@@ -104,20 +104,6 @@ document.title = "洛克王国工具箱";
                                     精灵配种
                                 </RouterLink>
                             </Button>
-                            <Button
-                                as-child
-                                size="lg"
-                                variant="outline"
-                                class="rounded-[10px] border border-border bg-card shadow-sm hover:shadow-md text-foreground hover:bg-accent"
-                            >
-                                <a
-                                    href="https://github.com/aoe-top/rocom.aoe.top"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    GitHub
-                                </a>
-                            </Button>
                         </div>
                     </div>
                 </div>
@@ -170,8 +156,6 @@ document.title = "洛克王国工具箱";
                 </div>
             </CardContent>
         </Card>
-        <Income />
-        <FriendlyLinks />
     </section>
 </template>
 

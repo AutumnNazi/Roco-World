@@ -12,4 +12,5 @@
 | pets/{id}.json      | 精灵详情 |
 | tables/{types}.json | 数据列表 |
 | items.json          | 道具列表 |
+| merchant.json       | 远行商人每日轮换商品（来自好游快爆工具页，`npm run sync:merchant-data` 生成） |
 | BinData/README.md   | 数据索引 |

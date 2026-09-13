@@ -9,7 +9,8 @@
         "preview": "vite preview",
         "build-only": "vite build",
         "type-check": "vue-tsc --build",
-        "sync:pet-data": "node ./scripts/sync-pet-data.mjs"
+        "sync:pet-data": "node ./scripts/sync-pet-data.mjs",
+        "sync:merchant-data": "node ./scripts/sync-merchant-data.mjs"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.2.2",

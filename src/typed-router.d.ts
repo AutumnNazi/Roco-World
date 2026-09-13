@@ -83,6 +83,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/merchant': RouteRecordInfo<
+      '/merchant',
+      '/merchant',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/pets/[id]': RouteRecordInfo<
       '/pets/[id]',
       '/pets/:id',
@@ -162,6 +169,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/items.vue': {
       routes:
         | '/items'
+      views:
+        | never
+    }
+    'src/pages/merchant.vue': {
+      routes:
+        | '/merchant'
       views:
         | never
     }

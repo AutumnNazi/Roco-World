@@ -7,15 +7,13 @@ import {
     Gamepad2,
     HeartPulse,
     Egg,
-    Gift,
-    Github,
     Sparkle,
     Menu,
     X,
-    ExternalLink,
     LifeBuoy,
     Package,
     ListTodo,
+    Store,
 } from "lucide-vue-next";
 import { cn } from "@/lib/utils";
 
@@ -40,15 +38,7 @@ const navItems = [
     { name: "星图", path: "/egggroup", icon: Sparkle },
     { name: "属性", path: "/attributes", icon: LifeBuoy },
     { name: "道具", path: "/items", icon: Package },
-];
-
-const bottomItems = [
-    {
-        name: "GitHub",
-        path: "https://github.com/aoe-top/rocom.aoe.top",
-        icon: Github,
-    },
-    { name: "赞助", path: "https://sponsor.aoe.top/", icon: Gift },
+    { name: "远行商人", path: "/merchant", icon: Store },
 ];
 </script>
 
@@ -98,20 +88,6 @@ const bottomItems = [
                 />
             </router-link>
         </div>
-
-        <div class="p-3 border-t border-border/50">
-            <a
-                v-for="item in bottomItems"
-                :key="item.path"
-                :href="item.path"
-                target="_blank"
-                class="group flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-sm font-medium transition-colors relative text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-            >
-                <component :is="item.icon" class="h-5 w-5 shrink-0" />
-                <span>{{ item.name }}</span>
-                <ExternalLink class="h-4 w-4 shrink-0" />
-            </a>
-        </div>
     </aside>
 
     <!-- Mobile Header -->
@@ -154,21 +130,6 @@ const bottomItems = [
                 <component :is="item.icon" class="h-6 w-6 shrink-0" />
                 <span>{{ item.name }}</span>
             </router-link>
-        </div>
-        <div
-            class="border-t border-border/50 pt-4 mt-4 flex flex-col gap-2 pb-8"
-        >
-            <a
-                v-for="item in bottomItems"
-                :key="item.path"
-                :href="item.path"
-                target="_blank"
-                class="flex items-center gap-3 rounded-[10px] px-4 py-3 text-base font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors"
-            >
-                <component :is="item.icon" class="h-6 w-6 shrink-0" />
-                <span>{{ item.name }}</span>
-                <ExternalLink class="h-5 w-5 shrink-0 ml-auto opacity-50" />
-            </a>
         </div>
     </div>
 </template>

@@ -259,3 +259,34 @@ export interface IItem {
     related_pets: IItemRelatedPet[];
     recipes?: IItemRecipe[];
 }
+
+export interface IMerchantItem {
+    name: string;
+    category: string;
+    description: string;
+    image: string | null;
+    price: number | null;
+    limit: number | null;
+    rare: boolean;
+}
+
+export interface IMerchantRound {
+    index: number;
+    start_ts: number;
+    end_ts: number;
+    start_time: string;
+    end_time: string;
+    items: IMerchantItem[];
+}
+
+export interface IMerchantPayload {
+    schema_version: number;
+    generated_at: string;
+    source: {
+        site: string;
+        page: string;
+        image_source: string;
+    };
+    date: string | null;
+    rounds: IMerchantRound[];
+}
