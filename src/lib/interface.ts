@@ -260,6 +260,26 @@ export interface IItem {
     recipes?: IItemRecipe[];
 }
 
+export interface IOfficialPokedexEntry {
+    no: string | null;
+    form: string | null;
+    height: string | null;
+    weight: string | null;
+    habitat: string | null;
+    nickname: string | null;
+    description: string | null;
+}
+
+export interface IOfficialPokedexPayload {
+    schema_version: number;
+    generated_at: string;
+    source: {
+        site: string;
+        page: string;
+    };
+    entries: Record<string, IOfficialPokedexEntry>;
+}
+
 export interface IMerchantItem {
     name: string;
     category: string;

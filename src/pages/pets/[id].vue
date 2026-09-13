@@ -54,6 +54,7 @@ import type {
     IPetsDetail,
     IPetsMove,
     IMonsterTypeDetail,
+    IOfficialPokedexPayload,
 } from "@/lib/interface";
 import {
     formatPetEggGroupSummary,
@@ -119,6 +120,7 @@ const routeId = computed(() => {
 });
 
 const friend = ref<IPetsDetail | null>(null);
+const officialPokedex = ref<IOfficialPokedexPayload["entries"]>({});
 const isLoading = ref(false);
 const errorMessage = ref("");
 const petTopics = ref<IPetHandbookTopic[]>([]);
@@ -745,10 +747,22 @@ const worldTypeLabel = computed(() => {
 });
 
 const introductionText = computed(() => {
+    const official = officialEntry.value?.description;
+
+    if (official) {
+        return official;
+    }
+
     return worldProfile.value?.introduction ?? "暂无图鉴介绍。";
 });
 
 const habitatSummary = computed(() => {
+    const officialHabitat = officialEntry.value?.habitat;
+
+    if (officialHabitat) {
+        return officialHabitat;
+    }
+
     if (worldProfile.value?.description_habitat) {
         return worldProfile.value.description_habitat;
     }
@@ -758,6 +772,31 @@ const habitatSummary = computed(() => {
     }
 
     return "暂无栖息地信息。";
+});
+
+const officialEntry = computed(() => {
+    const name = friend.value?.localized?.zh?.name;
+    return name ? officialPokedex.value[name] ?? null : null;
+});
+
+const officialArchiveBadges = computed(() => {
+    const entry = officialEntry.value;
+    const badges: string[] = [];
+
+    if (entry?.no) {
+        badges.push(`图鉴 ${entry.no}`);
+    }
+    if (entry?.nickname) {
+        badges.push(`昵称 ${entry.nickname}`);
+    }
+    if (entry?.height) {
+        badges.push(`身高 ${entry.height}`);
+    }
+    if (entry?.weight) {
+        badges.push(`体重 ${entry.weight}`);
+    }
+
+    return badges;
 });
 
 const hatchDurationLabel = computed(() => {
@@ -1289,6 +1328,26 @@ async function ensureTypeMap(signal: AbortSignal) {
     );
 }
 
+async function ensureOfficialPokedex(signal: AbortSignal) {
+    if (Object.keys(officialPokedex.value).length > 0) {
+        return;
+    }
+
+    try {
+        const response = await fetch("/data/pokedex-official.json", { signal });
+
+        if (!response.ok) {
+            return;
+        }
+
+        const payload = (await response.json()) as IOfficialPokedexPayload;
+        officialPokedex.value = payload?.entries ?? {};
+    } catch {
+        // 官方图鉴为增强数据，加载失败时静默降级到游戏解包字段。
+        officialPokedex.value = {};
+    }
+}
+
 async function ensureImplementedPetIds(signal: AbortSignal) {
     if (implementedPetIds.value.size > 0) {
         return;
@@ -1344,6 +1403,7 @@ async function getFriendDetail(idParam: string | string[]) {
             ensureTypeMap(controller.signal),
             ensureImplementedPetIds(controller.signal),
             ensureMoveDictionary(controller.signal),
+            ensureOfficialPokedex(controller.signal),
         ]);
 
         const response = await fetch(`/data/pets/${id}.json`, {
@@ -1725,6 +1785,14 @@ async function getFriendDetail(idParam: string | string[]) {
                                         class="rounded-[10px] border-border bg-card text-foreground"
                                     >
                                         {{ worldProfile.movement_type }}
+                                    </Badge>
+                                    <Badge
+                                        v-for="badge in officialArchiveBadges"
+                                        :key="badge"
+                                        variant="outline"
+                                        class="rounded-[10px] border-amber-400/20 bg-amber-400/10 text-amber-200"
+                                    >
+                                        {{ badge }}
                                     </Badge>
                                 </div>
                                 <p

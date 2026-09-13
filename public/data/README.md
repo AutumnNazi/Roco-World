@@ -13,4 +13,5 @@
 | tables/{types}.json | 数据列表 |
 | items.json          | 道具列表 |
 | merchant.json       | 远行商人每日轮换商品（来自好游快爆工具页，`npm run sync:merchant-data` 生成） |
+| pokedex-official.json | 官方图鉴档案：编号/身高/体重/栖息地/昵称/描述（`npm run sync:official-pokedex` 生成） |
 | BinData/README.md   | 数据索引 |
