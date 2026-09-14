@@ -10,7 +10,7 @@
 // 环境变量：
 //   PORT=4173              监听端口
 //   HOST=127.0.0.1         监听地址（填 0.0.0.0 可供局域网访问）
-//   SYNC_INTERVAL_MINUTES=30  商人数据轮询间隔（开市时段生效）
+//   SYNC_INTERVAL_MINUTES=5   商人数据轮询间隔（分钟，开市时段生效）
 //   SYNC_DISABLED=1        只做静态服务，不抓数据
 import http from "node:http";
 import fs from "node:fs";
@@ -29,7 +29,7 @@ const PORT = Number(process.env.PORT ?? 4173);
 const HOST = process.env.HOST ?? "127.0.0.1";
 const SYNC_DISABLED = process.env.SYNC_DISABLED === "1";
 const MERCHANT_INTERVAL_MS =
-    Number(process.env.SYNC_INTERVAL_MINUTES ?? 30) * 60 * 1000;
+    Number(process.env.SYNC_INTERVAL_MINUTES ?? 5) * 60 * 1000;
 const POKEDEX_INTERVAL_MS = 6 * 60 * 60 * 1000;
 const IMAGES_INTERVAL_MS = 12 * 60 * 60 * 1000;
 

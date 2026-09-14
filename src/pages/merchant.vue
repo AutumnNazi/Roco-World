@@ -119,7 +119,7 @@ function resetRoundSelection() {
 
 // 本地部署由 scripts/serve-local.mjs 定时写盘，开着的页面需要自己把新数据取回来，
 // 否则要手动刷新才能看到新一轮商品。
-const REFRESH_INTERVAL_MS = 120_000;
+const REFRESH_INTERVAL_MS = 60_000;
 let refreshTimer: number | undefined;
 
 async function refreshMerchantSilently() {
