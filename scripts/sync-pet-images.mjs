@@ -7,6 +7,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
+import { mirrorFileToDist } from "./lib/mirror-to-dist.mjs";
 
 const currentFilePath = fileURLToPath(import.meta.url);
 const rootDir = path.resolve(path.dirname(currentFilePath), "..");
@@ -69,6 +70,10 @@ async function main() {
             const buffer = Buffer.from(await response.arrayBuffer());
             const outFile = path.join(friendsDir, `JL_${pet.name}.webp`);
             await sharp(buffer).webp({ quality: 85 }).toFile(outFile);
+            await mirrorFileToDist(
+                rootDir,
+                path.join("assets", "webp", "friends", `JL_${pet.name}.webp`),
+            );
             const stat = await fs.stat(outFile);
             ok.push(pet);
             console.log(

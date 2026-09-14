@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import type { IMerchantItem, IMerchantPayload } from "@/lib/interface";
+import type {
+    IMerchantHistoryPayload,
+    IMerchantItem,
+    IMerchantPayload,
+} from "@/lib/interface";
 import {
     Clock,
+    History,
     Package,
     RotateCcw,
     Sparkles,
@@ -124,7 +129,9 @@ let refreshTimer: number | undefined;
 
 async function refreshMerchantSilently() {
     try {
-        const response = await fetch(`/data/merchant.json?t=${Date.now()}`);
+        const response = await fetch(`/data/merchant.json?t=${Date.now()}`, {
+            cache: "no-store",
+        });
 
         if (!response.ok) {
             return;
@@ -153,12 +160,60 @@ function handleVisibilityChange() {
     }
 }
 
+// 历史归档（public/data/merchant-history.json）：每轮商品首次出现或变化时记录，
+// 默认折叠、展开时才拉取，避免给首屏添负担。
+const historyPayload = ref<IMerchantHistoryPayload | null>(null);
+const historyExpanded = ref(false);
+const historyLoading = ref(false);
+
+async function toggleHistory() {
+    historyExpanded.value = !historyExpanded.value;
+
+    if (!historyExpanded.value) {
+        return;
+    }
+
+    historyLoading.value = true;
+    try {
+        const response = await fetch(
+            `/data/merchant-history.json?t=${Date.now()}`,
+            { cache: "no-store" },
+        );
+
+        if (response.ok) {
+            historyPayload.value =
+                (await response.json()) as IMerchantHistoryPayload;
+        }
+    } catch {
+        // 没有历史文件时保持空态。
+    } finally {
+        historyLoading.value = false;
+    }
+}
+
+const historyDays = computed(() => {
+    const days = historyPayload.value?.days ?? {};
+
+    return Object.values(days)
+        .sort((left, right) => right.date.localeCompare(left.date))
+        .map((day) => ({
+            date: day.date,
+            rounds: Object.values(day.rounds).sort(
+                (left, right) => left.index - right.index,
+            ),
+        }));
+});
+
 async function loadMerchant() {
     isLoading.value = true;
     errorMessage.value = "";
 
     try {
-        const response = await fetch("/data/merchant.json");
+        // 必须禁用缓存：静态服务器常给 JSON 带上强缓存/启发式缓存，
+        // 首屏会读到旧快照（表现为「刷新后又没有本轮数据」）。
+        const response = await fetch(`/data/merchant.json?t=${Date.now()}`, {
+            cache: "no-store",
+        });
 
         if (!response.ok) {
             throw new Error(`请求失败: ${response.status}`);
@@ -359,6 +414,61 @@ onBeforeUnmount(() => {
                 </Card>
             </div>
         </template>
+
+        <Card class="border-border bg-card py-0 shadow-md">
+            <CardHeader class="gap-2 px-4 py-4">
+                <div class="flex items-center justify-between gap-3">
+                    <CardTitle class="flex items-center gap-2 text-lg tracking-tight text-foreground">
+                        <History class="h-4 w-4 text-foreground" />
+                        历史记录
+                    </CardTitle>
+                    <Button variant="outline"
+                        class="rounded-[10px] border-border bg-white/5 text-foreground hover:bg-accent"
+                        @click="toggleHistory">
+                        {{ historyExpanded ? "收起" : "展开" }}
+                    </Button>
+                </div>
+                <p class="text-xs leading-5 text-foreground">
+                    每轮商品首次出现或变化时自动归档，不会被次日快照覆盖。
+                </p>
+            </CardHeader>
+            <CardContent v-if="historyExpanded" class="space-y-3 px-4 pb-5">
+                <Separator class="bg-white/10" />
+                <p v-if="historyLoading" class="text-sm text-foreground">加载中…</p>
+                <p v-else-if="historyDays.length === 0" class="text-sm text-foreground">
+                    暂无历史记录（需要先运行一次数据同步）。
+                </p>
+                <div v-else class="space-y-3">
+                    <div v-for="day in historyDays" :key="day.date"
+                        class="rounded-[10px] border border-border bg-muted px-3 py-2.5">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-sm font-semibold text-foreground">{{ day.date }}</span>
+                            <Badge v-if="day.date === payload?.date" variant="outline"
+                                class="rounded-[10px] border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-xs text-emerald-200">
+                                今天
+                            </Badge>
+                            <span class="text-xs text-foreground">{{ day.rounds.length }} 轮有货</span>
+                        </div>
+                        <div v-for="round in day.rounds" :key="`${day.date}-${round.index}`" class="mt-2">
+                            <p class="text-xs text-foreground">
+                                第 {{ round.index }} 轮 {{ round.start_time.slice(11, 16) }}-{{ round.end_time.slice(11, 16) }}
+                            </p>
+                            <div class="mt-1 flex flex-wrap gap-1.5">
+                                <Badge v-for="item in round.items" :key="`${day.date}-${round.index}-${item.name}`"
+                                    variant="outline"
+                                    :title="item.price !== null ? `价格 ${item.price}${item.limit !== null ? ` · 限购 ${item.limit}` : ''}` : undefined"
+                                    class="rounded-[10px] border-border bg-white/5 px-2 py-0.5 text-xs text-foreground">
+                                    {{ item.name }}
+                                    <span v-if="item.price !== null" class="ml-1 text-[10px] text-foreground/70">
+                                        {{ item.price }}
+                                    </span>
+                                </Badge>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
     </section>
 </template>
 

@@ -329,3 +329,22 @@ export interface IMerchantPayload {
     date: string | null;
     rounds: IMerchantRound[];
 }
+
+export interface IMerchantHistoryRound {
+    index: number;
+    start_time: string;
+    end_time: string;
+    recorded_at: string;
+    items: IMerchantItem[];
+}
+
+export interface IMerchantHistoryDay {
+    date: string;
+    rounds: Record<string, IMerchantHistoryRound>;
+}
+
+export interface IMerchantHistoryPayload {
+    schema_version: number;
+    updated_at: string | null;
+    days: Record<string, IMerchantHistoryDay>;
+}

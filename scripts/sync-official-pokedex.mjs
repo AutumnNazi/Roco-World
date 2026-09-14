@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { mirrorFileToDist } from "./lib/mirror-to-dist.mjs";
 
 const currentFilePath = fileURLToPath(import.meta.url);
 const rootDir = path.resolve(path.dirname(currentFilePath), "..");
@@ -78,6 +79,9 @@ async function main() {
     const skillsChanged = await writeJsonIfChanged(skillsOutputPath, skills, [
         "generated_at",
     ]);
+
+    await mirrorFileToDist(rootDir, path.join("data", "pokedex-official.json"));
+    await mirrorFileToDist(rootDir, path.join("data", "skills-official.json"));
 
     if (!pokedexChanged && !skillsChanged) {
         console.log(

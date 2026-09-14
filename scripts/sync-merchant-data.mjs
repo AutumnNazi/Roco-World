@@ -1,10 +1,18 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { mirrorFileToDist } from "./lib/mirror-to-dist.mjs";
 
 const currentFilePath = fileURLToPath(import.meta.url);
 const rootDir = path.resolve(path.dirname(currentFilePath), "..");
 const merchantOutputPath = path.join(rootDir, "public", "data", "merchant.json");
+// 历史归档：merchant.json 只保留当天快照，历史轮次在此累积，不被次日覆盖。
+const merchantHistoryPath = path.join(
+    rootDir,
+    "public",
+    "data",
+    "merchant-history.json",
+);
 
 // 远行商人每日轮换数据来自好游快爆「每日远行商人查询器」工具页：
 // 服务端渲染 HTML，每个商品的 class 带 show_1~show_4 标记所属轮次，
@@ -40,10 +48,14 @@ async function main() {
     const changed = await writeJsonIfChanged(merchantOutputPath, payload, [
         "generated_at",
     ]);
+    await mirrorFileToDist(rootDir, path.join("data", "merchant.json"));
+
+    const historyChanged = await recordHistory(payload);
+    await mirrorFileToDist(rootDir, path.join("data", "merchant-history.json"));
 
     const goodsTotal = rounds.reduce((sum, round) => sum + round.items.length, 0);
 
-    if (!changed) {
+    if (!changed && !historyChanged) {
         console.log(
             `Merchant data for ${payload.date} unchanged, skip write (${goodsTotal} goods).`,
         );
@@ -52,6 +64,82 @@ async function main() {
 
     console.log(
         `Generated merchant data for ${payload.date} with ${rounds.length} rounds / ${goodsTotal} goods entries.`,
+    );
+}
+
+// 把当天各轮商品并入历史归档：只记录已上架的轮次，
+// 同一轮商品发生变化（源站补货/改价）时覆盖该轮，其余日期原样保留。
+async function recordHistory(payload) {
+    if (!payload.date) {
+        return false;
+    }
+
+    let history = { schema_version: 1, updated_at: null, days: {} };
+
+    try {
+        const previous = JSON.parse(await fs.readFile(merchantHistoryPath, "utf8"));
+
+        if (previous && typeof previous === "object" && previous.days) {
+            history = {
+                schema_version: 1,
+                updated_at: previous.updated_at ?? null,
+                days: previous.days,
+            };
+        }
+    } catch {
+        // 首次运行没有历史文件。
+    }
+
+    const dayEntry = history.days[payload.date] ?? { date: payload.date, rounds: {} };
+    const recordedAt = buildBeijingTimestamp();
+    let changed = false;
+
+    for (const round of payload.rounds) {
+        if (!round.items.length) {
+            continue;
+        }
+
+        const key = String(round.index);
+        const next = {
+            index: round.index,
+            start_time: round.start_time,
+            end_time: round.end_time,
+            recorded_at: recordedAt,
+            items: round.items,
+        };
+
+        if (!isSameRecordedRound(dayEntry.rounds[key], next)) {
+            dayEntry.rounds[key] = next;
+            changed = true;
+        }
+    }
+
+    if (!changed) {
+        return false;
+    }
+
+    history.updated_at = recordedAt;
+    history.days[payload.date] = dayEntry;
+    await fs.writeFile(
+        merchantHistoryPath,
+        `${JSON.stringify(history, null, 4)}\n`,
+        "utf8",
+    );
+    console.log(
+        `Recorded merchant history for ${payload.date} (rounds: ${Object.keys(dayEntry.rounds).sort().join(", ")}).`,
+    );
+    return true;
+}
+
+function isSameRecordedRound(current, next) {
+    if (!current) {
+        return false;
+    }
+
+    return (
+        current.start_time === next.start_time &&
+        current.end_time === next.end_time &&
+        JSON.stringify(current.items) === JSON.stringify(next.items)
     );
 }
 
