@@ -1,11 +1,12 @@
-name: 每日数据同步
+name: 数据同步（远行商人/图鉴/立绘）
 
-# 商人数据每日 8/12/16/20 点轮换，取轮换前 15 分钟抓取可覆盖全天；
-# 官方图鉴与补图随行，保持站点数据与源同步。
+# 商人数据每日 8/12/16/20 点（北京时间）轮换，且源站是渐进上架。
+# GitHub 的 schedule 可能延迟或漏触发，所以用「高频轮询 + 无变化不提交」
+# 换取自我修复：每次运行都会重新解析源站，数据没变就跳过提交，成本极低。
 on:
   schedule:
-    - cron: "45 0,4,8,12 * * *" # 北京时间 8:45 / 12:45 / 16:45 / 20:45
-    - cron: "30 17 * * *" # 北京时间 次日 1:30，兜底抓当日末轮
+    # 每 30 分钟一次，覆盖北京时间 08:00-22:30（UTC 00:00-14:30）的营业时段。
+    - cron: "*/30 0-14 * * *"
   workflow_dispatch:
 
 permissions:
@@ -36,6 +37,8 @@ jobs:
         run: npm run sync:official-pokedex
 
       - name: 补充缺失精灵立绘
+        # BWIKI 有限频，补图失败不应拖累商人数据的提交。
+        continue-on-error: true
         run: npm run sync:pet-images
 
       - name: 检查数据是否有变化
@@ -43,7 +46,7 @@ jobs:
         run: |
           git config --local user.name "AutumnNazi"
           git config --local user.email "104422820+AutumnNazi@users.noreply.github.com"
-          if git diff --quiet -- public/data; then
+          if git diff --quiet -- public/data public/assets; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
