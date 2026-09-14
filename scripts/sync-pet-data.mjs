@@ -22,6 +22,14 @@ const handbookTopicSkillNamesPath = path.join(
     publicDataDir,
     "handbook-topic-skill-names.json",
 );
+const nrcPetsPath = path.join(publicDataDir, "nrc-pets.json");
+
+// 解包手册表（PET_HANDBOOK）的 name / type_desc / description_habitat 三列存在整体错位：
+// 例如手册行 302 只包含画间沉铁兽，name 却写成「绒光优优」、habitat 写成「喵喵」。
+// 实测 748 只已实装精灵中 408 只对不上，因此这三列一律改用 nrc WIKI 的
+// entry_name / title / habitat（字段语义分列、抽样核对全部正确）。
+// key 为 PETBASE id（nrc 的 game_id），缺失时回退到本体名，绝不再写入错位文本。
+const nrcProfileByPetId = new Map();
 
 const UNKNOWN_TYPE_ID = 20;
 // 只有这三张表被前端页面直接 fetch（图鉴进度/属性/配种下蛋率），
@@ -108,6 +116,8 @@ const UNKNOWN_TYPE = {
 };
 
 async function main() {
+    await loadNrcProfiles();
+
     const [
         typeRows,
         petBaseTable,
@@ -490,6 +500,55 @@ async function main() {
 
 async function readJson(filePath) {
     return JSON.parse(await fs.readFile(filePath, "utf8"));
+}
+
+// nrc-pets.json 由 sync:nrc-data 生成；缺失时静默跳过覆盖，
+// 保证本脚本在没有 wiki 数据的环境下仍可独立运行。
+async function loadNrcProfiles() {
+    nrcProfileByPetId.clear();
+
+    let payload;
+
+    try {
+        payload = await readJson(nrcPetsPath);
+    } catch {
+        console.warn(
+            "未找到 nrc-pets.json，图鉴文案将回退到解包字段，建议先运行 npm run sync:nrc-data。",
+        );
+        return;
+    }
+
+    for (const [gameId, entry] of Object.entries(payload?.entries ?? {})) {
+        const petId = Number(gameId);
+
+        if (!Number.isFinite(petId)) {
+            continue;
+        }
+
+        nrcProfileByPetId.set(petId, entry);
+    }
+
+    console.log(`已载入 nrc 图鉴文案 ${nrcProfileByPetId.size} 条。`);
+}
+
+// 物种名优先级：nrc entry_name > 本体名；绝不使用错位的手册 name。
+function resolveNrcSpeciesName(context) {
+    const own = nrcProfileByPetId.get(context.id);
+
+    if (cleanText(own?.entry_name)) {
+        return cleanText(own.entry_name);
+    }
+
+    // 同一物种的其他形态（如圣光迪莫 → 迪莫）也能提供物种名。
+    for (const petId of context.speciesGroupIds) {
+        const entry = nrcProfileByPetId.get(petId);
+
+        if (cleanText(entry?.entry_name)) {
+            return cleanText(entry.entry_name);
+        }
+    }
+
+    return null;
 }
 
 async function readTable(fileName) {
@@ -888,9 +947,7 @@ function buildSpecies(context, contextById) {
             context.id,
         name: speciesContext.portraitKey,
         localized: {
-            zh:
-                cleanText(context.handbookRow?.name) ??
-                speciesContext.displayName,
+            zh: resolveNrcSpeciesName(context) ?? speciesContext.displayName,
         },
     };
 }
@@ -1274,16 +1331,31 @@ function firstNumericValue(value) {
     return typeof value === "number" ? value : null;
 }
 
+// pet_track_fail_desc 是游戏内追踪失败时的提示语（「由于昼夜或者天气的原因…」），
+// 不是刷新地点。实测 532 只已实装精灵全部只有这句提示，写进 refresh_locations
+// 会让页面把提示语当产地展示，因此这类文案一律丢弃。
+const REFRESH_HINT_NOISE = /(还没有出现|昼夜|天气的原因|暂未|未开放)/;
+
 function buildWorldProfile(context) {
     const refreshHint = cleanText(context.petBase.pet_track_fail_desc);
+    const refreshLocations =
+        refreshHint && !REFRESH_HINT_NOISE.test(refreshHint)
+            ? [refreshHint]
+            : [];
+
+    const nrcProfile = nrcProfileByPetId.get(context.id) ?? null;
 
     return {
-        type_desc: cleanText(context.handbookRow?.type_desc),
-        description_habitat: cleanText(
-            context.handbookRow?.description_habitat,
-        ),
-        introduction: cleanText(context.petBase.description),
-        refresh_locations: refreshHint ? [refreshHint] : [],
+        // 手册表这两列存在整体错位，一律取 nrc WIKI 的 title / habitat。
+        type_desc: cleanText(nrcProfile?.title) ?? null,
+        description_habitat: cleanText(nrcProfile?.habitat) ?? null,
+        handbook_areas: Array.isArray(nrcProfile?.areas)
+            ? nrcProfile.areas.filter((area) => typeof area === "string")
+            : [],
+        introduction:
+            cleanText(nrcProfile?.description) ??
+            cleanText(context.petBase.description),
+        refresh_locations: refreshLocations,
         movement_type: cleanText(context.petBase.move_type),
         classis_id:
             typeof context.petBase.pet_classis_id === "number"

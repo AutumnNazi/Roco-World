@@ -62,6 +62,17 @@ const countdownText = computed(() => {
     return "今日已收市";
 });
 
+const lastSyncText = computed(() => {
+    const generatedAt = payload.value?.generated_at;
+
+    if (!generatedAt) {
+        return "";
+    }
+
+    // generated_at 形如 "2026-09-14 17:27:17"（北京时间），只展示到分钟即可。
+    return generatedAt.slice(0, 16);
+});
+
 const activeRoundIndex = computed(() => {
     return selectedRoundIndex.value ?? currentRound.value?.index ?? rounds.value[0]?.index ?? null;
 });
@@ -296,6 +307,11 @@ onBeforeUnmount(() => {
                         class="rounded-[10px] border-amber-400/20 bg-amber-400/10 px-3 py-1.5 text-sm text-amber-200">
                         <Timer class="mr-1.5 h-4 w-4" />
                         {{ countdownText }}
+                    </Badge>
+                    <Badge v-if="lastSyncText" variant="outline"
+                        class="rounded-[10px] border-border bg-white/5 px-3 py-1.5 text-sm text-foreground">
+                        <Clock class="mr-1.5 h-4 w-4" />
+                        最后同步 {{ lastSyncText }}
                     </Badge>
                     <Badge v-if="dataIsStale" variant="outline"
                         class="rounded-[10px] border-destructive/30 bg-destructive/10 px-3 py-1.5 text-sm text-destructive">

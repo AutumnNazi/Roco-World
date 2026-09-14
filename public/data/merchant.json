@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-14 15:06:45",
+    "generated_at": "2026-09-14 17:27:17",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -86,7 +86,17 @@
             "end_ts": 1789387200,
             "start_time": "2026-09-14 16:00:00",
             "end_time": "2026-09-14 20:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "机械血脉秘药",
+                    "category": "血脉修改道具",
+                    "description": "能唤醒血脉力量的远古秘药，使精灵获得机械系血脉。 “一段失落的秘密将被重拾。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/56/12jc1mzlz7nhgnterqdk6bgm6rofibn.png/100px-Xuemai_gang.png",
+                    "price": null,
+                    "limit": 3,
+                    "rare": false
+                }
+            ]
         },
         {
             "index": 4,

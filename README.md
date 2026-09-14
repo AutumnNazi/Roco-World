@@ -11,6 +11,8 @@
 - 属性关系
 - 远行商人
 - 技能图鉴
+- 时装
+- 奖牌
 
 
 ### 使用
@@ -24,6 +26,8 @@
 一键全量更新: `npm run sync:all`（精灵数据 → 官方图鉴 → 远行商人）
 
 补充缺失精灵立绘: `npm run sync:pet-images`（从 BWIKI 图床拉取，可带精灵 id 只补一只）
+
+同步哔哩哔哩 WIKI 结构化数据: `npm run sync:nrc-data`（生成精灵图鉴文案、时装 `fashions.json`、奖牌 `medals.json`；同时作为图鉴物种名/称号/栖息地的主数据源）
 
 ### 本地部署（推荐）
 
@@ -54,3 +58,16 @@ GitHub Actions 工作流（`.github/workflows/daily-data-sync.yml`）保留为�
 - 前端使用 Vue 3 + Vite 构建，组件库使用 Shadcn UI，样式使用 Tailwind CSS.
 - 主要页面在 `src\pages`
 
+
+### 数据来源与转载声明
+
+本项目为**非官方、非商业的粉丝向工具站**，仅供学习交流。《洛克王国：世界》相关版权归腾讯所有。
+
+数据来源：
+
+- 精灵图鉴文案（物种名 / 称号 / 栖息地 / 图鉴区域）、时装、奖牌：哔哩哔哩「洛克王国：世界」WIKI（`wiki.biligame.com/nrc`）结构化数据模块，由 `scripts/sync-nrc-data.mjs` 抓取解析，生成 `public/data/{nrc-pets,fashions,medals}.json`；图标直链亦取自该 WIKI 图床。
+- 精灵种族值 / 技能 / 配种 / 进化等结构化数据：游戏客户端数据包解包（`data-source/BinData`，不入库），由 `scripts/sync-pet-data.mjs` 处理。
+- 官方图鉴档案：《洛克王国：世界》官方图鉴接口，由 `scripts/sync-official-pokedex.mjs` 同步。
+- 远行商人每日轮换：好游快爆「每日远行商人查询器」，由 `scripts/sync-merchant-data.mjs` 抓取。
+
+转载与二次分发时请保留本声明，并注明上述原始数据来源。

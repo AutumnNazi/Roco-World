@@ -132,6 +132,7 @@ export interface IPetsWorldProfile {
     description_habitat: string | null;
     introduction: string | null;
     refresh_locations: string[];
+    handbook_areas?: string[];
     movement_type: string | null;
     classis_id: number | null;
     classis_name: string | null;
@@ -347,4 +348,77 @@ export interface IMerchantHistoryPayload {
     schema_version: number;
     updated_at: string | null;
     days: Record<string, IMerchantHistoryDay>;
+}
+
+export interface IFashionPiece {
+    id: number;
+    name: string;
+    slot: string;
+    quality: number;
+}
+
+export interface IFashionVariant {
+    gender: string;
+    gender_label: string;
+    name: string;
+    description: string;
+    grade_name: string;
+    acquire: string[];
+    item_count: number;
+    image: string | null;
+    image_url: string | null;
+    pieces: IFashionPiece[];
+}
+
+export interface IFashionEntry {
+    wiki_key: string;
+    name: string;
+    description: string;
+    quality: number;
+    grade: number;
+    grade_name: string;
+    series_id: number | null;
+    genders: string[];
+    variants: IFashionVariant[];
+}
+
+export interface IFashionPayload {
+    schema_version: number;
+    generated_at: string;
+    source: {
+        site: string;
+        page: string;
+    };
+    entries: Record<string, IFashionEntry>;
+}
+
+export interface IMedalTask {
+    condition_label: string;
+    count: number;
+    deprecated: boolean;
+    description: string;
+    id: number;
+}
+
+export interface IMedalEntry {
+    wiki_key: string;
+    name: string;
+    description: string;
+    prefix_text: string;
+    quality: number;
+    quality_label: string;
+    type_label: string;
+    image: string | null;
+    image_url: string | null;
+    tasks: IMedalTask[];
+}
+
+export interface IMedalPayload {
+    schema_version: number;
+    generated_at: string;
+    source: {
+        site: string;
+        page: string;
+    };
+    entries: Record<string, IMedalEntry>;
 }

@@ -10,11 +10,12 @@
         "serve": "node ./scripts/serve-local.mjs",
         "build-only": "vite build",
         "type-check": "vue-tsc --build",
+        "sync:nrc-data": "node ./scripts/sync-nrc-data.mjs",
         "sync:pet-data": "node ./scripts/sync-pet-data.mjs",
         "sync:merchant-data": "node ./scripts/sync-merchant-data.mjs",
         "sync:official-pokedex": "node ./scripts/sync-official-pokedex.mjs",
         "sync:pet-images": "node ./scripts/sync-pet-images.mjs",
-        "sync:all": "run-s sync:pet-data sync:official-pokedex sync:merchant-data"
+        "sync:all": "run-s sync:nrc-data sync:pet-data sync:official-pokedex sync:merchant-data"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.2.2",

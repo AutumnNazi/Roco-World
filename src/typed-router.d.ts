@@ -62,6 +62,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/fashions': RouteRecordInfo<
+      '/fashions',
+      '/fashions',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/handbook-progress': RouteRecordInfo<
       '/handbook-progress',
       '/handbook-progress',
@@ -79,6 +86,13 @@ declare module 'vue-router/auto-routes' {
     '/items': RouteRecordInfo<
       '/items',
       '/items',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/medals': RouteRecordInfo<
+      '/medals',
+      '/medals',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -161,6 +175,12 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
+    'src/pages/fashions.vue': {
+      routes:
+        | '/fashions'
+      views:
+        | never
+    }
     'src/pages/handbook-progress.vue': {
       routes:
         | '/handbook-progress'
@@ -176,6 +196,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/items.vue': {
       routes:
         | '/items'
+      views:
+        | never
+    }
+    'src/pages/medals.vue': {
+      routes:
+        | '/medals'
       views:
         | never
     }

@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-14 15:39:04",
+    "updated_at": "2026-09-14 17:27:18",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -71,6 +71,23 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/24/sgt0lc5llwfvlcmjhr1awhwq6st35fj.png/100px-100139.png",
                             "price": 500,
                             "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                },
+                "3": {
+                    "index": 3,
+                    "start_time": "2026-09-14 16:00:00",
+                    "end_time": "2026-09-14 20:00:00",
+                    "recorded_at": "2026-09-14 17:27:18",
+                    "items": [
+                        {
+                            "name": "机械血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "能唤醒血脉力量的远古秘药，使精灵获得机械系血脉。 “一段失落的秘密将被重拾。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/56/12jc1mzlz7nhgnterqdk6bgm6rofibn.png/100px-Xuemai_gang.png",
+                            "price": null,
+                            "limit": 3,
                             "rare": false
                         }
                     ]

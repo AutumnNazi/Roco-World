@@ -15,6 +15,8 @@ import {
     ListTodo,
     Store,
     Swords,
+    Shirt,
+    Medal,
 } from "lucide-vue-next";
 import { cn } from "@/lib/utils";
 
@@ -40,6 +42,8 @@ const navItems = [
     { name: "星图", path: "/egggroup", icon: Sparkle },
     { name: "属性", path: "/attributes", icon: LifeBuoy },
     { name: "道具", path: "/items", icon: Package },
+    { name: "时装", path: "/fashions", icon: Shirt },
+    { name: "奖牌", path: "/medals", icon: Medal },
     { name: "远行商人", path: "/merchant", icon: Store },
 ];
 </script>

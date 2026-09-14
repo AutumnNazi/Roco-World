@@ -9,6 +9,7 @@ import {
 import { init, use, type ComposeOption, type ECharts } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import {
+    ArrowDown,
     ArrowRight,
     BarChart3,
     BookOpen,
@@ -736,6 +737,24 @@ const petTopicLastRecordedLabel = computed(() => {
 
 const refreshLocations = computed(() => {
     return worldProfile.value?.refresh_locations ?? [];
+});
+
+// 游戏解包与 wiki 都没有精灵的具体刷新坐标，能确定的只有它收录在哪几本图鉴里，
+// 所以这里展示图鉴归属，而不是把「暂无数据」摆在页面上。
+const handbookAreas = computed(() => {
+    return worldProfile.value?.handbook_areas ?? [];
+});
+
+const habitatHint = computed(() => {
+    const habitat = worldProfile.value?.description_habitat;
+
+    if (!habitat) {
+        return "";
+    }
+
+    return handbookAreas.value.length || refreshLocations.value.length
+        ? habitat
+        : `${habitat}（暂无具体坐标）`;
 });
 
 const worldTypeLabel = computed(() => {
@@ -1833,11 +1852,27 @@ async function getFriendDetail(idParam: string | string[]) {
                                         未实装
                                     </Badge>
                                     <Badge
-                                        v-if="!refreshLocations.length"
+                                        v-for="area in handbookAreas"
+                                        :key="area"
+                                        variant="outline"
+                                        class="rounded-[10px] border-emerald-400/20 bg-emerald-400/10 text-emerald-200"
+                                    >
+                                        {{ area }}
+                                    </Badge>
+                                    <Badge
+                                        v-for="location in refreshLocations"
+                                        :key="location"
                                         variant="outline"
                                         class="rounded-[10px] border-border bg-card text-foreground"
                                     >
-                                        暂无刷新位置数据
+                                        {{ location }}
+                                    </Badge>
+                                    <Badge
+                                        v-if="habitatHint"
+                                        variant="outline"
+                                        class="rounded-[10px] border-border bg-card text-foreground"
+                                    >
+                                        {{ habitatHint }}
                                     </Badge>
                                 </div>
 
@@ -2048,7 +2083,7 @@ async function getFriendDetail(idParam: string | string[]) {
                                                 <p
                                                     class="mt-1.5 text-xs leading-relaxed text-foreground"
                                                 >
-                                                    使用不同球时，大约需要多少次保底捕获
+                                                    「保底」不是某种球，而是投球机制：每次投球失败会累积隐藏进度，累积到上限就必定捕获。下面是每种球投到必定捕获前，最多需要的次数。
                                                 </p>
                                                 <div
                                                     class="mt-3 grid grid-cols-[1fr_auto_auto] items-center gap-x-3 gap-y-2"
@@ -2317,8 +2352,8 @@ async function getFriendDetail(idParam: string | string[]) {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <div class="overflow-x-auto pb-1">
-                                <div class="flex min-w-max items-center gap-3">
+                            <div class="md:overflow-x-auto md:pb-1">
+                                <div class="flex flex-col items-stretch gap-3 md:min-w-max md:flex-row md:items-center">
                                     <template
                                         v-for="(
                                             stage, stageIndex
@@ -2326,7 +2361,7 @@ async function getFriendDetail(idParam: string | string[]) {
                                         :key="stage.depth"
                                     >
                                         <div
-                                            class="min-w-48 rounded-[10px] border border-border bg-muted p-3"
+                                            class="w-full rounded-[10px] border border-border bg-muted p-3 md:w-auto md:min-w-48"
                                         >
                                             <div
                                                 class="mb-3 flex items-center justify-between gap-2"
@@ -2474,9 +2509,10 @@ async function getFriendDetail(idParam: string | string[]) {
                                                 stageIndex <
                                                 evolutionStages.length - 1
                                             "
-                                            class="flex items-center justify-center px-1 text-foreground"
+                                            class="flex items-center justify-center px-1 py-1 text-foreground md:py-0"
                                         >
-                                            <ArrowRight class="h-4 w-4" />
+                                            <ArrowDown class="h-4 w-4 md:hidden" />
+                                            <ArrowRight class="hidden h-4 w-4 md:block" />
                                         </div>
                                     </template>
                                 </div>
