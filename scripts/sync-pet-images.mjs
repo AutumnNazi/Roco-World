@@ -14,6 +14,8 @@ const petsIndexPath = path.join(rootDir, "public", "data", "Pets.json");
 const friendsDir = path.join(rootDir, "public", "assets", "webp", "friends");
 
 // 立绘命名与 Pets.json 的 name 字段（portraitKey）一致；BWIKI 上为 JL_{name}.png。
+// 扫描全部带有效 portraitKey 的条目（含未实装的圣火/圣水迪莫等形态），
+// 否则新立绘会因 implemented=false 永远漏补。
 const WIKI_API_URL = "https://wiki.biligame.com/rocom/api.php";
 const REQUEST_INTERVAL_MS = 2500;
 
@@ -94,14 +96,17 @@ async function main() {
 
 async function readImplementedPets(onlyPetId) {
     const payload = JSON.parse(await fs.readFile(petsIndexPath, "utf8"));
+    const targeted = Number.isFinite(onlyPetId) && onlyPetId > 0;
     const pets = (Array.isArray(payload) ? payload : [])
         .filter(
             (pet) =>
                 typeof pet?.id === "number" &&
-                pet?.implemented === true &&
                 typeof pet?.name === "string" &&
                 pet.name.length > 0 &&
-                !/^\d+$/.test(pet.name),
+                !/^\d+$/.test(pet.name) &&
+                // 默认只扫已实装（有界，CI 可承受）；显式传精灵 id 时放开，
+                // 便于补圣火/圣水迪莫这类 implemented=false 的新形态立绘。
+                (targeted || pet?.implemented === true),
         )
         .map((pet) => ({
             id: pet.id,

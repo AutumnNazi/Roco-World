@@ -5,7 +5,9 @@ import { fileURLToPath } from "node:url";
 const currentFilePath = fileURLToPath(import.meta.url);
 const rootDir = path.resolve(path.dirname(currentFilePath), "..");
 const publicDataDir = path.join(rootDir, "public", "data");
-const binDataDir = path.join(publicDataDir, "BinData");
+// 解包原始数据不放在 public 下：避免 293MB 进入 dist 构建产物与仓库，
+// 客户端只需要 tables 镜像与生成的 JSON。
+const binDataDir = path.join(rootDir, "data-source", "BinData");
 const tablesDir = path.join(publicDataDir, "tables");
 const petsIndexPath = path.join(publicDataDir, "Pets.json");
 const petsDetailDir = path.join(publicDataDir, "pets");
@@ -1470,10 +1472,13 @@ function buildEvolutionTree(
     });
 
     const groupContexts = contextsByGroup.get(context.groupKey) ?? [context];
+    // 同组里游离于进化链外的条目，只认图鉴号段（3000-3999）的可收集形态；
+    // NPC/首领镜像（如 16000004、103004 这类重复立绘）不应混入一阶列表。
     const extraBaseIds = groupContexts
         .filter(
             (item) =>
                 !seenIds.has(item.id) &&
+                isCanonicalCollectiblePetBaseId(item.id) &&
                 !(leaderFlagById.get(item.id) ?? false),
         )
         .map((item) => item.id);

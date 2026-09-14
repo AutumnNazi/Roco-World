@@ -292,7 +292,7 @@ async function loadTypeData() {
                 controller.signal,
             ),
             fetchJSON<ITypeDictionaryResponse>(
-                "/data/BinData/TYPE_DICTIONARY.json",
+                "/data/tables/TYPE_DICTIONARY.json",
                 controller.signal,
             ),
         ]);

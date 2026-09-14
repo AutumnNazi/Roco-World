@@ -1052,27 +1052,6 @@
                         },
                         "sub_type": null,
                         "evolution_conditions": []
-                    },
-                    {
-                        "id": 19000006,
-                        "species_id": 313,
-                        "name": "guodong",
-                        "form": "果冻",
-                        "localized": {
-                            "zh": {
-                                "name": "果冻"
-                            }
-                        },
-                        "is_leader_form": false,
-                        "main_type": {
-                            "id": 4,
-                            "name": "Water",
-                            "localized": {
-                                "zh": "水"
-                            }
-                        },
-                        "sub_type": null,
-                        "evolution_conditions": []
                     }
                 ],
                 "is_leader_stage": false
@@ -1175,7 +1154,7 @@
             }
         ],
         "max_depth": 1,
-        "total_unique_monsters": 6,
+        "total_unique_monsters": 5,
         "species_id": 313,
         "current_monster_id": 19000003
     },

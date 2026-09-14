@@ -37,4 +37,8 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
-__pycache__.tmp-*
+__pycache__
+.tmp-*
+
+# 游戏解包原始数据（本地保留，不入库不进构建产物）
+data-source/

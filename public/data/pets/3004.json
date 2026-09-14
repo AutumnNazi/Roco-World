@@ -1317,48 +1317,6 @@
                         },
                         "sub_type": null,
                         "evolution_conditions": []
-                    },
-                    {
-                        "id": 16000004,
-                        "species_id": 1,
-                        "name": "dimo",
-                        "form": "default",
-                        "localized": {
-                            "zh": {
-                                "name": "迪莫"
-                            }
-                        },
-                        "is_leader_form": false,
-                        "main_type": {
-                            "id": 5,
-                            "name": "Light",
-                            "localized": {
-                                "zh": "光"
-                            }
-                        },
-                        "sub_type": null,
-                        "evolution_conditions": []
-                    },
-                    {
-                        "id": 16000007,
-                        "species_id": 1,
-                        "name": "dimo",
-                        "form": "default",
-                        "localized": {
-                            "zh": {
-                                "name": "迪莫"
-                            }
-                        },
-                        "is_leader_form": false,
-                        "main_type": {
-                            "id": 5,
-                            "name": "Light",
-                            "localized": {
-                                "zh": "光"
-                            }
-                        },
-                        "sub_type": null,
-                        "evolution_conditions": []
                     }
                 ],
                 "is_leader_stage": false
@@ -1461,7 +1419,7 @@
             }
         ],
         "max_depth": 1,
-        "total_unique_monsters": 7,
+        "total_unique_monsters": 5,
         "species_id": 1,
         "current_monster_id": 3004
     },
