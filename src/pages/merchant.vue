@@ -78,6 +78,20 @@ const summaryItems = computed(() => [
     },
 ]);
 
+const emptyRoundHint = computed(() => {
+    const round = activeRound.value;
+
+    if (!round) {
+        return "该轮次暂无商品数据。";
+    }
+
+    if (round.start_ts > nowSec.value) {
+        return "本轮尚未开市，商人会在开市时上架商品。";
+    }
+
+    return "本轮暂无商品（数据未覆盖或商人本轮无货）。";
+});
+
 function formatDuration(totalSeconds: number) {
     const seconds = Math.max(0, Math.floor(totalSeconds));
     const hours = String(Math.floor(seconds / 3600)).padStart(2, "0");
@@ -233,7 +247,7 @@ onBeforeUnmount(() => {
 
         <div v-else-if="!activeRound || activeRound.items.length === 0"
             class="rounded-[10px] border border-dashed border-white/12 bg-card px-4 py-6 text-center text-sm text-foreground">
-            该轮次暂无商品数据。
+            {{ emptyRoundHint }}
         </div>
 
         <template v-else>

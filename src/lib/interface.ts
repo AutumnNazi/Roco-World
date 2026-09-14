@@ -280,6 +280,35 @@ export interface IOfficialPokedexPayload {
     entries: Record<string, IOfficialPokedexEntry>;
 }
 
+export interface IOfficialSkillLearnRecord {
+    id: number;
+    name: string;
+    pool: string;
+    level: string | null;
+}
+
+export interface IOfficialSkillEntry {
+    name: string;
+    move_id: number | null;
+    category: string | null;
+    element: string | null;
+    energy_cost: number | null;
+    power: number | null;
+    effect: string | null;
+    learn_pets: IOfficialSkillLearnRecord[];
+}
+
+export interface IOfficialSkillsPayload {
+    schema_version: number;
+    generated_at: string;
+    source: {
+        site: string;
+        page: string;
+    };
+    pool_labels: string[];
+    entries: Record<string, IOfficialSkillEntry>;
+}
+
 export interface IMerchantItem {
     name: string;
     category: string;

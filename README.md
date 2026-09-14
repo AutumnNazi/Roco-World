@@ -10,6 +10,7 @@
 - 星图
 - 属性关系
 - 远行商人
+- 技能图鉴
 
 
 ### 使用
@@ -18,7 +19,7 @@
 
 同步远行商人每日轮换数据: `npm run sync:merchant-data`（建议每日定时执行）
 
-同步官方图鉴档案: `npm run sync:official-pokedex`
+同步官方图鉴档案: `npm run sync:official-pokedex`（同时生成精灵档案与官方技能表 `skills-official.json`）
 
 一键全量更新: `npm run sync:all`（精灵数据 → 官方图鉴 → 远行商人）
 

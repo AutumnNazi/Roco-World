@@ -138,13 +138,14 @@ function parseLimit(liBlock) {
 }
 
 function buildRounds(items) {
-    // 页面会把过往时段的商品一并渲染（s-tit2 折叠区）。
-    // data-time 是商品最后一轮的结束时刻，取最大值锚定「数据日」，
-    // 再按每日 8/12/16/20 点开市、每轮 4 小时的固定规则推算各轮窗口。
+    // 页面会把过往时段的商品一并渲染（s-tit2 折叠区），且商品是渐进上架的：
+    // 早上抓取时可能只有第 1 轮。data-time 是商品最后一轮的结束时刻（北京时间
+    // 12:00/16:00/20:00/24:00），回退 1 秒再向下取整到北京日零点即数据日，
+    // 然后按每日 8/12/16/20 点开市、每轮 4 小时的固定规则推算四轮窗口。
     const anchorEndTs = Math.max(...items.map((item) => item.round_end_ts));
-    const dateBaseTs = anchorEndTs - 24 * 60 * 60;
+    const dateBaseTs = floorToBeijingDayStart(anchorEndTs - 1);
     const dayItems = items.filter(
-        (item) => item.round_end_ts > dateBaseTs && item.round_end_ts <= anchorEndTs,
+        (item) => item.round_end_ts > dateBaseTs && item.round_end_ts <= dateBaseTs + 24 * 60 * 60,
     );
 
     if (!dayItems.length) {
@@ -170,6 +171,14 @@ function buildRounds(items) {
     }
 
     return rounds;
+}
+
+function floorToBeijingDayStart(unixSeconds) {
+    const beijingShift = 8 * 60 * 60;
+    const daySeconds = 24 * 60 * 60;
+    return (
+        Math.floor((unixSeconds + beijingShift) / daySeconds) * daySeconds - beijingShift
+    );
 }
 
 function resolveMerchantDate(rounds) {
