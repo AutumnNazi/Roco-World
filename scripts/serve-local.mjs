@@ -92,6 +92,7 @@ function log(...args) {
 // ---- 数据同步调度 ----
 
 let merchantRunning = false;
+let lastMerchantSyncAt = 0;
 
 function runScript(scriptName, label) {
     return new Promise((resolve) => {
@@ -117,15 +118,53 @@ function runScript(scriptName, label) {
 
 async function syncMerchant(reason) {
     if (merchantRunning) {
-        return;
+        return { ok: false, message: "同步已在进行中" };
     }
 
     merchantRunning = true;
+    lastMerchantSyncAt = Date.now();
+
     try {
         log(`同步远行商人数据（${reason}）…`);
-        await runScript("sync-merchant-data.mjs", "商人数据");
+        const ok = await runScript("sync-merchant-data.mjs", "商人数据");
+        return { ok, message: ok ? "同步完成" : "同步失败，详见服务日志" };
     } finally {
         merchantRunning = false;
+    }
+}
+
+// 数据陈旧兜底：定时器可能被休眠/重启打断，页面来取数据时再判一次，
+// 只要超过一个轮询周期就后台补一次，保证「打开页面就是新数据」。
+function isMerchantDataStale() {
+    try {
+        const payload = JSON.parse(
+            fs.readFileSync(path.join(publicDir, "data", "merchant.json"), "utf8"),
+        );
+        const generatedAt = payload?.generated_at;
+
+        if (typeof generatedAt !== "string") {
+            return true;
+        }
+
+        const generatedMs = Date.parse(generatedAt.replace(" ", "T") + "+08:00");
+
+        if (!Number.isFinite(generatedMs)) {
+            return true;
+        }
+
+        return Date.now() - generatedMs > MERCHANT_INTERVAL_MS;
+    } catch {
+        return true;
+    }
+}
+
+function ensureFreshMerchantData() {
+    if (SYNC_DISABLED || merchantRunning) {
+        return;
+    }
+
+    if (isMerchantDataStale()) {
+        void syncMerchant("数据陈旧自动补同步");
     }
 }
 
@@ -171,6 +210,11 @@ async function sendFile(request, response, filePath) {
     const extension = path.extname(filePath).toLowerCase();
     const type = MIME_TYPES[extension] ?? "application/octet-stream";
 
+    // 页面来取商人数据时顺手判断是否过期，过期就后台补同步（不阻塞本次响应）。
+    if (filePath.endsWith(`${path.sep}data${path.sep}merchant.json`)) {
+        ensureFreshMerchantData();
+    }
+
     let content;
     try {
         content = await fsp.readFile(filePath);
@@ -201,6 +245,14 @@ async function sendFile(request, response, filePath) {
 
 const server = http.createServer(async (request, response) => {
     const urlPath = request.url ?? "/";
+
+    // 手动同步接口：页面上的「立即同步」按钮调用它。
+    // 只允许本机/同源调用，避免暴露成公网可触发的写操作。
+    if (urlPath.startsWith("/api/sync")) {
+        await handleSyncRequest(request, response, urlPath);
+        return;
+    }
+
     const filePath = resolveFile(urlPath);
 
     if (await sendFile(request, response, filePath)) {
@@ -217,6 +269,42 @@ const server = http.createServer(async (request, response) => {
     response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
     response.end("404 Not Found");
 });
+
+async function handleSyncRequest(request, response, urlPath) {
+    const sendJson = (status, payload) => {
+        const body = JSON.stringify(payload);
+        response.writeHead(status, {
+            "Content-Type": "application/json; charset=utf-8",
+            "Cache-Control": "no-store",
+            "Content-Length": String(Buffer.byteLength(body)),
+        });
+        response.end(body);
+    };
+
+    // 只读探测：页面加载时用它判断服务端是否支持手动同步。
+    if (urlPath.startsWith("/api/sync/status")) {
+        sendJson(200, {
+            syncEnabled: !SYNC_DISABLED,
+            running: merchantRunning,
+            intervalMinutes: MERCHANT_INTERVAL_MS / 60000,
+            lastSyncAt: lastMerchantSyncAt ? beijingTimestamp() : null,
+        });
+        return;
+    }
+
+    if (request.method !== "POST") {
+        sendJson(405, { ok: false, message: "请使用 POST 触发同步" });
+        return;
+    }
+
+    if (SYNC_DISABLED) {
+        sendJson(200, { ok: false, message: "服务端已禁用数据同步（SYNC_DISABLED=1）" });
+        return;
+    }
+
+    const result = await syncMerchant("页面手动触发");
+    sendJson(200, result);
+}
 
 async function main() {
     if (!fs.existsSync(path.join(distDir, "index.html"))) {
@@ -235,7 +323,7 @@ async function main() {
         return;
     }
 
-    // 启动即同步一次，之后按间隔轮询。
+    // 启动即同步一次，之后按间隔轮询；页面取数据时还有陈旧兜底。
     await syncMerchant("启动同步");
     void runScript("sync-official-pokedex.mjs", "官方图鉴");
     void runScript("sync-pet-images.mjs", "精灵立绘");

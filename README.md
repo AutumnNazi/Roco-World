@@ -71,3 +71,18 @@ GitHub Actions 工作流（`.github/workflows/daily-data-sync.yml`）保留为�
 - 远行商人每日轮换：好游快爆「每日远行商人查询器」，由 `scripts/sync-merchant-data.mjs` 抓取。
 
 转载与二次分发时请保留本声明，并注明上述原始数据来源。
+
+### 数据同步命令
+
+| 命令 | 作用 |
+| --- | --- |
+| `npm run sync:nrc-data` | 拉取 B 站 WIKI 结构化数据（精灵档案、时装、徽章、奖牌） |
+| `npm run sync:nrc-images` | 下载时装 / 徽章 / 奖牌 / 系列图片到本地（可反复执行续传） |
+| `npm run sync:personalities` | 同步性格效果表 |
+| `npm run sync:pet-data` | 从解包数据重建精灵索引与详情 |
+| `npm run sync:pet-images` | 补齐缺失精灵立绘（nrc 优先，回退 BWIKI） |
+| `npm run sync:official-pokedex` | 同步官方图鉴档案与技能表 |
+| `npm run sync:merchant-data` | 同步远行商人当日 4 轮商品 |
+| `npm run sync:all` | 按依赖顺序跑完以上全部 |
+
+远行商人页在本地服务下会显示「立即同步」按钮（调用 `POST /api/sync`），可随时手动拉取；服务端同时每 5 分钟自动轮询，并在页面取数据时做陈旧兜底。纯静态托管时该按钮自动隐藏。

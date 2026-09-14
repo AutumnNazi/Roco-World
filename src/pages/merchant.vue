@@ -8,6 +8,7 @@ import {
     Clock,
     History,
     Package,
+    RefreshCw,
     RotateCcw,
     Sparkles,
     Store,
@@ -147,12 +148,64 @@ function resetRoundSelection() {
     selectedRoundIndex.value = null;
 }
 
+// 手动同步：调用本地服务（scripts/serve-local.mjs）的 /api/sync 接口。
+// 部署在纯静态托管（无 Node 服务）时接口不存在，按钮自动隐藏。
+const syncSupported = ref(false);
+const syncRunning = ref(false);
+const syncMessage = ref("");
+
+async function detectSyncSupport() {
+    try {
+        const response = await fetch("/api/sync/status", { cache: "no-store" });
+
+        if (!response.ok) {
+            return;
+        }
+
+        const status = (await response.json()) as { syncEnabled?: boolean };
+        syncSupported.value = status?.syncEnabled === true;
+    } catch {
+        syncSupported.value = false;
+    }
+}
+
+async function triggerManualSync() {
+    if (syncRunning.value) {
+        return;
+    }
+
+    syncRunning.value = true;
+    syncMessage.value = "正在同步…";
+
+    try {
+        const response = await fetch("/api/sync", { method: "POST" });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const result = (await response.json()) as { ok?: boolean; message?: string };
+        syncMessage.value = result?.message ?? (result?.ok ? "同步完成" : "同步失败");
+
+        if (result?.ok) {
+            await refreshMerchantSilently(true);
+        }
+    } catch {
+        syncMessage.value = "同步请求失败，请确认本地服务正在运行";
+    } finally {
+        syncRunning.value = false;
+        window.setTimeout(() => {
+            syncMessage.value = "";
+        }, 5000);
+    }
+}
+
 // 本地部署由 scripts/serve-local.mjs 定时写盘，开着的页面需要自己把新数据取回来，
 // 否则要手动刷新才能看到新一轮商品。
 const REFRESH_INTERVAL_MS = 60_000;
 let refreshTimer: number | undefined;
 
-async function refreshMerchantSilently() {
+async function refreshMerchantSilently(force = false) {
     try {
         const response = await fetch(`/data/merchant.json?t=${Date.now()}`, {
             cache: "no-store",
@@ -165,6 +218,7 @@ async function refreshMerchantSilently() {
         const next = (await response.json()) as IMerchantPayload;
 
         if (
+            !force &&
             next?.generated_at === payload.value?.generated_at &&
             next?.date === payload.value?.date
         ) {
@@ -268,6 +322,7 @@ document.title = "远行商人 - 洛克王国工具箱";
 onMounted(async () => {
     await loadMerchant();
     applyRoundFromRoute();
+    void detectSyncSupport();
     clockTimer = window.setInterval(() => {
         nowSec.value = Math.floor(Date.now() / 1000);
     }, 1000);
@@ -327,6 +382,13 @@ onBeforeUnmount(() => {
                         <Clock class="mr-1.5 h-4 w-4" />
                         最后同步 {{ lastSyncText }}
                     </Badge>
+                    <Button v-if="syncSupported" variant="outline" :disabled="syncRunning"
+                        class="h-9 rounded-[10px] border-border bg-white/5 text-sm text-foreground hover:bg-accent"
+                        @click="triggerManualSync">
+                        <RefreshCw class="mr-1.5 h-3.5 w-3.5" :class="syncRunning ? 'animate-spin' : ''" />
+                        {{ syncRunning ? "同步中…" : "立即同步" }}
+                    </Button>
+                    <span v-if="syncMessage" class="text-xs text-foreground">{{ syncMessage }}</span>
                     <Badge v-if="dataIsStale" variant="outline"
                         class="rounded-[10px] border-destructive/30 bg-destructive/10 px-3 py-1.5 text-sm text-destructive">
                         <Clock class="mr-1.5 h-4 w-4" />
