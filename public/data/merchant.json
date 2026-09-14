@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-13 22:18:57",
+    "generated_at": "2026-09-14 09:06:29",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -10,135 +10,27 @@
     "rounds": [
         {
             "index": 1,
-            "start_ts": 1789257600,
-            "end_ts": 1789272000,
-            "start_time": "2026-09-13 08:00:00",
-            "end_time": "2026-09-13 12:00:00",
-            "items": [
-                {
-                    "name": "紫莲刚玉",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "暗星球",
-                    "category": "特制咕噜球",
-                    "description": "更适合用来捕捉幽系、恶系精灵。 爱捉弄的球，喜欢偷袭精灵。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/5a/hif6470l7ojdexwm72t9brp0f0x3h4x.png/100px-Img_daodanqiu.png",
-                    "price": 3000,
-                    "limit": 200,
-                    "rare": false
-                }
-            ]
-        },
-        {
-            "index": 2,
-            "start_ts": 1789272000,
-            "end_ts": 1789286400,
-            "start_time": "2026-09-13 12:00:00",
-            "end_time": "2026-09-13 16:00:00",
-            "items": [
-                {
-                    "name": "暗星球",
-                    "category": "特制咕噜球",
-                    "description": "更适合用来捕捉幽系、恶系精灵。 爱捉弄的球，喜欢偷袭精灵。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/5a/hif6470l7ojdexwm72t9brp0f0x3h4x.png/100px-Img_daodanqiu.png",
-                    "price": 3000,
-                    "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "黄石榴石",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "幽系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量幽系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/20/okbnyp4feg52iaxuijvjzv6wodaqjmi.png/100px-100126.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "虫系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量虫系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c0/ihsb7b9pcs210dtaiswlsaxuhe2jfaa.png/100px-100134.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
-        },
-        {
-            "index": 3,
-            "start_ts": 1789286400,
-            "end_ts": 1789300800,
-            "start_time": "2026-09-13 16:00:00",
-            "end_time": "2026-09-13 20:00:00",
-            "items": [
-                {
-                    "name": "暗星球",
-                    "category": "特制咕噜球",
-                    "description": "更适合用来捕捉幽系、恶系精灵。 爱捉弄的球，喜欢偷袭精灵。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/5a/hif6470l7ojdexwm72t9brp0f0x3h4x.png/100px-Img_daodanqiu.png",
-                    "price": 3000,
-                    "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "黄石榴石",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "紫莲刚玉",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
-        },
-        {
-            "index": 4,
             "start_ts": 1789300800,
             "end_ts": 1789315200,
             "start_time": "2026-09-13 20:00:00",
             "end_time": "2026-09-14 00:00:00",
             "items": [
                 {
-                    "name": "暗星球",
-                    "category": "特制咕噜球",
-                    "description": "更适合用来捕捉幽系、恶系精灵。 爱捉弄的球，喜欢偷袭精灵。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/5a/hif6470l7ojdexwm72t9brp0f0x3h4x.png/100px-Img_daodanqiu.png",
-                    "price": 3000,
-                    "limit": 200,
+                    "name": "黑晶琉璃",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+                    "price": 1000,
+                    "limit": 100,
                     "rare": false
                 },
                 {
-                    "name": "龙系血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "能唤醒血脉力量的远古秘药，使精灵获得龙系血脉。 “一段失落的秘密将被重拾。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/88wm27imouqbkxv6d9tlof24xs20nrv.png/100px-Xuemai_long.png",
-                    "price": null,
-                    "limit": 3,
+                    "name": "蓝晶碧玺",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
+                    "price": 1000,
+                    "limit": 100,
                     "rare": false
                 },
                 {
@@ -149,17 +41,32 @@
                     "price": 6000,
                     "limit": 20,
                     "rare": false
-                },
-                {
-                    "name": "神奇的蛋",
-                    "category": "精灵蛋",
-                    "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-                    "price": 36000,
-                    "limit": 5,
-                    "rare": false
                 }
             ]
+        },
+        {
+            "index": 2,
+            "start_ts": 1789315200,
+            "end_ts": 1789329600,
+            "start_time": "2026-09-14 00:00:00",
+            "end_time": "2026-09-14 04:00:00",
+            "items": []
+        },
+        {
+            "index": 3,
+            "start_ts": 1789329600,
+            "end_ts": 1789344000,
+            "start_time": "2026-09-14 04:00:00",
+            "end_time": "2026-09-14 08:00:00",
+            "items": []
+        },
+        {
+            "index": 4,
+            "start_ts": 1789344000,
+            "end_ts": 1789358400,
+            "start_time": "2026-09-14 08:00:00",
+            "end_time": "2026-09-14 12:00:00",
+            "items": []
         }
     ]
 }
