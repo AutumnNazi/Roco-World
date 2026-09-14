@@ -18,6 +18,12 @@
 
 同步远行商人每日轮换数据: `npm run sync:merchant-data`（建议每日定时执行）
 
+同步官方图鉴档案: `npm run sync:official-pokedex`
+
+一键全量更新: `npm run sync:all`（精灵数据 → 官方图鉴 → 远行商人）
+
+补充缺失精灵立绘: `npm run sync:pet-images`（从 BWIKI 图床拉取，可带精灵 id 只补一只）
+
 ### 结构
 
 - 精灵相关数据在 `public\data` ，数据来源于洛克王国世界的游戏数据包，经过处理后以 JSON 格式存储.

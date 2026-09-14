@@ -4,6 +4,7 @@ import {
     HeartPulse,
     ShieldCheck,
     Sparkles,
+    Store,
     Swords,
     TableProperties,
 } from "lucide-vue-next";
@@ -32,6 +33,14 @@ const heroLinks = [
         icon: Swords,
         badge: "策略构建",
         accent: "from-emerald-300/20 via-teal-300/10 to-transparent",
+    },
+    {
+        title: "远行商人",
+        description: "每日 4 轮轮换商品排期与当前轮次实时倒计时。",
+        to: "/merchant",
+        icon: Store,
+        badge: "每日更新",
+        accent: "from-amber-400/20 via-yellow-300/10 to-transparent",
     },
 ];
 
