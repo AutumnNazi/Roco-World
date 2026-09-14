@@ -15,7 +15,7 @@ import {
     formatEggGroupSummary,
     getEggGroupMeta,
 } from "@/lib/eggGroups";
-import type { IPets } from "@/lib/interface";
+import type { IPets, IPetsBreedingInfo } from "@/lib/interface";
 import {
     getPetImplementationLabel,
     isPetImplemented,
@@ -508,15 +508,27 @@ async function getPets() {
     errorMessage.value = "";
 
     try {
-        const response = await fetch("/data/Pets.json", {
-            signal: petsController.signal,
-        });
+        const [response, breedingResponse] = await Promise.all([
+            fetch("/data/Pets.json", {
+                signal: petsController.signal,
+            }),
+            fetch("/data/PetsBreeding.json", {
+                signal: petsController.signal,
+            }).catch(() => null),
+        ]);
 
         if (!response.ok) {
             throw new Error(`请求失败: ${response.status}`);
         }
 
-        pets.value = await response.json();
+        const petsPayload = await response.json();
+        const breedingMap = breedingResponse?.ok
+            ? ((await breedingResponse.json()) as Record<string, IPetsBreedingInfo>)
+            : {};
+        pets.value = (petsPayload as IPets[]).map((pet) => ({
+            ...pet,
+            breeding: breedingMap[String(pet.id)] ?? null,
+        }));
     } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError") {
             return;

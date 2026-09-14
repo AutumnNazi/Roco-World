@@ -10,6 +10,7 @@ const publicDataDir = path.join(rootDir, "public", "data");
 const binDataDir = path.join(rootDir, "data-source", "BinData");
 const tablesDir = path.join(publicDataDir, "tables");
 const petsIndexPath = path.join(publicDataDir, "Pets.json");
+const petsBreedingPath = path.join(publicDataDir, "PetsBreeding.json");
 const petsDetailDir = path.join(publicDataDir, "pets");
 const typesPath = path.join(publicDataDir, "types.json");
 const bloodlineIndexPath = path.join(publicDataDir, "bloodline_index.json");
@@ -22,6 +23,13 @@ const handbookTopicSkillNamesPath = path.join(
 );
 
 const UNKNOWN_TYPE_ID = 20;
+// 只有这三张表被前端页面直接 fetch（图鉴进度/属性/配种下蛋率），
+// 其余镜像纯浪费 dist 体积，不再复制。
+const MIRRORED_TABLE_FILES = [
+    "TYPE_DICTIONARY.json",
+    "PET_HANDBOOK.json",
+    "HOME_PET_LAY_EGG_RATE_CONF.json",
+];
 const CANONICAL_PETBASE_ID_RANGE = {
     min: 3000,
     maxExclusive: 4000,
@@ -333,42 +341,56 @@ async function main() {
         };
     });
 
-    const indexEntries = details.map((detail) => ({
-        id: detail.id,
-        species_id: detail.species.id,
-        name: detail.name,
-        form: detail.form,
-        main_type: detail.main_type,
-        sub_type: detail.sub_type,
-        default_legacy_type: detail.default_legacy_type,
-        leader_potential: detail.leader_potential,
-        is_leader_form: detail.is_leader_form,
-        preferred_attack_style: detail.preferred_attack_style,
-        localized: detail.localized,
-        implemented: detail.implemented,
-        base_hp: detail.base_hp,
-        base_phy_atk: detail.base_phy_atk,
-        base_mag_atk: detail.base_mag_atk,
-        base_phy_def: detail.base_phy_def,
-        base_mag_def: detail.base_mag_def,
-        base_spd: detail.base_spd,
-        evolves_from_id: detail.evolves_from_id,
-        breeding: detail.breeding,
-        breeding_profile: detail.breeding_profile,
-    }));
+    const indexEntries = details.map((detail) => {
+        // breeding（蛋变体数组）占索引体积约 80%，只有配种/孵蛋两页需要，
+        // 拆到 PetsBreeding.json 按需加载；breeding_profile（蛋组）很小且多页使用，保留。
+        return {
+            id: detail.id,
+            species_id: detail.species.id,
+            name: detail.name,
+            form: detail.form,
+            main_type: detail.main_type,
+            sub_type: detail.sub_type,
+            default_legacy_type: detail.default_legacy_type,
+            leader_potential: detail.leader_potential,
+            is_leader_form: detail.is_leader_form,
+            preferred_attack_style: detail.preferred_attack_style,
+            localized: detail.localized,
+            implemented: detail.implemented,
+            base_hp: detail.base_hp,
+            base_phy_atk: detail.base_phy_atk,
+            base_mag_atk: detail.base_mag_atk,
+            base_phy_def: detail.base_phy_def,
+            base_mag_def: detail.base_mag_def,
+            base_spd: detail.base_spd,
+            evolves_from_id: detail.evolves_from_id,
+            breeding_profile: detail.breeding_profile,
+        };
+    });
+    const petsBreedingMap = {};
+    for (const detail of details) {
+        if (detail.breeding) {
+            petsBreedingMap[detail.id] = detail.breeding;
+        }
+    }
     const bloodlineIndexEntries = details.map((detail) => ({
+        // 图鉴的血脉关键词匹配只用 pet_id、pet_name 与技能名/系别标签，
+        // 全量 move 摘要（含图标、威力能耗）会让文件膨胀到数 MB。
         pet_id: detail.id,
         pet_name: detail.localized.zh.name,
-        form: detail.form,
         implemented: detail.implemented,
-        main_type_id: detail.main_type.id,
-        sub_type_id: detail.sub_type?.id ?? null,
-        default_legacy_type_id: detail.default_legacy_type.id,
-        preferred_attack_style: detail.preferred_attack_style,
         bloodline_moves: detail.legacy_moves
-            .map((entry) =>
-                buildBloodlineMoveSummary(entry, skillById, typesById),
-            )
+            .map((entry) => {
+                const move = buildBloodlineMoveSummary(entry, skillById, typesById);
+                if (!move) {
+                    return null;
+                }
+                return {
+                    move_id: move.move_id,
+                    move_name: move.move_name,
+                    type_label: move.type_label,
+                };
+            })
             .filter(Boolean),
     }));
     const petSkillCatalogById = new Map();
@@ -420,22 +442,25 @@ async function main() {
     await syncMirroredTables();
     await fs.mkdir(petsDetailDir, { recursive: true });
     await cleanGeneratedPetDetails();
-    await writeJson(petsIndexPath, indexEntries);
-    await writeJson(bloodlineIndexPath, bloodlineIndexEntries);
+    // 索引与查表大文件走紧凑 JSON：缩进对这类机器消费的文件是纯浪费。
+    await writeJson(petsIndexPath, indexEntries, { compact: true });
+    await writeJson(petsBreedingPath, petsBreedingMap, { compact: true });
+    await writeJson(bloodlineIndexPath, bloodlineIndexEntries, { compact: true });
     await writeJson(petSkillIndexPath, {
         entries: petSkillIndexEntries,
         skills: petSkillCatalogEntries,
-    });
+    }, { compact: true });
     await Promise.all([
         ...details.map((detail) => {
             return writeJson(
                 path.join(petsDetailDir, `${detail.id}.json`),
                 detail,
+                { compact: true },
             );
         }),
-        writeJson(itemsIndexPath, itemEntries),
-        writeJson(handbookRewardsPath, handbookRewards),
-        writeJson(handbookTopicSkillNamesPath, handbookTopicSkillNames),
+        writeJson(itemsIndexPath, itemEntries, { compact: true }),
+        writeJson(handbookRewardsPath, handbookRewards, { compact: true }),
+        writeJson(handbookTopicSkillNamesPath, handbookTopicSkillNames, { compact: true }),
     ]);
 
     console.log(
@@ -2137,6 +2162,24 @@ function findEvolvesFromId(evolutionTree, currentPetId, evolutionRow) {
 async function syncMirroredTables() {
     await fs.mkdir(tablesDir, { recursive: true });
 
+    await Promise.all(
+        MIRRORED_TABLE_FILES.map(async (fileName) => {
+            const sourcePath = path.join(binDataDir, fileName);
+
+            try {
+                const content = await fs.readFile(sourcePath, "utf8");
+                await fs.writeFile(
+                    path.join(tablesDir, fileName),
+                    content,
+                    "utf8",
+                );
+            } catch {
+                // Ignore table mirrors that do not have a BinData source.
+            }
+        }),
+    );
+
+    // 清理历史全量镜像：白名单之外的旧表不再被任何页面使用。
     let existingFiles = [];
 
     try {
@@ -2147,21 +2190,11 @@ async function syncMirroredTables() {
 
     await Promise.all(
         existingFiles
-            .filter((fileName) => fileName.endsWith(".json"))
-            .map(async (fileName) => {
-                const sourcePath = path.join(binDataDir, fileName);
-
-                try {
-                    const content = await fs.readFile(sourcePath, "utf8");
-                    await fs.writeFile(
-                        path.join(tablesDir, fileName),
-                        content,
-                        "utf8",
-                    );
-                } catch {
-                    // Ignore table mirrors that do not have a BinData source.
-                }
-            }),
+            .filter(
+                (fileName) =>
+                    fileName.endsWith(".json") && !MIRRORED_TABLE_FILES.includes(fileName),
+            )
+            .map((fileName) => fs.unlink(path.join(tablesDir, fileName))),
     );
 }
 
@@ -2181,8 +2214,9 @@ async function cleanGeneratedPetDetails() {
     );
 }
 
-async function writeJson(filePath, value) {
-    await fs.writeFile(filePath, `${JSON.stringify(value, null, 4)}\n`, "utf8");
+async function writeJson(filePath, value, options = {}) {
+    const indent = options.compact ? 0 : 4;
+    await fs.writeFile(filePath, `${JSON.stringify(value, null, indent)}\n`, "utf8");
 }
 
 function resolveItemIconId(row, labelType, skillById) {

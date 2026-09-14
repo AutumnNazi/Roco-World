@@ -10,7 +10,7 @@ import {
 } from "lucide-vue-next";
 import type { LocationQuery, LocationQueryRaw } from "vue-router";
 import FriendPortrait from "@/components/FriendPortrait.vue";
-import type { IPets, IPetsBreedingVariant } from "@/lib/interface";
+import type { IPets, IPetsBreedingInfo, IPetsBreedingVariant } from "@/lib/interface";
 import {
     formatPetEggGroupSummary,
     isPetImplemented,
@@ -404,15 +404,28 @@ async function getPets() {
     errorMessage.value = "";
 
     try {
-        const response = await fetch("/data/Pets.json", {
-            signal: petsController.signal,
-        });
+        const [response, breedingResponse] = await Promise.all([
+            fetch("/data/Pets.json", {
+                signal: petsController.signal,
+            }),
+            fetch("/data/PetsBreeding.json", {
+                signal: petsController.signal,
+            }).catch(() => null),
+        ]);
 
         if (!response.ok) {
             throw new Error(`请求失败: ${response.status}`);
         }
 
-        pets.value = (await response.json()) as IPets[];
+        const petsPayload = (await response.json()) as IPets[];
+        const breedingMap =
+            breedingResponse && breedingResponse.ok
+                ? ((await breedingResponse.json()) as Record<string, IPetsBreedingInfo>)
+                : {};
+        pets.value = petsPayload.map((pet) => ({
+            ...pet,
+            breeding: breedingMap[String(pet.id)] ?? null,
+        }));
     } catch (error) {
         if (petsController.signal.aborted) {
             return;
