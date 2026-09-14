@@ -274,13 +274,13 @@ onBeforeUnmount(() => {
                         远行商人
                     </CardTitle>
 
-                    <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+                    <div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3">
                         <div v-for="item in summaryItems" :key="item.label"
-                            class="rounded-[10px] border border-border bg-muted px-4 py-3 shadow-sm">
-                            <p class="text-xs tracking-[0.2em] text-foreground uppercase">
+                            class="rounded-[10px] border border-border bg-muted px-3 py-2.5 shadow-sm md:px-4 md:py-3">
+                            <p class="text-[10px] tracking-[0.12em] text-foreground uppercase sm:text-xs sm:tracking-[0.2em]">
                                 {{ item.label }}
                             </p>
-                            <p class="mt-2 text-2xl font-semibold text-foreground">
+                            <p class="mt-1 text-lg font-semibold text-foreground sm:mt-2 sm:text-2xl">
                                 {{ item.value }}
                             </p>
                         </div>

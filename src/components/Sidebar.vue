@@ -110,28 +110,34 @@ const navItems = [
     </header>
 
     <!-- Mobile Navigation Overlay -->
-    <div
-        v-if="isMobileMenuOpen"
-        class="md:hidden fixed inset-0 top-14 z-50 bg-background/95 flex flex-col p-4 overflow-y-auto duration-300 animate-in fade-in slide-in-from-top-4"
-    >
-        <div class="flex-1 flex flex-col gap-2">
-            <router-link
-                v-for="item in navItems"
-                :key="item.path"
-                :to="item.path"
-                @click="isMobileMenuOpen = false"
-                :class="
-                    cn(
-                        'flex items-center gap-3 rounded-[10px] px-4 py-3 text-base font-medium transition-colors',
-                        route.path === item.path
-                            ? 'bg-primary/10 text-primary'
-                            : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground',
-                    )
-                "
-            >
-                <component :is="item.icon" class="h-6 w-6 shrink-0" />
-                <span>{{ item.name }}</span>
-            </router-link>
+    <template v-if="isMobileMenuOpen">
+        <!-- 点空白处收起，避免只能靠右上角按钮关闭 -->
+        <div
+            class="md:hidden fixed inset-0 top-14 z-40 bg-black/60 backdrop-blur-sm"
+            @click="isMobileMenuOpen = false"
+        />
+        <div
+            class="md:hidden fixed inset-x-0 top-14 bottom-0 z-50 flex flex-col overflow-y-auto overscroll-contain bg-background/95 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] duration-300 animate-in fade-in slide-in-from-top-4"
+        >
+            <div class="flex-1 flex flex-col gap-2">
+                <router-link
+                    v-for="item in navItems"
+                    :key="item.path"
+                    :to="item.path"
+                    @click="isMobileMenuOpen = false"
+                    :class="
+                        cn(
+                            'flex items-center gap-3 rounded-[10px] px-4 py-3 text-base font-medium transition-colors active:bg-accent',
+                            route.path === item.path
+                                ? 'bg-primary/10 text-primary'
+                                : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground',
+                        )
+                    "
+                >
+                    <component :is="item.icon" class="h-6 w-6 shrink-0" />
+                    <span>{{ item.name }}</span>
+                </router-link>
+            </div>
         </div>
-    </div>
+    </template>
 </template>
