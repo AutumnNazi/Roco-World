@@ -1,0 +1,57 @@
+name: 每日数据同步
+
+# 商人数据每日 8/12/16/20 点轮换，取轮换前 15 分钟抓取可覆盖全天；
+# 官方图鉴与补图随行，保持站点数据与源同步。
+on:
+  schedule:
+    - cron: "45 0,4,8,12 * * *" # 北京时间 8:45 / 12:45 / 16:45 / 20:45
+    - cron: "30 17 * * *" # 北京时间 次日 1:30，兜底抓当日末轮
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-data-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci --legacy-peer-deps
+
+      - name: 同步远行商人数据
+        run: npm run sync:merchant-data
+
+      - name: 同步官方图鉴档案
+        run: npm run sync:official-pokedex
+
+      - name: 补充缺失精灵立绘
+        run: npm run sync:pet-images
+
+      - name: 检查数据是否有变化
+        id: changes
+        run: |
+          git config --local user.name "AutumnNazi"
+          git config --local user.email "104422820+AutumnNazi@users.noreply.github.com"
+          if git diff --quiet -- public/data; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 提交并推送数据更新
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git add public/data public/assets
+          git commit -m "🔄 data: 定时同步商人/图鉴/立绘数据"
+          git push
