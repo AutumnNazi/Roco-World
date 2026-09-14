@@ -2,7 +2,6 @@
 import type {
     IOfficialSkillEntry,
     IOfficialSkillsPayload,
-    IPetsMove,
 } from "@/lib/interface";
 import {
     ChevronLeft,
@@ -213,9 +212,11 @@ async function loadSkills() {
     errorMessage.value = "";
 
     try {
-        const [skillsResponse, movesResponse] = await Promise.all([
+        const [skillsResponse, iconsResponse] = await Promise.all([
             fetch("/data/skills-official.json", { signal: controller.signal }),
-            fetch("/data/moves.json", { signal: controller.signal }),
+            fetch("/data/move-icons.json", { signal: controller.signal }).catch(
+                () => null,
+            ),
         ]);
 
         if (!skillsResponse.ok) {
@@ -227,19 +228,11 @@ async function loadSkills() {
             (left, right) => left.name.localeCompare(right.name, "zh-CN"),
         );
 
-        if (movesResponse.ok) {
-            const moves = (await movesResponse.json()) as IPetsMove[];
-            const iconByName: Record<string, string> = {};
-
-            for (const move of moves) {
-                const name = move?.localized?.zh?.name;
-
-                if (name && move?.icon_id) {
-                    iconByName[name] = move.icon_id;
-                }
-            }
-
-            skillIconLookup.value = iconByName;
+        if (iconsResponse?.ok) {
+            skillIconLookup.value = (await iconsResponse.json()) as Record<
+                string,
+                string
+            >;
         }
     } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError") {

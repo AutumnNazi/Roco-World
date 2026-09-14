@@ -16,6 +16,7 @@ const typesPath = path.join(publicDataDir, "types.json");
 const bloodlineIndexPath = path.join(publicDataDir, "bloodline_index.json");
 const petSkillIndexPath = path.join(publicDataDir, "PetSkillIndex.json");
 const itemsIndexPath = path.join(publicDataDir, "items.json");
+const moveIconsPath = path.join(publicDataDir, "move-icons.json");
 const handbookRewardsPath = path.join(publicDataDir, "handbook-rewards.json");
 const handbookTopicSkillNamesPath = path.join(
     publicDataDir,
@@ -411,6 +412,24 @@ async function main() {
             left.name.localeCompare(right.name, "zh-CN") || left.id - right.id,
     );
 
+    // 技能图标映射：moves.json 这类技能索引不带图标，技能图鉴页需要按技能名取图；
+    // 图标 id 从宠物技能池（升级/技能石/血脉）里收集，与详情页显示口径一致。
+    const moveIconByName = {};
+
+    for (const detail of details) {
+        const skillPools = [
+            ...detail.move_pool,
+            ...detail.move_stones,
+            ...detail.legacy_moves.map((entry) => entry?.move).filter(Boolean),
+        ];
+
+        for (const move of skillPools) {
+            if (move?.name && move.icon_id && !moveIconByName[move.name]) {
+                moveIconByName[move.name] = move.icon_id;
+            }
+        }
+    }
+
     const itemLabelTypeTable = await readTable("ITEM_LABLE_TYPE_CONF.json");
     const itemCategories = buildItemCategories(getRows(itemLabelTypeTable));
     const evolutionItemUsage = buildEvolutionItemUsageFromRaw(
@@ -459,6 +478,7 @@ async function main() {
             );
         }),
         writeJson(itemsIndexPath, itemEntries, { compact: true }),
+        writeJson(moveIconsPath, moveIconByName, { compact: true }),
         writeJson(handbookRewardsPath, handbookRewards, { compact: true }),
         writeJson(handbookTopicSkillNamesPath, handbookTopicSkillNames, { compact: true }),
     ]);
