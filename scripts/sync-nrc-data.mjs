@@ -18,8 +18,15 @@ const HEADERS = {
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
     "Accept-Language": "zh-CN,zh;q=0.9",
 };
+// BWIKI 的 Special:FilePath 会 302 到真实图床地址且不限频，
+// 直接用它作为图片地址，既省掉每张图的 API 查询，也避免触发限频导致整批丢失。
+const FILE_PATH_PREFIX = "https://wiki.biligame.com/nrc/Special:FilePath/";
+// 模块拉取仍需限频，BWIKI 对连续 API 请求会返回验证页。
 const REQUEST_INTERVAL_MS = 2500;
-const IMAGE_BATCH_SIZE = 40;
+
+function toImageUrl(fileName) {
+    return fileName ? `${FILE_PATH_PREFIX}${encodeURIComponent(fileName)}` : null;
+}
 
 const MODULES = [
     "模块:Pets/data/Catalog",
@@ -27,6 +34,8 @@ const MODULES = [
     "模块:Pets/data/Overview",
     "模块:Fashions/data/Catalog",
     "模块:Fashions/data/Items",
+    "模块:Fashions/data/Bonds",
+    "模块:Fashions/data/Series",
     "模块:Medals/data/Catalog",
 ];
 
@@ -39,18 +48,22 @@ async function main() {
     const overview = modules["模块:Pets/data/Overview"];
     const fashionCatalog = modules["模块:Fashions/data/Catalog"];
     const fashionItems = modules["模块:Fashions/data/Items"];
+    const fashionBonds = modules["模块:Fashions/data/Bonds"];
+    const fashionSeries = modules["模块:Fashions/data/Series"];
     const medalCatalog = modules["模块:Medals/data/Catalog"];
 
     const petEntries = buildPetEntries(petCatalog, handbooks, overview);
-    const fashions = buildFashions(fashionCatalog, fashionItems);
+    const fashions = buildFashions(fashionCatalog, fashionItems, fashionBonds);
+    const fashionSeriesEntries = buildFashionSeries(fashionSeries);
     const medals = buildMedals(medalCatalog);
 
-    const imageNames = collectImageNames(fashions, medals);
-    const imageUrls = useCacheOnly
-        ? await loadImageUrlCache()
-        : await resolveImageUrls(imageNames);
+    const imageNames = [
+        ...collectImageNames(fashions, medals),
+        ...collectSeriesImageNames(fashionSeriesEntries),
+    ];
+    const imageUrls = await resolveImageUrls(imageNames);
 
-    applyImageUrls(fashions, medals, imageUrls);
+    applyImageUrls(fashions, medals, fashionSeriesEntries, imageUrls);
 
     const generatedAt = buildBeijingTimestamp();
     const source = {
@@ -76,6 +89,7 @@ async function main() {
             schema_version: 1,
             generated_at: generatedAt,
             source,
+            series: fashionSeriesEntries,
             entries: fashions,
         },
         ["generated_at"],
@@ -95,6 +109,7 @@ async function main() {
     console.log(
         `nrc 数据同步完成：精灵档案 ${Object.keys(petEntries).length} 条${petsChanged ? "（已更新）" : "（无变化）"}、` +
             `时装 ${fashions.length} 套${fashionsChanged ? "（已更新）" : "（无变化）"}、` +
+            `系列 ${fashionSeriesEntries.length} 个、` +
             `奖牌 ${medals.length} 枚${medalsChanged ? "（已更新）" : "（无变化）"}。`,
     );
 }
@@ -215,6 +230,9 @@ function buildPetEntries(petCatalog, handbooks, overview) {
             has_shiny: pet.has_shiny ?? null,
             stage: pet.stage ?? null,
             affinity: pet.affinity ?? null,
+            // 立绘图与头像：sync-pet-images 缺图时按此回退到 nrc 图床。
+            illustration: pet.image?.illustration ?? null,
+            head: pet.image?.head ?? null,
             sources: collectSources(pet, petOverview),
             fruits: collectFruits(pet),
             release: pet.release ?? null,
@@ -278,9 +296,34 @@ function buildHandbookTopics(handbook) {
     }));
 }
 
-function buildFashions(fashionCatalog, fashionItems) {
+function buildFashions(fashionCatalog, fashionItems, fashionBonds) {
     const pieceById = fashionItems?.fashion ?? {};
     const entries = [];
+
+    // 徽章（Bonds）通过 outfit_ids 关联到时装套，用来在时装页展示搭配奖励。
+    const bondsByOutfit = new Map();
+    for (const bond of Object.values(fashionBonds ?? {})) {
+        for (const outfitId of toArray(bond?.outfit_ids)) {
+            const bucket = bondsByOutfit.get(outfitId) ?? [];
+            bucket.push({
+                id: bond?.id ?? null,
+                name: bond?.name ?? null,
+                quality_name: bond?.quality_name ?? null,
+                style: bond?.style ?? null,
+                series_id: bond?.series_id ?? null,
+                text: bond?.text ?? null,
+                interaction_text: bond?.interaction_text ?? null,
+                normal_text: bond?.normal_text ?? null,
+                icon: bond?.icon ?? null,
+                image_url: null,
+                pets: toArray(bond?.pets?.primary).map((pet) => ({
+                    name: pet?.name ?? null,
+                    form: pet?.form ?? null,
+                })),
+            });
+            bondsByOutfit.set(outfitId, bucket);
+        }
+    }
 
     for (const [key, suit] of Object.entries(fashionCatalog)) {
         const variants = [];
@@ -330,6 +373,7 @@ function buildFashions(fashionCatalog, fashionItems) {
             grade_name: suit?.grade_name ?? null,
             series_id: suit?.series_id ?? null,
             genders: toArray(suit?.genders),
+            bonds: bondsByOutfit.get(key) ?? [],
             variants,
         });
     }
@@ -337,6 +381,26 @@ function buildFashions(fashionCatalog, fashionItems) {
     entries.sort((left, right) =>
         String(left.wiki_key).localeCompare(String(right.wiki_key)),
     );
+    return entries;
+}
+
+function buildFashionSeries(seriesTable) {
+    const entries = [];
+
+    for (const [key, series] of Object.entries(seriesTable ?? {})) {
+        entries.push({
+            id: Number(key),
+            name: series?.name ?? null,
+            description: series?.description ?? null,
+            tags: series?.tags ?? null,
+            art: series?.art ?? null,
+            art_url: null,
+            icon: series?.icon ?? null,
+            icon_url: null,
+        });
+    }
+
+    entries.sort((left, right) => left.id - right.id);
     return entries;
 }
 
@@ -380,6 +444,12 @@ function collectImageNames(fashions, medals) {
                 names.add(variant.image);
             }
         }
+
+        for (const bond of suit.bonds ?? []) {
+            if (bond.icon) {
+                names.add(bond.icon);
+            }
+        }
     }
 
     for (const medal of medals) {
@@ -392,94 +462,52 @@ function collectImageNames(fashions, medals) {
 }
 
 async function resolveImageUrls(imageNames) {
-    const cache = await loadImageUrlCache();
-    const pending = imageNames.filter((name) => !cache[name]);
+    // 直接用 Special:FilePath 拼地址：不消耗 API 配额、不会限频，
+    // 也不需要缓存真实图床 URL（图床地址会随文件版本变化）。
+    const map = {};
 
-    if (!pending.length) {
-        return cache;
+    for (const name of imageNames) {
+        map[name] = toImageUrl(name);
     }
 
-    for (let index = 0; index < pending.length; index += IMAGE_BATCH_SIZE) {
-        const batch = pending.slice(index, index + IMAGE_BATCH_SIZE);
-        const titles = batch.map((name) => `File:${name}`).join("|");
-        const params = new URLSearchParams({
-            action: "query",
-            titles,
-            prop: "imageinfo",
-            iiprop: "url",
-            format: "json",
-            formatversion: "2",
-        });
+    return map;
+}
 
-        try {
-            const response = await fetch(`${WIKI_API_URL}?${params}`, {
-                headers: HEADERS,
-            });
-            const text = await response.text();
+function collectSeriesImageNames(seriesEntries) {
+    const names = new Set();
 
-            if (!text.trimStart().startsWith("{")) {
-                console.warn("图片直链查询触发限频，剩余项保留占位。");
-                break;
-            }
-
-            const payload = JSON.parse(text);
-
-            for (const page of payload?.query?.pages ?? []) {
-                const url = page?.imageinfo?.[0]?.url;
-
-                if (!url) {
-                    continue;
-                }
-
-                const fileName = normalizeFileTitle(page.title);
-
-                if (fileName) {
-                    cache[fileName] = url;
-                }
-            }
-        } catch (error) {
-            console.warn(`图片直链查询失败：${error.message}`);
-            break;
+    for (const series of seriesEntries) {
+        if (series.art) {
+            names.add(series.art);
         }
-
-        await sleep(REQUEST_INTERVAL_MS);
+        if (series.icon) {
+            names.add(series.icon);
+        }
     }
 
-    await fs.writeFile(
-        path.join(cacheDir, "image-urls.json"),
-        `${JSON.stringify(cache, null, 2)}\n`,
-        "utf8",
-    );
-
-    return cache;
+    return [...names];
 }
 
-async function loadImageUrlCache() {
-    const raw = await readFileOrNull(path.join(cacheDir, "image-urls.json"));
-    return raw ? JSON.parse(raw) : {};
-}
-
-function normalizeFileTitle(title) {
-    if (typeof title !== "string") {
-        return null;
-    }
-
-    // BWIKI 会把 File: 归一化成「文件:」并把下划线换成空格。
-    const withoutNamespace = title.replace(/^(文件|File):/u, "");
-    return withoutNamespace.replace(/ /gu, "_") || null;
-}
-
-function applyImageUrls(fashions, medals, imageUrls) {
+function applyImageUrls(fashions, medals, seriesEntries, imageUrls) {
     for (const suit of fashions) {
         for (const variant of suit.variants) {
             variant.image_url = variant.image
                 ? (imageUrls[variant.image] ?? null)
                 : null;
         }
+
+        for (const bond of suit.bonds ?? []) {
+            bond.image_url = bond.icon ? (imageUrls[bond.icon] ?? null) : null;
+        }
     }
 
     for (const medal of medals) {
         medal.image_url = medal.image ? (imageUrls[medal.image] ?? null) : null;
+    }
+
+    for (const series of seriesEntries) {
+        series.art_url = series.art ? (imageUrls[series.art] ?? null) : null;
+        series.icon_url = series.icon ? (imageUrls[series.icon] ?? null) : null;
     }
 }
 

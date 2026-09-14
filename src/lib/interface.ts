@@ -370,15 +370,46 @@ export interface IFashionVariant {
     pieces: IFashionPiece[];
 }
 
+export interface IFashionBondPet {
+    name: string | null;
+    form: string | null;
+}
+
+export interface IFashionBond {
+    id: number | null;
+    name: string | null;
+    quality_name: string | null;
+    style: string | null;
+    series_id: number | null;
+    text: string | null;
+    interaction_text: string | null;
+    normal_text: string | null;
+    icon: string | null;
+    image_url: string | null;
+    pets: IFashionBondPet[];
+}
+
+export interface IFashionSeries {
+    id: number;
+    name: string | null;
+    description: string | null;
+    tags: string | null;
+    art: string | null;
+    art_url: string | null;
+    icon: string | null;
+    icon_url: string | null;
+}
+
 export interface IFashionEntry {
     wiki_key: string;
     name: string;
-    description: string;
+    description: string | null;
     quality: number;
     grade: number;
     grade_name: string;
     series_id: number | null;
     genders: string[];
+    bonds: IFashionBond[];
     variants: IFashionVariant[];
 }
 
@@ -389,6 +420,7 @@ export interface IFashionPayload {
         site: string;
         page: string;
     };
+    series: IFashionSeries[];
     entries: Record<string, IFashionEntry>;
 }
 

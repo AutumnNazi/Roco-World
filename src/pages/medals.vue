@@ -38,6 +38,11 @@ const selectedQuality = ref("all");
 const selectedType = ref("all");
 const currentPage = ref(1);
 const pageSize = ref(48);
+const failedImages = ref(new Set<string>());
+
+function onImageError(url: string) {
+    failedImages.value.add(url);
+}
 
 let controller: AbortController | null = null;
 
@@ -340,7 +345,11 @@ onBeforeUnmount(() => {
                                 </Badge>
                             </div>
                         </div>
-                        <Award class="h-5 w-5 shrink-0 text-amber-300" />
+                        <img v-if="medal.image_url && !failedImages.has(medal.image_url)"
+                            :src="medal.image_url" :alt="medal.name" loading="lazy" decoding="async"
+                            class="h-12 w-12 shrink-0 rounded-[10px] border border-border bg-slate-900/60 object-contain p-1"
+                            @error="onImageError(medal.image_url!)" />
+                        <Award v-else class="h-5 w-5 shrink-0 text-amber-300" />
                     </div>
 
                     <p v-if="medal.description" class="mt-2 text-sm leading-6 text-foreground">

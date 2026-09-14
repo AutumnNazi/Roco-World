@@ -77,6 +77,20 @@ const activeRoundIndex = computed(() => {
     return selectedRoundIndex.value ?? currentRound.value?.index ?? rounds.value[0]?.index ?? null;
 });
 
+// 默认视图：开市时是当前轮次，未开市时是第一轮。
+// 只有用户手动切到了「非默认」轮次，才需要显示返回按钮，
+// 否则选中当前轮次后按钮仍然挂着，点它也不会有任何变化。
+const defaultRoundIndex = computed(() => {
+    return currentRound.value?.index ?? rounds.value[0]?.index ?? null;
+});
+
+const showBackToCurrent = computed(() => {
+    return (
+        selectedRoundIndex.value !== null &&
+        selectedRoundIndex.value !== defaultRoundIndex.value
+    );
+});
+
 const activeRound = computed(() => {
     return rounds.value.find((round) => round.index === activeRoundIndex.value) ?? null;
 });
@@ -342,7 +356,7 @@ onBeforeUnmount(() => {
                         </Badge>
                     </Button>
 
-                    <Button v-if="selectedRoundIndex !== null" variant="outline"
+                    <Button v-if="showBackToCurrent" variant="outline"
                         class="rounded-[10px] border-border bg-white/5 text-foreground hover:bg-accent"
                         @click="resetRoundSelection">
                         <RotateCcw class="h-3.5 w-3.5" />

@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { IFashionEntry, IFashionPayload } from "@/lib/interface";
+import type {
+    IFashionEntry,
+    IFashionPayload,
+    IFashionSeries,
+} from "@/lib/interface";
 import {
     ChevronLeft,
     ChevronRight,
@@ -39,15 +43,31 @@ const QUALITY_TEXT: Record<number, string> = {
 };
 
 const fashions = ref<IFashionEntry[]>([]);
+const seriesList = ref<IFashionSeries[]>([]);
 const isLoading = ref(false);
 const errorMessage = ref("");
 const searchQuery = ref("");
 const selectedQuality = ref("all");
 const selectedGrade = ref("all");
+const selectedSeries = ref("all");
 const currentPage = ref(1);
 const pageSize = ref(48);
 const expandedKey = ref<string | null>(null);
 const activeGenderByKey = ref<Record<string, number>>({});
+const failedImages = ref(new Set<string>());
+
+function onImageError(url: string) {
+    failedImages.value.add(url);
+}
+
+const seriesById = computed(() => {
+    return new Map(seriesList.value.map((series) => [series.id, series]));
+});
+
+function seriesName(seriesId: number | null) {
+    if (seriesId === null) return null;
+    return seriesById.value.get(seriesId)?.name ?? null;
+}
 
 let controller: AbortController | null = null;
 
@@ -63,6 +83,20 @@ const gradeOptions = computed(() => {
     return [...grades].sort((a, b) => a.localeCompare(b, "zh-CN"));
 });
 
+const seriesOptions = computed(() => {
+    const ids = new Set<number>();
+
+    for (const fashion of fashions.value) {
+        if (fashion.series_id !== null) {
+            ids.add(fashion.series_id);
+        }
+    }
+
+    return [...ids]
+        .map((id) => ({ id, name: seriesName(id) ?? `系列 ${id}` }))
+        .sort((a, b) => a.id - b.id);
+});
+
 const filteredFashions = computed(() => {
     let result = fashions.value;
     const query = searchQuery.value.trim().toLowerCase();
@@ -71,7 +105,15 @@ const filteredFashions = computed(() => {
         result = result.filter((fashion) => {
             return (
                 fashion.name.toLowerCase().includes(query) ||
-                fashion.description.toLowerCase().includes(query) ||
+                (fashion.description ?? "").toLowerCase().includes(query) ||
+                (seriesName(fashion.series_id) ?? "")
+                    .toLowerCase()
+                    .includes(query) ||
+                fashion.bonds.some(
+                    (bond) =>
+                        (bond.name ?? "").toLowerCase().includes(query) ||
+                        (bond.text ?? "").toLowerCase().includes(query),
+                ) ||
                 fashion.variants.some((variant) =>
                     variant.pieces.some((piece) =>
                         piece.name.toLowerCase().includes(query),
@@ -90,6 +132,11 @@ const filteredFashions = computed(() => {
         result = result.filter(
             (fashion) => fashion.grade_name === selectedGrade.value,
         );
+    }
+
+    if (selectedSeries.value !== "all") {
+        const seriesId = Number(selectedSeries.value);
+        result = result.filter((fashion) => fashion.series_id === seriesId);
     }
 
     return result;
@@ -120,7 +167,8 @@ const hasActiveFilters = computed(() => {
     return (
         searchQuery.value.trim() !== "" ||
         selectedQuality.value !== "all" ||
-        selectedGrade.value !== "all"
+        selectedGrade.value !== "all" ||
+        selectedSeries.value !== "all"
     );
 });
 
@@ -140,7 +188,7 @@ const pageSizeModel = computed({
 
 const pageItems = computed(() => buildPageItems(currentPage.value, pageCount.value));
 
-watch([searchQuery, selectedQuality, selectedGrade], () => {
+watch([searchQuery, selectedQuality, selectedGrade, selectedSeries], () => {
     currentPage.value = 1;
 });
 
@@ -176,6 +224,7 @@ function resetFilters() {
     searchQuery.value = "";
     selectedQuality.value = "all";
     selectedGrade.value = "all";
+    selectedSeries.value = "all";
     currentPage.value = 1;
 }
 
@@ -224,6 +273,7 @@ async function loadFashions() {
 
         const payload = (await response.json()) as IFashionPayload;
         fashions.value = Object.values(payload.entries ?? {});
+        seriesList.value = payload.series ?? [];
     } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError") {
             return;
@@ -273,11 +323,11 @@ onBeforeUnmount(() => {
             <CardContent class="space-y-4 px-4 pb-6">
                 <Separator class="bg-white/10" />
 
-                <div class="grid gap-3 xl:grid-cols-[2fr_1fr_1fr]">
-                    <div class="relative">
+                <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-[2fr_1fr_1fr_1fr]">
+                    <div class="relative sm:col-span-2 xl:col-span-1">
                         <Search
                             class="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-foreground" />
-                        <Input v-model="searchQuery" type="search" placeholder="搜索时装名称、描述或部件"
+                        <Input v-model="searchQuery" type="search" placeholder="搜索时装、系列、徽章或部件"
                             class="h-10 rounded-[10px] border-border bg-card pl-11 text-sm text-foreground placeholder:text-foreground focus-visible:border-primary/60 focus-visible:ring-primary/20" />
                     </div>
 
@@ -302,6 +352,19 @@ onBeforeUnmount(() => {
                             <SelectItem value="all">全部分级</SelectItem>
                             <SelectItem v-for="grade in gradeOptions" :key="grade" :value="grade">
                                 {{ grade }}
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
+
+                    <Select v-model="selectedSeries">
+                        <SelectTrigger
+                            class="h-10 w-full rounded-[10px] border-border bg-card text-foreground focus-visible:border-primary/60 focus-visible:ring-primary/20">
+                            <SelectValue placeholder="全部系列" />
+                        </SelectTrigger>
+                        <SelectContent class="border-border bg-slate-950/95 text-foreground">
+                            <SelectItem value="all">全部系列</SelectItem>
+                            <SelectItem v-for="series in seriesOptions" :key="series.id" :value="String(series.id)">
+                                {{ series.name }}
                             </SelectItem>
                         </SelectContent>
                     </Select>
@@ -359,23 +422,39 @@ onBeforeUnmount(() => {
                 <Card
                     class="h-full cursor-pointer border-border bg-card py-0 shadow-md transition duration-300 group-hover:-translate-y-1 group-hover:border-primary/30 group-hover:shadow-xl">
                     <CardContent class="p-4">
-                        <div class="flex items-start justify-between gap-2">
-                            <div class="min-w-0">
-                                <h3 class="truncate text-lg font-semibold tracking-tight text-foreground">
-                                    {{ fashion.name }}
-                                </h3>
-                                <div class="mt-1 flex flex-wrap items-center gap-2">
-                                    <Badge variant="outline"
-                                        :class="['rounded-[10px] border-border bg-white/5 px-2.5 py-0.5 text-xs', qualityText(fashion.quality)]">
-                                        {{ qualityLabel(fashion.quality) }}
-                                    </Badge>
-                                    <Badge v-if="fashion.grade_name" variant="outline"
-                                        class="rounded-[10px] border-border bg-white/5 px-2.5 py-0.5 text-xs text-foreground">
-                                        {{ fashion.grade_name }}
-                                    </Badge>
+                        <div class="flex gap-3">
+                            <div v-if="activeVariant(fashion)?.image_url && !failedImages.has(activeVariant(fashion)!.image_url!)"
+                                class="h-20 w-20 shrink-0 overflow-hidden rounded-[10px] border border-border bg-slate-900/60">
+                                <img :src="activeVariant(fashion)!.image_url!" :alt="fashion.name"
+                                    loading="lazy" decoding="async"
+                                    class="h-full w-full object-contain p-1"
+                                    @error="onImageError(activeVariant(fashion)!.image_url!)" />
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-start justify-between gap-2">
+                                    <div class="min-w-0">
+                                        <h3 class="truncate text-lg font-semibold tracking-tight text-foreground">
+                                            {{ fashion.name }}
+                                        </h3>
+                                        <div class="mt-1 flex flex-wrap items-center gap-2">
+                                            <Badge variant="outline"
+                                                :class="['rounded-[10px] border-border bg-white/5 px-2.5 py-0.5 text-xs', qualityText(fashion.quality)]">
+                                                {{ qualityLabel(fashion.quality) }}
+                                            </Badge>
+                                            <Badge v-if="fashion.grade_name" variant="outline"
+                                                class="rounded-[10px] border-border bg-white/5 px-2.5 py-0.5 text-xs text-foreground">
+                                                {{ fashion.grade_name }}
+                                            </Badge>
+                                            <Badge v-if="seriesName(fashion.series_id)" variant="outline"
+                                                class="rounded-[10px] border-violet-400/20 bg-violet-400/10 px-2.5 py-0.5 text-xs text-violet-200">
+                                                {{ seriesName(fashion.series_id) }}
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                    <Shirt v-if="!activeVariant(fashion)?.image_url || failedImages.has(activeVariant(fashion)!.image_url!)"
+                                        class="h-5 w-5 shrink-0 text-sky-300" />
                                 </div>
                             </div>
-                            <Shirt class="h-5 w-5 shrink-0 text-sky-300" />
                         </div>
 
                         <div v-if="fashion.variants.length > 1" class="mt-3 flex gap-2" @click.stop>
@@ -391,6 +470,12 @@ onBeforeUnmount(() => {
 
                         <template v-for="variant in [activeVariant(fashion)]" :key="variant?.gender ?? 'none'">
                             <div v-if="variant" class="mt-3">
+                                <div v-if="variant.image_url && !failedImages.has(variant.image_url)"
+                                    class="mb-3 overflow-hidden rounded-[10px] border border-border bg-slate-900/60">
+                                    <img :src="variant.image_url" :alt="variant.name" loading="lazy" decoding="async"
+                                        class="mx-auto h-44 w-full object-contain p-2"
+                                        @error="onImageError(variant.image_url!)" />
+                                </div>
                                 <div class="flex flex-wrap items-center gap-2 text-xs text-foreground">
                                     <Badge variant="outline"
                                         class="rounded-[10px] border-border bg-white/5 px-2.5 py-0.5 text-foreground">
@@ -422,6 +507,51 @@ onBeforeUnmount(() => {
                                 </div>
                             </div>
                         </template>
+
+                        <div v-if="expandedKey === fashion.wiki_key && fashion.bonds.length"
+                            class="mt-3 space-y-2 border-t border-white/8 pt-3">
+                            <p class="text-xs font-medium text-foreground">搭配徽章（{{ fashion.bonds.length }}）</p>
+                            <div v-for="bond in fashion.bonds" :key="bond.id ?? bond.name ?? ''"
+                                class="rounded-[10px] border border-amber-400/20 bg-amber-400/8 px-2.5 py-2">
+                                <div class="flex items-start gap-2">
+                                    <img v-if="bond.image_url && !failedImages.has(bond.image_url)"
+                                        :src="bond.image_url" :alt="bond.name ?? ''" loading="lazy" decoding="async"
+                                        class="h-10 w-10 shrink-0 rounded-[10px] border border-border bg-slate-900/60 object-contain p-0.5"
+                                        @error="onImageError(bond.image_url!)" />
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            <span class="truncate text-xs font-semibold text-amber-200">
+                                                {{ bond.name }}
+                                            </span>
+                                            <Badge v-if="bond.quality_name" variant="outline"
+                                                class="rounded-[10px] border-amber-400/30 bg-amber-400/10 px-2 py-0 text-[10px] text-amber-200">
+                                                {{ bond.quality_name }}
+                                            </Badge>
+                                            <Badge v-if="bond.style" variant="outline"
+                                                class="rounded-[10px] border-border bg-white/5 px-2 py-0 text-[10px] text-foreground">
+                                                {{ bond.style }}
+                                            </Badge>
+                                        </div>
+                                        <p v-if="bond.text" class="mt-1 text-[11px] leading-5 text-foreground">
+                                            {{ bond.text }}
+                                        </p>
+                                        <div v-if="bond.pets.length" class="mt-1 flex flex-wrap gap-1">
+                                            <Badge v-for="(pet, petIndex) in bond.pets" :key="petIndex" variant="outline"
+                                                class="rounded-[10px] border-emerald-400/20 bg-emerald-400/10 px-2 py-0 text-[10px] text-emerald-200">
+                                                {{ pet.name }}<span v-if="pet.form" class="ml-1 opacity-80">{{ pet.form }}</span>
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p v-if="expandedKey !== fashion.wiki_key"
+                            class="mt-2 text-[10px] tracking-wide text-foreground/50 uppercase">
+                            {{ activeVariant(fashion)?.item_count ?? 0 }} 件部件
+                            <span v-if="fashion.bonds.length"> · {{ fashion.bonds.length }} 枚搭配徽章</span>
+                            · 点击展开
+                        </p>
                     </CardContent>
                 </Card>
             </div>
