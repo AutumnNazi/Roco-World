@@ -69,23 +69,52 @@ async function main() {
         entries,
     };
 
-    await fs.writeFile(
-        outputPath,
-        `${JSON.stringify(result, null, 4)}\n`,
-        "utf8",
-    );
+    const pokedexChanged = await writeJsonIfChanged(outputPath, result, [
+        "generated_at",
+    ]);
 
     const skills = await buildOfficialSkills(list, details);
 
-    await fs.writeFile(
-        skillsOutputPath,
-        `${JSON.stringify(skills, null, 4)}\n`,
-        "utf8",
-    );
+    const skillsChanged = await writeJsonIfChanged(skillsOutputPath, skills, [
+        "generated_at",
+    ]);
+
+    if (!pokedexChanged && !skillsChanged) {
+        console.log(
+            `Official pokedex unchanged (${Object.keys(entries).length} entries / ${Object.keys(skills.entries).length} skills), skip write.`,
+        );
+        return;
+    }
 
     console.log(
         `Generated ${Object.keys(entries).length} official pokedex entries and ${Object.keys(skills.entries).length} official skills.`,
     );
+}
+
+async function writeJsonIfChanged(filePath, value, ignoredKeys = []) {
+    try {
+        const previous = JSON.parse(await fs.readFile(filePath, "utf8"));
+        const left = { ...previous };
+        const right = { ...value };
+
+        for (const key of ignoredKeys) {
+            delete left[key];
+            delete right[key];
+        }
+
+        if (JSON.stringify(left) === JSON.stringify(right)) {
+            return false;
+        }
+    } catch {
+        // 旧文件缺失或不可解析时直接写入。
+    }
+
+    await fs.writeFile(
+        filePath,
+        `${JSON.stringify(value, null, 4)}\n`,
+        "utf8",
+    );
+    return true;
 }
 
 // 官方技能以名称去重归档；学习关系由官方精灵映射到站内精灵 id，

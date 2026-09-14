@@ -7,6 +7,7 @@
         "dev": "vite",
         "build": "run-p type-check \"build-only {@}\" --",
         "preview": "vite preview",
+        "serve": "node ./scripts/serve-local.mjs",
         "build-only": "vite build",
         "type-check": "vue-tsc --build",
         "sync:pet-data": "node ./scripts/sync-pet-data.mjs",

@@ -37,9 +37,19 @@ async function main() {
         rounds,
     };
 
-    await writeJson(merchantOutputPath, payload);
+    const changed = await writeJsonIfChanged(merchantOutputPath, payload, [
+        "generated_at",
+    ]);
 
     const goodsTotal = rounds.reduce((sum, round) => sum + round.items.length, 0);
+
+    if (!changed) {
+        console.log(
+            `Merchant data for ${payload.date} unchanged, skip write (${goodsTotal} goods).`,
+        );
+        return;
+    }
+
     console.log(
         `Generated merchant data for ${payload.date} with ${rounds.length} rounds / ${goodsTotal} goods entries.`,
     );
@@ -240,6 +250,30 @@ function buildBeijingTimestamp() {
 
 async function writeJson(filePath, value) {
     await fs.writeFile(filePath, `${JSON.stringify(value, null, 4)}\n`, "utf8");
+}
+
+// 轮询式同步下，仅时间戳变化的内容不应产生提交；
+// 除 ignoredKeys 外内容一致时保留旧文件，返回 false 表示未写入。
+async function writeJsonIfChanged(filePath, value, ignoredKeys = []) {
+    try {
+        const previous = JSON.parse(await fs.readFile(filePath, "utf8"));
+        const left = { ...previous };
+        const right = { ...value };
+
+        for (const key of ignoredKeys) {
+            delete left[key];
+            delete right[key];
+        }
+
+        if (JSON.stringify(left) === JSON.stringify(right)) {
+            return false;
+        }
+    } catch {
+        // 旧文件缺失或不可解析时直接写入。
+    }
+
+    await writeJson(filePath, value);
+    return true;
 }
 
 main().catch((error) => {

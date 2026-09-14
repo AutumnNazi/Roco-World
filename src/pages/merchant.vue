@@ -117,6 +117,42 @@ function resetRoundSelection() {
     selectedRoundIndex.value = null;
 }
 
+// 本地部署由 scripts/serve-local.mjs 定时写盘，开着的页面需要自己把新数据取回来，
+// 否则要手动刷新才能看到新一轮商品。
+const REFRESH_INTERVAL_MS = 120_000;
+let refreshTimer: number | undefined;
+
+async function refreshMerchantSilently() {
+    try {
+        const response = await fetch(`/data/merchant.json?t=${Date.now()}`);
+
+        if (!response.ok) {
+            return;
+        }
+
+        const next = (await response.json()) as IMerchantPayload;
+
+        if (
+            next?.generated_at === payload.value?.generated_at &&
+            next?.date === payload.value?.date
+        ) {
+            return;
+        }
+
+        payload.value = next;
+        rounds.value = next?.rounds ?? [];
+        nowSec.value = Math.floor(Date.now() / 1000);
+    } catch {
+        // 轮询失败保持旧数据，不打断页面。
+    }
+}
+
+function handleVisibilityChange() {
+    if (document.visibilityState === "visible") {
+        void refreshMerchantSilently();
+    }
+}
+
 async function loadMerchant() {
     isLoading.value = true;
     errorMessage.value = "";
@@ -155,12 +191,22 @@ onMounted(async () => {
     clockTimer = window.setInterval(() => {
         nowSec.value = Math.floor(Date.now() / 1000);
     }, 1000);
+    refreshTimer = window.setInterval(() => {
+        void refreshMerchantSilently();
+    }, REFRESH_INTERVAL_MS);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 });
 
 onBeforeUnmount(() => {
     if (clockTimer !== undefined) {
         window.clearInterval(clockTimer);
     }
+
+    if (refreshTimer !== undefined) {
+        window.clearInterval(refreshTimer);
+    }
+
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
 });
 </script>
 
