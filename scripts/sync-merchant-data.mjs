@@ -228,7 +228,9 @@ function findLiBlock(html, startIndex) {
 }
 
 function parsePrice(liBlock) {
-    const match = liBlock.match(/<em class="shop_price">价格：([\d,，.]+)\s*</);
+    const match = liBlock.match(
+        /<em class="shop_price">价格：([\d,，.]+)\s*([wW万]?)/,
+    );
 
     if (!match) {
         return null;
@@ -237,7 +239,14 @@ function parsePrice(liBlock) {
     // 源站价格带千分位，半角/全角逗号都出现过（如 36,000 / 36，000），
     // 只去掉其中一种会让 Number() 得到 NaN，价格就白白显示成「未知」。
     const value = Number(match[1].replace(/[,，]/g, ""));
-    return Number.isFinite(value) ? value : null;
+
+    if (!Number.isFinite(value)) {
+        return null;
+    }
+
+    // 贵价商品（血脉秘药一类）源站直接写成「16w」「16万」，
+    // 不把万单位展开成整数，价格会当成解析失败显示「未知」，排序也会错位。
+    return match[2] ? Math.round(value * 10000) : value;
 }
 
 function parseLimit(liBlock) {
