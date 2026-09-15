@@ -16,8 +16,9 @@
         "sync:official-pokedex": "node ./scripts/sync-official-pokedex.mjs",
         "sync:pet-images": "node ./scripts/sync-pet-images.mjs",
         "sync:nrc-images": "node ./scripts/sync-nrc-images.mjs",
+        "sync:skill-icons": "node ./scripts/sync-skill-icons.mjs",
         "sync:personalities": "node ./scripts/sync-personalities.mjs",
-        "sync:all": "run-s sync:nrc-data sync:nrc-images sync:personalities sync:pet-data sync:official-pokedex sync:merchant-data"
+        "sync:all": "run-s sync:nrc-data sync:nrc-images sync:personalities sync:pet-data sync:official-pokedex sync:skill-icons sync:merchant-data"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.2.2",

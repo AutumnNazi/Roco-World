@@ -319,6 +319,7 @@ async function main() {
             movePool,
             moveStones,
             legacyMoves,
+            templateRaceStatIds,
         );
 
         return {
@@ -439,6 +440,18 @@ async function main() {
             if (move?.name && move.icon_id && !moveIconByName[move.name]) {
                 moveIconByName[move.name] = move.icon_id;
             }
+        }
+    }
+
+    // 兜底：技能图鉴页收录的是官方技能表，其中有些技能不出现在任何精灵的技能池里
+    // （例如「恶念交换」），只靠上面的技能池收集会漏图。SKILL_CONF 自带 icon 字段，
+    // 按技能名补齐即可，已有的映射不覆盖（技能池口径优先）。
+    for (const skill of getRows(skillTable)) {
+        const name = cleanText(skill?.name);
+        const iconId = extractIconId(skill?.icon);
+
+        if (name && iconId && !moveIconByName[name]) {
+            moveIconByName[name] = iconId;
         }
     }
 
@@ -1053,7 +1066,28 @@ function hasCanonicalBreedingSignals(context) {
     );
 }
 
-function isImplementedContext(context, movePool, moveStones, legacyMoves) {
+// 解包表里残留的未完工行：种族值是整批共用的模板值，nrc WIKI 上也查不到条目
+// （既没有正式立绘，也没有种族值）。这类行没有任何可展示内容，
+// 留在图鉴里只会显示成「借用别人图标 + 假面板」，因此不计入已实装。
+function isUnreleasedTemplateRow(context, templateRaceStatIds) {
+    return (
+        templateRaceStatIds.has(context.id) &&
+        !nrcProfileByPetId.has(context.id) &&
+        !resolveNrcRaceStats(context.id)
+    );
+}
+
+function isImplementedContext(
+    context,
+    movePool,
+    moveStones,
+    legacyMoves,
+    templateRaceStatIds,
+) {
+    if (isUnreleasedTemplateRow(context, templateRaceStatIds)) {
+        return false;
+    }
+
     // BinData does not expose one stable `is_released` flag. The most reliable
     // rule is a split by content type:
     // - canonical collectible pets: battle-ready and backed by either
