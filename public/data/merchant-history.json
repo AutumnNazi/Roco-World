@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-14 20:28:47",
+    "updated_at": "2026-09-15 10:45:52",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -123,6 +123,37 @@
                             "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
                             "price": 36000,
                             "limit": 5,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-09-15": {
+            "date": "2026-09-15",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-09-15 08:00:00",
+                    "end_time": "2026-09-15 12:00:00",
+                    "recorded_at": "2026-09-15 10:45:52",
+                    "items": [
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
+                            "rare": false
+                        },
+                        {
+                            "name": "毒系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量毒系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/41/qgthc06nxeq4r9tzejgwwox7qtqp86w.png/100px-100133.png",
+                            "price": 500,
+                            "limit": 100,
                             "rare": false
                         }
                     ]
