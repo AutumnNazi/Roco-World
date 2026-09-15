@@ -171,6 +171,8 @@ async function main() {
     const petBaseRows = getRows(petBaseTable)
         .filter((row) => typeof row?.id === "number")
         .sort((left, right) => left.id - right.id);
+    const borrowedPortraitKeyIds = buildBorrowedPortraitKeyIds(petBaseRows);
+    const templateRaceStatIds = buildTemplateRaceStatIds(petBaseRows);
     const handbookRows = getRows(handbookTable);
     const evolutionRows = getRows(evolutionTable);
     const evolutionById = indexBy(evolutionRows);
@@ -220,11 +222,16 @@ async function main() {
             speciesGroupIds,
             evolutionById,
         );
-        const portraitKey =
-            extractPortraitKey(petBase.JL_res) ??
-            extractPortraitKey(petBase.JL_small_res) ??
-            normalizeFallbackName(petNameMapById.get(petBase.id)?.name) ??
-            String(petBase.id);
+        // 贴图沿用的行（JL_res 指向别的精灵）优先取 nrc 立绘 key，
+        // 否则整批精灵会显示成同一张图标。nrc 也没有收录时（尚未上线的精灵）
+        // 用 id 兜底，让它显示缺图占位，而不是继续顶着别人的图标。
+        const borrowedPortrait = borrowedPortraitKeyIds.has(petBase.id);
+        const portraitKey = borrowedPortrait
+            ? (resolveNrcPortraitKey(petBase.id) ?? String(petBase.id))
+            : (extractPortraitKey(petBase.JL_res) ??
+              extractPortraitKey(petBase.JL_small_res) ??
+              normalizeFallbackName(petNameMapById.get(petBase.id)?.name) ??
+              String(petBase.id));
 
         return {
             id: petBase.id,
@@ -332,12 +339,7 @@ async function main() {
                 },
             },
             implemented,
-            base_hp: normalizeStat(context.petBase.hp_max_race),
-            base_phy_atk: normalizeStat(context.petBase.phy_attack_race),
-            base_mag_atk: normalizeStat(context.petBase.spe_attack_race),
-            base_phy_def: normalizeStat(context.petBase.phy_defence_race),
-            base_mag_def: normalizeStat(context.petBase.spe_defence_race),
-            base_spd: normalizeStat(context.petBase.speed_race),
+            ...resolveRaceStats(context, templateRaceStatIds),
             evolves_from_id: evolvesFromId,
             species: buildSpecies(context, contextById),
             trait: buildTrait(context.petBase, skillById),
@@ -549,6 +551,147 @@ function resolveNrcSpeciesName(context) {
     }
 
     return null;
+}
+
+// 解包表里有一批尚未完工的行：JL_res 直接沿用了上一只精灵的贴图路径，
+// 种族值也整批共用同一组模板值（3747 之后那批即如此，表现为「同图标、同种族值」）。
+// 这些精灵在 nrc WIKI 上已有正式立绘与种族值，因此按 PETBASE id 用 nrc 覆盖。
+function resolveNrcPortraitKey(petId) {
+    const illustration = nrcProfileByPetId.get(petId)?.illustration;
+
+    if (typeof illustration !== "string") {
+        return null;
+    }
+
+    const match = illustration.match(/^PetPortrait_(.+)\.png$/u);
+    return match ? match[1] : null;
+}
+
+// nrc 的 stats 字段语义：spa=魔攻、spd=魔防、spe=速度（已用 completeness=1 的样本核对）。
+function resolveNrcRaceStats(petId) {
+    const stats = nrcProfileByPetId.get(petId)?.stats;
+
+    if (!stats || typeof stats !== "object") {
+        return null;
+    }
+
+    const mapped = {
+        base_hp: stats.hp,
+        base_phy_atk: stats.atk,
+        base_mag_atk: stats.spa,
+        base_phy_def: stats.def,
+        base_mag_def: stats.spd,
+        base_spd: stats.spe,
+    };
+
+    return Object.values(mapped).every((value) => typeof value === "number")
+        ? mapped
+        : null;
+}
+
+// 种族值优先级：解包值可信时直接用；命中模板值（整批共用同一组）时改用 nrc。
+function resolveRaceStats(context, templateRaceStatIds) {
+    if (templateRaceStatIds.has(context.id)) {
+        const fromNrc = resolveNrcRaceStats(context.id);
+
+        if (fromNrc) {
+            return fromNrc;
+        }
+    }
+
+    return {
+        base_hp: normalizeStat(context.petBase.hp_max_race),
+        base_phy_atk: normalizeStat(context.petBase.phy_attack_race),
+        base_mag_atk: normalizeStat(context.petBase.spe_attack_race),
+        base_phy_def: normalizeStat(context.petBase.phy_defence_race),
+        base_mag_def: normalizeStat(context.petBase.spe_defence_race),
+        base_spd: normalizeStat(context.petBase.speed_race),
+    };
+}
+
+// 判断某个立绘 key 是否被「另一只不同名的精灵」占用：这正是贴图沿用的特征。
+// 首领形态之间共用 key（多行同名）属正常，不算冲突。
+function buildBorrowedPortraitKeyIds(petBaseRows) {
+    const namesByKey = new Map();
+
+    for (const petBase of petBaseRows) {
+        const key =
+            extractPortraitKey(petBase.JL_res) ??
+            extractPortraitKey(petBase.JL_small_res);
+
+        if (!key) {
+            continue;
+        }
+
+        if (!namesByKey.has(key)) {
+            namesByKey.set(key, new Set());
+        }
+
+        namesByKey.get(key).add(cleanText(petBase.name) ?? String(petBase.id));
+    }
+
+    const borrowedIds = new Set();
+
+    for (const petBase of petBaseRows) {
+        // 只判图鉴号段：首领 / 副本形态本来就与「首领-魔力猫」「卡图斯」等
+        // 不同名的行共用一张贴图，那是正常复用，不是未完工的沿用。
+        if (!isCanonicalCollectiblePetBaseId(petBase.id)) {
+            continue;
+        }
+
+        const key =
+            extractPortraitKey(petBase.JL_res) ??
+            extractPortraitKey(petBase.JL_small_res);
+
+        if (key && (namesByKey.get(key)?.size ?? 0) > 1) {
+            borrowedIds.add(petBase.id);
+        }
+    }
+
+    return borrowedIds;
+}
+
+// 未完工行的另一特征：种族值整批共用同一组模板值（3747 之后那批共用 108 行）。
+// 阈值取 5：正式精灵之间偶有重复（如迪莫的多个形态共 5 行），但不会成批出现。
+const TEMPLATE_RACE_STAT_MIN_SHARE = 5;
+
+function buildRaceStatSignature(petBase) {
+    return [
+        petBase?.hp_max_race,
+        petBase?.phy_attack_race,
+        petBase?.spe_attack_race,
+        petBase?.phy_defence_race,
+        petBase?.spe_defence_race,
+        petBase?.speed_race,
+    ]
+        .map((value) => value ?? "")
+        .join("/");
+}
+
+function buildTemplateRaceStatIds(petBaseRows) {
+    const shareCount = new Map();
+
+    for (const petBase of petBaseRows) {
+        const signature = buildRaceStatSignature(petBase);
+        shareCount.set(signature, (shareCount.get(signature) ?? 0) + 1);
+    }
+
+    const templateIds = new Set();
+
+    for (const petBase of petBaseRows) {
+        const signature = buildRaceStatSignature(petBase);
+
+        // 全空签名是首领形态那类数据，种族值本就不在这张表里，不做覆盖。
+        if (!/\d/u.test(signature)) {
+            continue;
+        }
+
+        if ((shareCount.get(signature) ?? 0) >= TEMPLATE_RACE_STAT_MIN_SHARE) {
+            templateIds.add(petBase.id);
+        }
+    }
+
+    return templateIds;
 }
 
 async function readTable(fileName) {
