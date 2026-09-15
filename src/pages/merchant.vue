@@ -6,6 +6,7 @@ import type {
 } from "@/lib/interface";
 import {
     Clock,
+    Cloud,
     History,
     Package,
     RefreshCw,
@@ -148,25 +149,53 @@ function resetRoundSelection() {
     selectedRoundIndex.value = null;
 }
 
-// 手动同步：调用本地服务（scripts/serve-local.mjs）的 /api/sync 接口。
-// 部署在纯静态托管（无 Node 服务）时接口不存在，按钮自动隐藏。
-const syncSupported = ref(false);
+// 站点可能部署在纯静态服务器（nginx 等）上，那里没有进程会去抓源站，
+// 数据只会停在构建那一刻。仓库侧的 GitHub Actions 会定时把新数据提交上去，
+// 因此页面在本地数据过期时直接读仓库原始文件兜底（该域带 CORS 头，可跨域直取）。
+const REMOTE_DATA_BASE =
+    "https://raw.githubusercontent.com/AutumnNazi/Roco-World/main/public/data";
+
 const syncRunning = ref(false);
 const syncMessage = ref("");
+const usingRemoteData = ref(false);
 
-async function detectSyncSupport() {
-    try {
-        const response = await fetch("/api/sync/status", { cache: "no-store" });
+async function fetchMerchantFrom(url: string) {
+    const response = await fetch(`${url}?t=${Date.now()}`, {
+        cache: "no-store",
+    });
 
-        if (!response.ok) {
-            return;
-        }
-
-        const status = (await response.json()) as { syncEnabled?: boolean };
-        syncSupported.value = status?.syncEnabled === true;
-    } catch {
-        syncSupported.value = false;
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
     }
+
+    return (await response.json()) as IMerchantPayload;
+}
+
+function applyMerchantPayload(next: IMerchantPayload, fromRemote: boolean) {
+    payload.value = next;
+    rounds.value = next?.rounds ?? [];
+    usingRemoteData.value = fromRemote;
+    nowSec.value = Math.floor(Date.now() / 1000);
+}
+
+// 比较两份数据谁更新：先看数据日期，再看生成时间。
+function isNewerPayload(
+    next: IMerchantPayload | null,
+    current: IMerchantPayload | null,
+) {
+    if (!next?.date) {
+        return false;
+    }
+
+    if (!current?.date) {
+        return true;
+    }
+
+    if (next.date !== current.date) {
+        return next.date > current.date;
+    }
+
+    return (next.generated_at ?? "") > (current.generated_at ?? "");
 }
 
 async function triggerManualSync() {
@@ -175,23 +204,19 @@ async function triggerManualSync() {
     }
 
     syncRunning.value = true;
-    syncMessage.value = "正在同步…";
+    syncMessage.value = "正在从云端拉取…";
 
     try {
-        const response = await fetch("/api/sync", { method: "POST" });
+        const remote = await fetchMerchantFrom(`${REMOTE_DATA_BASE}/merchant.json`);
 
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-
-        const result = (await response.json()) as { ok?: boolean; message?: string };
-        syncMessage.value = result?.message ?? (result?.ok ? "同步完成" : "同步失败");
-
-        if (result?.ok) {
-            await refreshMerchantSilently(true);
+        if (isNewerPayload(remote, payload.value)) {
+            applyMerchantPayload(remote, true);
+            syncMessage.value = `已更新到 ${remote.date}`;
+        } else {
+            syncMessage.value = "已是最新数据";
         }
     } catch {
-        syncMessage.value = "同步请求失败，请确认本地服务正在运行";
+        syncMessage.value = "云端拉取失败，请稍后重试";
     } finally {
         syncRunning.value = false;
         window.setTimeout(() => {
@@ -206,31 +231,39 @@ const REFRESH_INTERVAL_MS = 60_000;
 let refreshTimer: number | undefined;
 
 async function refreshMerchantSilently(force = false) {
-    try {
-        const response = await fetch(`/data/merchant.json?t=${Date.now()}`, {
-            cache: "no-store",
-        });
+    const local = await fetchMerchantFrom("/data/merchant.json").catch(
+        () => null,
+    );
 
-        if (!response.ok) {
-            return;
-        }
-
-        const next = (await response.json()) as IMerchantPayload;
-
-        if (
-            !force &&
-            next?.generated_at === payload.value?.generated_at &&
-            next?.date === payload.value?.date
-        ) {
-            return;
-        }
-
-        payload.value = next;
-        rounds.value = next?.rounds ?? [];
-        nowSec.value = Math.floor(Date.now() / 1000);
-    } catch {
-        // 轮询失败保持旧数据，不打断页面。
+    if (local && isNewerPayload(local, payload.value)) {
+        applyMerchantPayload(local, false);
+    } else if (force && local && !payload.value) {
+        applyMerchantPayload(local, false);
     }
+
+    // 本地那份没跟上（纯静态托管时它永远停在构建时刻）就用云端的。
+    if (!shouldTryRemote()) {
+        return;
+    }
+
+    const remote = await fetchMerchantFrom(
+        `${REMOTE_DATA_BASE}/merchant.json`,
+    ).catch(() => null);
+
+    if (remote && isNewerPayload(remote, payload.value)) {
+        applyMerchantPayload(remote, true);
+    }
+}
+
+// 只在本地数据不是「今天」时才走云端，避免每分钟都打 GitHub。
+function shouldTryRemote() {
+    const today = beijingDateString();
+    return payload.value?.date !== today;
+}
+
+function beijingDateString() {
+    const beijingNow = new Date(Date.now() + 8 * 60 * 60 * 1000);
+    return beijingNow.toISOString().slice(0, 10);
 }
 
 function handleVisibilityChange() {
@@ -287,25 +320,36 @@ async function loadMerchant() {
     isLoading.value = true;
     errorMessage.value = "";
 
+    // 必须禁用缓存：静态服务器常给 JSON 带上强缓存/启发式缓存，
+    // 首屏会读到旧快照（表现为「刷新后又没有本轮数据」）。
+    let local: IMerchantPayload | null = null;
+
     try {
-        // 必须禁用缓存：静态服务器常给 JSON 带上强缓存/启发式缓存，
-        // 首屏会读到旧快照（表现为「刷新后又没有本轮数据」）。
-        const response = await fetch(`/data/merchant.json?t=${Date.now()}`, {
-            cache: "no-store",
-        });
-
-        if (!response.ok) {
-            throw new Error(`请求失败: ${response.status}`);
-        }
-
-        payload.value = await response.json();
-        rounds.value = payload.value?.rounds ?? [];
+        local = await fetchMerchantFrom("/data/merchant.json");
+        applyMerchantPayload(local, false);
     } catch {
+        local = null;
+    }
+
+    // 纯静态托管时本地文件停在构建那一刻，用仓库里的最新数据兜底。
+    try {
+        const remote = await fetchMerchantFrom(
+            `${REMOTE_DATA_BASE}/merchant.json`,
+        );
+
+        if (isNewerPayload(remote, local)) {
+            applyMerchantPayload(remote, true);
+        }
+    } catch {
+        // 云端不可达时保留本地数据。
+    }
+
+    if (!payload.value) {
         errorMessage.value = "远行商人数据加载失败，请稍后重试。";
         rounds.value = [];
-    } finally {
-        isLoading.value = false;
     }
+
+    isLoading.value = false;
 }
 
 function applyRoundFromRoute() {
@@ -322,7 +366,6 @@ document.title = "远行商人 - 洛克王国工具箱";
 onMounted(async () => {
     await loadMerchant();
     applyRoundFromRoute();
-    void detectSyncSupport();
     clockTimer = window.setInterval(() => {
         nowSec.value = Math.floor(Date.now() / 1000);
     }, 1000);
@@ -382,12 +425,17 @@ onBeforeUnmount(() => {
                         <Clock class="mr-1.5 h-4 w-4" />
                         最后同步 {{ lastSyncText }}
                     </Badge>
-                    <Button v-if="syncSupported" variant="outline" :disabled="syncRunning"
+                    <Button variant="outline" :disabled="syncRunning"
                         class="h-9 rounded-[10px] border-border bg-white/5 text-sm text-foreground hover:bg-accent"
                         @click="triggerManualSync">
                         <RefreshCw class="mr-1.5 h-3.5 w-3.5" :class="syncRunning ? 'animate-spin' : ''" />
-                        {{ syncRunning ? "同步中…" : "立即同步" }}
+                        {{ syncRunning ? "拉取中…" : "立即同步" }}
                     </Button>
+                    <Badge v-if="usingRemoteData" variant="outline"
+                        class="rounded-[10px] border-sky-400/20 bg-sky-400/10 px-3 py-1.5 text-sm text-sky-200">
+                        <Cloud class="mr-1.5 h-4 w-4" />
+                        云端数据
+                    </Badge>
                     <span v-if="syncMessage" class="text-xs text-foreground">{{ syncMessage }}</span>
                     <Badge v-if="dataIsStale" variant="outline"
                         class="rounded-[10px] border-destructive/30 bg-destructive/10 px-3 py-1.5 text-sm text-destructive">
