@@ -7,12 +7,17 @@ Wants=network-online.target
 Type=simple
 # 改成你的实际部署路径与运行用户
 WorkingDirectory=/opt/roco-world
+# 同步脚本要往 public/data 写盘，运行用户必须对部署目录有写权限，
+# 否则每次同步都会以 EACCES 失败（表现为「最后同步时间不动、点按钮没反应」）：
+#   sudo chown -R www-data:www-data /opt/roco-world/public/data /opt/roco-world/dist
 User=www-data
 Group=www-data
 
-# 监听 3002 并对外开放；只给 nginx 反代时可改回 127.0.0.1
-Environment=HOST=0.0.0.0
-Environment=PORT=3002
+# nginx 反代到 127.0.0.1:4173（见 nginx-roco-world.conf），
+# 两处端口必须一致，否则反代打不到 Node 服务。
+# 若不用 nginx、想让 Node 直接对外，改成 HOST=0.0.0.0 且 PORT=3002。
+Environment=HOST=127.0.0.1
+Environment=PORT=4173
 # 开市时段的商人数据轮询间隔（分钟）
 Environment=SYNC_INTERVAL_MINUTES=5
 Environment=NODE_ENV=production

@@ -78,6 +78,57 @@ crontab -e
 
 两个方案都能做到准点，区别是方案 A 多了页面「立即同步」按钮和过期自动补抓。
 
+#### 排查「最后同步时间不动 / 点了立即同步没反应」
+
+最快的定位方式是在服务器上直接跑一次同步脚本，它的报错就是真因：
+
+```bash
+cd /opt/roco-world && node scripts/sync-merchant-data.mjs; echo "exit=$?"
+node -v                                  # 需要 20.19+ 或 22.12+
+curl -sI --max-time 20 'https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0' | head -3
+```
+
+正常情况下会打印 `Generated merchant data for …`；失败时按报错对照：
+
+| 报错 | 含义与处置 |
+| --- | --- |
+| `EACCES: permission denied` | **最常见**。运行用户对部署目录没写权限：抓取其实成功了，卡在写盘那一步，表现成「时间永远不动、点按钮没反应」。用 `ls -l` 看属主，若不是 service 里的 `User=`，执行 `sudo chown -R <运行用户>:<运行用户> /opt/roco-world`。注意用 root 跑 `git pull` / `npm run build` 会把属主改回 root，故障会复发。 |
+| `getaddrinfo EAI_AGAIN` / `ENOTFOUND` | 服务器 DNS 不通，检查 `/etc/resolv.conf` 或换内网 DNS。 |
+| `ETIMEDOUT` / `fetch failed` | 服务器出网被安全组或防火墙拦，放行 443 出站。 |
+| `ECONNREFUSED` / `403` | 源站拒了该服务器 IP（云主机 IP 段常被限），换出口或改用仓库侧定时同步。 |
+| `fetch is not defined` | 部署机 Node 低于 18。升级 Node 到 `package.json` 要求的版本即可。 |
+| `HTTP 200` 但 `未从…解析到商品` | 源站页面结构变了，需要更新 `scripts/sync-merchant-data.mjs` 的解析规则。 |
+
+部署侧另有自检接口（需用下面的步骤更新到含该接口的版本），一次说清运行时与源站两侧状态：
+
+```bash
+curl -s http://<你的域名或IP>/api/sync/diagnose
+curl -s http://<你的域名或IP>/api/sync/status
+```
+
+| 现象 | 含义与处置 |
+| --- | --- |
+| `/api/sync/diagnose` 返回 HTML 而不是 JSON | 请求没打到 Node 服务。多半是 systemd 的 `PORT` 与 nginx `proxy_pass` 端口不一致（仓库里两者都用 `4173`），或 nginx 没转发 `/api`。 |
+| `runtime.dataWritable` 为 `false` | 同上面的 `EACCES`，运行用户写不了 `public/data`。 |
+| `source.reachable` 为 `false` | 服务器出网被拦或源站不通，看 `source.error` 里的错误码。 |
+| `source.reachable` 为 `true` 但 `hasGoods` 为 `false` | 源站页面结构变了，需改解析规则。 |
+| `status.lastError` 有值 | 上次同步的真实报错，页面上也会以「服务端同步失败」提示出来。 |
+
+一个容易误判的正常情况：**商品没变化时同步脚本按设计不重写文件**（避免仓库侧每 5 分钟产生一次无意义提交），所以 `merchant.json` 的 `generated_at` 会长时间停在旧值。页面因此把两个时间分开显示——「数据生成」是 `generated_at`，「最后校验」是服务端最近一次成功抓取的时间。只有后者也不动，才说明同步真的坏了。
+
+#### 更新已有部署（拉新代码并重启）
+
+```bash
+cd /opt/roco-world
+git pull
+npm ci --legacy-peer-deps && npm run build     # 前端有改动时需要
+sudo systemctl restart roco-world && systemctl status roco-world --no-pager
+```
+
+只改了同步脚本时，`npm run build` 可跳过，但**必须重启服务**，因为脚本是在服务里按间隔调起的。
+
+> 用 root 执行上面的 `git pull` / `npm run build` 会把文件属主改成 root，而服务以 `User=` 指定的普通用户运行，同步就会因 `EACCES` 全部失败。要么全程用运行用户操作，要么每次部署后补一次 `sudo chown -R <运行用户>:<运行用户> /opt/roco-world`。
+
 #### 本机运行（开发或自用）
 
 ```bash
@@ -112,6 +163,7 @@ npm run serve     # 默认 http://127.0.0.1:4173
 - 精灵种族值 / 技能 / 配种 / 进化等结构化数据：游戏客户端数据包解包（`data-source/BinData`，不入库），由 `scripts/sync-pet-data.mjs` 处理。
 - 官方图鉴档案：《洛克王国：世界》官方图鉴接口，由 `scripts/sync-official-pokedex.mjs` 同步。
 - 远行商人每日轮换：好游快爆「每日远行商人查询器」，由 `scripts/sync-merchant-data.mjs` 抓取。
+- 少数两个 WIKI 均未收录立绘的精灵（如多灵、多灵主）：`rocokingdomworld.org` 图鉴页，由 `scripts/sync-pet-images.mjs` 作为末端兜底按中文名精确匹配取图。
 
 转载与二次分发时请保留本声明，并注明上述原始数据来源。
 
@@ -128,4 +180,4 @@ npm run serve     # 默认 http://127.0.0.1:4173
 | `npm run sync:merchant-data` | 同步远行商人当日 4 轮商品 |
 | `npm run sync:all` | 按依赖顺序跑完以上全部 |
 
-远行商人页始终显示「立即同步」按钮：点击后从仓库原始文件拉取最新那份数据，纯静态托管也能用（不需要服务器上有 Node 进程）。本机 `npm run serve` 时另有服务端每 5 分钟轮询源站并在页面取数据时做陈旧兜底。
+远行商人页始终显示「立即同步」按钮，点击后按两级顺序取数据：先请求服务端 `/api/sync` 现抓源站（方案 A 部署可用，最及时），失败或纯静态托管时退回仓库原始文件。之所以不只拉云端——云端那份受 GitHub Actions 排期限制，fork 仓库的 `schedule` 可能根本不触发，只拉云端就会出现「点了按钮却什么都没变」。服务端抓取失败时，失败原因会直接显示在页面上，不再只写进服务日志。

@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import fsSync from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseLuaTable } from "./lib/lua-table.mjs";
@@ -62,8 +63,18 @@ async function main() {
         ...collectSeriesImageNames(fashionSeriesEntries),
     ];
     const imageUrls = await resolveImageUrls(imageNames);
+    // sync-nrc-images 会把图片下载到本地并把 image_url 改写成 /assets/webp/...，
+    // 这里若直接写远程地址就会把那批本地路径冲掉（页面转而请求 BWIKI 图床，
+    // 受防盗链影响时好时坏）。所以先取回已本地化的地址，逐个优先沿用。
+    const localImageUrls = await collectLocalImageUrls();
 
-    applyImageUrls(fashions, medals, fashionSeriesEntries, imageUrls);
+    applyImageUrls(
+        fashions,
+        medals,
+        fashionSeriesEntries,
+        imageUrls,
+        localImageUrls,
+    );
 
     const generatedAt = buildBeijingTimestamp();
     const source = {
@@ -167,6 +178,7 @@ async function fetchModuleSource(moduleTitle) {
 
     const response = await fetch(`${WIKI_API_URL}?${params}`, {
         headers: HEADERS,
+        signal: AbortSignal.timeout(30000),
     });
 
     if (!response.ok) {
@@ -488,26 +500,116 @@ function collectSeriesImageNames(seriesEntries) {
     return [...names];
 }
 
-function applyImageUrls(fashions, medals, seriesEntries, imageUrls) {
+function applyImageUrls(
+    fashions,
+    medals,
+    seriesEntries,
+    imageUrls,
+    localImageUrls = new Map(),
+) {
+    // 本地已存图的沿用本地路径，源站确认缺图的保持 null，其余回落到远程地址。
+    // 用 has 而非 ?? 判定：缺图记录的值就是 null，?? 会把它当成未命中而写回死链。
+    const urlOf = (fileName) => {
+        if (!fileName) {
+            return null;
+        }
+
+        if (localImageUrls.has(fileName)) {
+            return localImageUrls.get(fileName);
+        }
+
+        return imageUrls[fileName] ?? null;
+    };
+
     for (const suit of fashions) {
         for (const variant of suit.variants) {
-            variant.image_url = variant.image
-                ? (imageUrls[variant.image] ?? null)
-                : null;
+            variant.image_url = urlOf(variant.image);
         }
 
         for (const bond of suit.bonds ?? []) {
-            bond.image_url = bond.icon ? (imageUrls[bond.icon] ?? null) : null;
+            bond.image_url = urlOf(bond.icon);
         }
     }
 
     for (const medal of medals) {
-        medal.image_url = medal.image ? (imageUrls[medal.image] ?? null) : null;
+        medal.image_url = urlOf(medal.image);
     }
 
     for (const series of seriesEntries) {
-        series.art_url = series.art ? (imageUrls[series.art] ?? null) : null;
-        series.icon_url = series.icon ? (imageUrls[series.icon] ?? null) : null;
+        series.art_url = urlOf(series.art);
+        series.icon_url = urlOf(series.icon);
+    }
+}
+
+// 从上一轮产物里回收「源文件名 -> 已定地址」的对应关系，含两类需要保住的状态：
+//   1. 已下载到本地的图，值是 /assets/webp/... —— 冲成远程地址会让页面转去请求
+//      BWIKI 图床，受防盗链影响时好时坏；
+//   2. sync-nrc-images 探到源站 404 的缺图，值是 null —— 冲成远程地址就成了死链。
+// 本地文件被清理过的项不记入，让它自然回落远程重新取。
+async function collectLocalImageUrls() {
+    const map = new Map();
+
+    const remember = (fileName, url) => {
+        if (!fileName) {
+            return;
+        }
+
+        // 源站已确认缺图：保持「无图」，别回落到 404 地址。
+        if (url === null) {
+            map.set(fileName, null);
+            return;
+        }
+
+        if (typeof url !== "string" || !url.startsWith("/")) {
+            return;
+        }
+
+        if (!fsSync.existsSync(path.join(rootDir, "public", url))) {
+            return;
+        }
+
+        map.set(fileName, url);
+    };
+
+    const fashions = await readJsonOrNull(
+        path.join(publicDataDir, "fashions.json"),
+    );
+
+    for (const suit of fashions?.entries ?? []) {
+        for (const variant of suit?.variants ?? []) {
+            remember(variant?.image, variant?.image_url);
+        }
+
+        for (const bond of suit?.bonds ?? []) {
+            remember(bond?.icon, bond?.image_url);
+        }
+    }
+
+    for (const series of fashions?.series ?? []) {
+        remember(series?.art, series?.art_url);
+        remember(series?.icon, series?.icon_url);
+    }
+
+    const medals = await readJsonOrNull(path.join(publicDataDir, "medals.json"));
+
+    for (const medal of medals?.entries ?? []) {
+        remember(medal?.image, medal?.image_url);
+    }
+
+    return map;
+}
+
+async function readJsonOrNull(filePath) {
+    const raw = await readFileOrNull(filePath);
+
+    if (!raw) {
+        return null;
+    }
+
+    try {
+        return JSON.parse(raw);
+    } catch {
+        return null;
     }
 }
 
