@@ -21,15 +21,19 @@ const OFFICIAL_DATA_URL =
 const SKILL_POOL_LABELS = { s: "升级", b: "血脉", t: "技能石" };
 
 async function main() {
+    // 部署机可能只铺 dist 而没有 public/data 目录，缺目录会让写盘直接 ENOENT。
+    await fs.mkdir(outputDir, { recursive: true });
+
     const response = await fetch(OFFICIAL_DATA_URL, {
         headers: { "User-Agent": "Mozilla/5.0 rocom-aoe-top-pokedex-sync" },
+        signal: AbortSignal.timeout(30000),
     });
 
     if (!response.ok) {
-        throw new Error(`官方图鉴数据请求失败: ${response.status}`);
+        throw new Error(`官方图鉴数据请求失败: HTTP ${response.status}`);
     }
 
-    const payload = await response.json();
+    const payload = JSON.parse(await response.text());
     const list = Array.isArray(payload?.l) ? payload.l : [];
     const details =
         payload?.d && typeof payload.d === "object" ? payload.d : {};

@@ -25,6 +25,9 @@ const ROUND_COUNT = 4;
 const RARE_ITEM_NAMES = new Set(["国王球", "棱镜球", "炫彩精灵蛋"]);
 
 async function main() {
+    // 部署包可能只带了 dist/，public/data 不存在时写盘会 ENOENT 直接失败。
+    await fs.mkdir(path.dirname(merchantOutputPath), { recursive: true });
+
     const html = await fetchMerchantPage();
     const items = parseMerchantItems(html);
 
@@ -144,16 +147,27 @@ function isSameRecordedRound(current, next) {
 }
 
 async function fetchMerchantPage() {
-    const response = await fetch(MERCHANT_PAGE_URL, {
-        headers: {
-            "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 rocom-aoe-top-merchant-sync",
-            Referer: "https://www.onebiji.com/",
-        },
-    });
+    let response;
+
+    try {
+        response = await fetch(MERCHANT_PAGE_URL, {
+            headers: {
+                "User-Agent":
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 rocom-aoe-top-merchant-sync",
+                Referer: "https://www.onebiji.com/",
+            },
+            signal: AbortSignal.timeout(20000),
+        });
+    } catch (error) {
+        // 出网失败（DNS/超时/被拦）时带上原始错误码，否则只看到一句
+        // 「同步失败」，分不清是服务器不通还是源站结构变了。
+        throw new Error(
+            `好游快爆工具页请求失败: ${error.message}，请确认部署环境能否出网访问 www.onebiji.com`,
+        );
+    }
 
     if (!response.ok) {
-        throw new Error(`好游快爆工具页请求失败: ${response.status}`);
+        throw new Error(`好游快爆工具页请求失败: HTTP ${response.status}`);
     }
 
     return response.text();
@@ -220,7 +234,9 @@ function parsePrice(liBlock) {
         return null;
     }
 
-    const value = Number(match[1].replace(/[,,]/g, ""));
+    // 源站价格带千分位，半角/全角逗号都出现过（如 36,000 / 36，000），
+    // 只去掉其中一种会让 Number() 得到 NaN，价格就白白显示成「未知」。
+    const value = Number(match[1].replace(/[,，]/g, ""));
     return Number.isFinite(value) ? value : null;
 }
 
