@@ -1,0 +1,48 @@
+name: 远行商人高频同步
+
+# 只抓远行商人当日轮换（单页请求、几秒完成），开市时段每 5 分钟一次。
+# 图鉴/立绘那类重活放在 daily-data-sync.yml 每天跑一次，避免高频撞 BWIKI 限频。
+#
+# 注意：GitHub 的 schedule 是「尽力而为」调度，高峰期会延迟数分钟甚至跳过，
+# 所以 */5 是上限而非准点保证。需要准点请在服务器侧挂定时器（见 README）。
+on:
+  schedule:
+    - cron: "*/5 0-15 * * *" # UTC 00:00-15:55 = 北京 08:00-23:55
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: merchant-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # 只跑一个无第三方依赖的抓取脚本，跳过 npm ci 省掉约 40 秒。
+      - name: 同步远行商人数据
+        run: node ./scripts/sync-merchant-data.mjs
+
+      - name: 提交数据更新
+        run: |
+          git config --local user.name "AutumnNazi"
+          git config --local user.email "104422820+AutumnNazi@users.noreply.github.com"
+
+          if git diff --quiet -- public/data; then
+            echo "数据无变化，跳过提交。"
+            exit 0
+          fi
+
+          git add public/data
+          git commit -m "🔄 data: 同步远行商人商品"
+          # 高频任务之间可能撞车：远端有新提交时先 rebase 再推，避免整轮失败。
+          git pull --rebase --autostash origin main
+          git push

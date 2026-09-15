@@ -35,10 +35,48 @@
 
 服务器上只放 `dist`、没有 Node 进程时，构建产物里的数据会**冻结在构建那一刻**。数据刷新靠两条链路配合：
 
-1. **仓库侧定时同步**：`.github/workflows/daily-data-sync.yml` 每 30 分钟（开市时段）跑一次抓取并提交到仓库。
+1. **仓库侧定时同步**：
+   - `.github/workflows/merchant-sync.yml`：只抓远行商人，开市时段（北京 08:00-23:55）**每 5 分钟**一次。
+   - `.github/workflows/daily-data-sync.yml`：图鉴档案 + 补图等重活，每天北京 04:20 一次（BWIKI 有限频，不适合高频）。
 2. **页面云端兜底**：远行商人页发现本地数据不是最新，就直接从仓库原始文件（`raw.githubusercontent.com`，带 CORS 头可跨域直取）读取更新的那一份，并标记「云端数据」。页面上的「立即同步」按钮就是手动触发这一步，纯静态托管下同样可用。
 
 所以**服务器不需要重新构建也能看到当天商品**；想让服务器本地那份也更新，重新拉取仓库并部署即可。
+
+> GitHub 的 `schedule` 是「尽力而为」调度：高峰期会延迟数分钟，偶尔跳过；fork 仓库的定时触发也可能被限制。所以每 5 分钟是**上限而非准点保证**。要准点，用下面的服务器侧定时器。
+
+#### 服务器侧定时器（准点刷新，推荐）
+
+服务器上跑一个常驻 Node 进程，自己按点抓取写盘，不依赖 GitHub。`deploy/` 下已备好配置：
+
+| 文件 | 用途 |
+| --- | --- |
+| `deploy/roco-world.service` | systemd 单元：常驻运行 `npm run serve`（静态服务 + 定时同步 + `/api/sync` 接口） |
+| `deploy/nginx-roco-world.conf` | nginx 配置：静态文件直发，`/data`、`/assets`、`/api` 反代给 Node |
+| `deploy/sync-cron.sh` | 不想动 nginx 时的替代方案：cron 只跑同步脚本，产物直接写进托管目录 |
+
+**方案 A：systemd + nginx 反代**（能用上「立即同步」按钮和陈旧兜底）
+
+```bash
+git clone https://github.com/AutumnNazi/Roco-World.git /opt/roco-world
+cd /opt/roco-world && npm ci --legacy-peer-deps && npm run build
+
+cp deploy/roco-world.service /etc/systemd/system/
+systemctl daemon-reload && systemctl enable --now roco-world
+
+cp deploy/nginx-roco-world.conf /etc/nginx/conf.d/
+nginx -t && systemctl reload nginx
+```
+
+**方案 B：只挂 cron**（不改 nginx，最小改动）
+
+```bash
+cp deploy/sync-cron.sh /opt/roco-world/
+crontab -e
+# 开市时段每 5 分钟抓一次商人数据
+*/5 8-23 * * * /opt/roco-world/sync-cron.sh >> /var/log/roco-sync.log 2>&1
+```
+
+两个方案都能做到准点，区别是方案 A 多了页面「立即同步」按钮和过期自动补抓。
 
 #### 本机运行（开发或自用）
 
