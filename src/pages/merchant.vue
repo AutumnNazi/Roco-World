@@ -3,6 +3,7 @@ import type {
     IMerchantHistoryPayload,
     IMerchantItem,
     IMerchantPayload,
+    IMerchantServerStatus,
 } from "@/lib/interface";
 import {
     Clock,
@@ -14,6 +15,7 @@ import {
     Sparkles,
     Store,
     Timer,
+    TriangleAlert,
 } from "lucide-vue-next";
 
 const route = useRoute();
@@ -74,6 +76,37 @@ const lastSyncText = computed(() => {
     // generated_at 形如 "2026-09-14 17:27:17"（北京时间），只展示到分钟即可。
     return generatedAt.slice(0, 16);
 });
+
+// 服务端同步状态（仅 nginx 反代 Node 服务的部署有这个接口）。
+// 必须和 generated_at 分开展示：商品没变化时同步脚本按设计不重写文件
+// （避免仓库侧每 5 分钟产生一次无意义提交），generated_at 因此会长时间停在旧值。
+// 只看它就会把「一直在正常校验、只是货没换」误判成「定时器死了」。
+const serverStatus = ref<IMerchantServerStatus | null>(null);
+
+const lastCheckedText = computed(() => {
+    const checkedAt = serverStatus.value?.lastSyncAt;
+    return checkedAt ? checkedAt.slice(0, 16) : "";
+});
+
+const serverErrorText = computed(() => serverStatus.value?.lastError ?? "");
+
+async function refreshServerStatus() {
+    try {
+        const response = await fetch(`/api/sync/status?t=${Date.now()}`, {
+            cache: "no-store",
+        });
+
+        // 纯静态托管会把这个路径 SPA 回退成 index.html，据此判定服务端不支持。
+        if (!(response.headers.get("content-type") ?? "").includes("application/json")) {
+            serverStatus.value = null;
+            return;
+        }
+
+        serverStatus.value = (await response.json()) as IMerchantServerStatus;
+    } catch {
+        serverStatus.value = null;
+    }
+}
 
 const activeRoundIndex = computed(() => {
     return selectedRoundIndex.value ?? currentRound.value?.index ?? rounds.value[0]?.index ?? null;
@@ -198,30 +231,83 @@ function isNewerPayload(
     return (next.generated_at ?? "") > (current.generated_at ?? "");
 }
 
+// 让服务端现抓一次。部署在 nginx 反代 Node 服务时这条最有效：
+// 云端兜底受 GitHub Actions 排期限制（fork 仓库的 schedule 可能根本不触发），
+// 只拉云端会出现「点了按钮却什么都没变」——因为云端那份本身也是旧的。
+// 纯静态托管没有这个接口，返回的是 index.html，据此判定不支持并跳过。
+async function requestServerSync() {
+    const response = await fetch(`/api/sync?t=${Date.now()}`, {
+        method: "POST",
+        cache: "no-store",
+    });
+
+    const contentType = response.headers.get("content-type") ?? "";
+
+    if (!contentType.includes("application/json")) {
+        return { supported: false, ok: false, message: "" };
+    }
+
+    const result = (await response.json()) as { ok?: boolean; message?: string };
+    return {
+        supported: true,
+        ok: result.ok === true,
+        message: result.message ?? "",
+    };
+}
+
 async function triggerManualSync() {
     if (syncRunning.value) {
         return;
     }
 
     syncRunning.value = true;
-    syncMessage.value = "正在从云端拉取…";
+    syncMessage.value = "正在同步…";
 
     try {
-        const remote = await fetchMerchantFrom(`${REMOTE_DATA_BASE}/merchant.json`);
+        // 先让服务端抓源站，成功后本地那份就是最新的，直接读回来。
+        const server = await requestServerSync().catch(() => ({
+            supported: false,
+            ok: false,
+            message: "",
+        }));
+
+        if (server.supported && server.ok) {
+            const local = await fetchMerchantFrom("/data/merchant.json").catch(
+                () => null,
+            );
+
+            if (local) {
+                applyMerchantPayload(local, false);
+                await refreshServerStatus();
+                syncMessage.value = "服务端已校验源站，数据为最新";
+                return;
+            }
+        }
+
+        // 服务端抓取失败时把真实原因带出来，否则失败和「已是最新」看起来一样。
+        const serverNote =
+            server.supported && !server.ok && server.message
+                ? `服务端同步失败：${server.message}；`
+                : "";
+
+        const remote = await fetchMerchantFrom(
+            `${REMOTE_DATA_BASE}/merchant.json`,
+        );
 
         if (isNewerPayload(remote, payload.value)) {
             applyMerchantPayload(remote, true);
-            syncMessage.value = `已更新到 ${remote.date}`;
+            syncMessage.value = `${serverNote}已更新到云端数据 ${remote.date}`;
         } else {
-            syncMessage.value = "已是最新数据";
+            syncMessage.value = `${serverNote}已是最新数据`;
         }
     } catch {
-        syncMessage.value = "云端拉取失败，请稍后重试";
+        syncMessage.value = "同步失败，请稍后重试";
     } finally {
+        await refreshServerStatus();
         syncRunning.value = false;
         window.setTimeout(() => {
             syncMessage.value = "";
-        }, 5000);
+        }, 8000);
     }
 }
 
@@ -365,12 +451,14 @@ document.title = "远行商人 - 洛克王国工具箱";
 
 onMounted(async () => {
     await loadMerchant();
+    void refreshServerStatus();
     applyRoundFromRoute();
     clockTimer = window.setInterval(() => {
         nowSec.value = Math.floor(Date.now() / 1000);
     }, 1000);
     refreshTimer = window.setInterval(() => {
         void refreshMerchantSilently();
+        void refreshServerStatus();
     }, REFRESH_INTERVAL_MS);
     document.addEventListener("visibilitychange", handleVisibilityChange);
 });
@@ -421,9 +509,16 @@ onBeforeUnmount(() => {
                         {{ countdownText }}
                     </Badge>
                     <Badge v-if="lastSyncText" variant="outline"
-                        class="rounded-[10px] border-border bg-white/5 px-3 py-1.5 text-sm text-foreground">
+                        class="rounded-[10px] border-border bg-white/5 px-3 py-1.5 text-sm text-foreground"
+                        title="数据本身的生成时间：商品没变化时同步不会重写文件，这个时间会保持不变">
                         <Clock class="mr-1.5 h-4 w-4" />
-                        最后同步 {{ lastSyncText }}
+                        数据生成 {{ lastSyncText }}
+                    </Badge>
+                    <Badge v-if="lastCheckedText" variant="outline"
+                        class="rounded-[10px] border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 text-sm text-emerald-200"
+                        title="服务端最近一次成功校验源站的时间">
+                        <RefreshCw class="mr-1.5 h-4 w-4" />
+                        最后校验 {{ lastCheckedText }}
                     </Badge>
                     <Button variant="outline" :disabled="syncRunning"
                         class="h-9 rounded-[10px] border-border bg-white/5 text-sm text-foreground hover:bg-accent"
@@ -437,6 +532,12 @@ onBeforeUnmount(() => {
                         云端数据
                     </Badge>
                     <span v-if="syncMessage" class="text-xs text-foreground">{{ syncMessage }}</span>
+                    <Badge v-if="serverErrorText" variant="outline"
+                        class="rounded-[10px] border-destructive/30 bg-destructive/10 px-3 py-1.5 text-sm text-destructive"
+                        :title="serverErrorText">
+                        <TriangleAlert class="mr-1.5 h-4 w-4" />
+                        服务端同步异常
+                    </Badge>
                     <Badge v-if="dataIsStale" variant="outline"
                         class="rounded-[10px] border-destructive/30 bg-destructive/10 px-3 py-1.5 text-sm text-destructive">
                         <Clock class="mr-1.5 h-4 w-4" />

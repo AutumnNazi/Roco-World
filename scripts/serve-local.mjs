@@ -92,7 +92,10 @@ function log(...args) {
 // ---- 数据同步调度 ----
 
 let merchantRunning = false;
-let lastMerchantSyncAt = 0;
+// 尝试时间与成功时间必须分开记：只记尝试时间会让「每次都失败」看起来像健康的定时同步。
+let lastMerchantAttemptAt = null;
+let lastMerchantSuccessAt = null;
+let lastMerchantError = null;
 
 function runScript(scriptName, label) {
     return new Promise((resolve) => {
@@ -108,12 +111,35 @@ function runScript(scriptName, label) {
         child.stderr.on("data", (chunk) => {
             output += chunk.toString();
         });
+        child.on("error", (error) => {
+            output += `spawn 失败: ${error.message}\n`;
+        });
         child.on("close", (code) => {
             const summary = output.trim().split("\n").slice(-3).join(" | ");
             log(`${label} 结束 (exit ${code}) ${summary}`);
-            resolve(code === 0);
+            resolve({ ok: code === 0, code, output: output.trim() });
         });
     });
+}
+
+// 子进程失败时把真实报错带回调用方：服务器上没法看日志时，
+// 「fetch failed」和「页面结构变更」是完全不同的处置方向，不能都糊成一句「详见服务日志」。
+function extractFailureMessage(output) {
+    const lines = output
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+    if (!lines.length) {
+        return "子进程无输出";
+    }
+
+    const errorLine =
+        lines.find((line) => /^(Error|TypeError|FetchError|AggregateError)\b/u.test(line)) ??
+        lines.find((line) => !line.startsWith("at ")) ??
+        lines[0];
+
+    return errorLine.slice(0, 300);
 }
 
 async function syncMerchant(reason) {
@@ -122,14 +148,72 @@ async function syncMerchant(reason) {
     }
 
     merchantRunning = true;
-    lastMerchantSyncAt = Date.now();
+    lastMerchantAttemptAt = beijingTimestamp();
 
     try {
         log(`同步远行商人数据（${reason}）…`);
-        const ok = await runScript("sync-merchant-data.mjs", "商人数据");
-        return { ok, message: ok ? "同步完成" : "同步失败，详见服务日志" };
+        const result = await runScript("sync-merchant-data.mjs", "商人数据");
+
+        if (result.ok) {
+            lastMerchantSuccessAt = beijingTimestamp();
+            lastMerchantError = null;
+            return { ok: true, message: "同步完成" };
+        }
+
+        lastMerchantError = extractFailureMessage(result.output);
+        return { ok: false, message: `同步失败：${lastMerchantError}` };
     } finally {
         merchantRunning = false;
+    }
+}
+
+// 源站可达性自检：同一份脚本在开发机能跑通、服务器上失败时，
+// 先分清是出网被拦（DNS/超时/封 IP）还是页面结构变了，再决定改代码还是改部署。
+async function probeMerchantSource() {
+    const started = Date.now();
+
+    try {
+        const response = await fetch(
+            "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
+            {
+                headers: {
+                    "User-Agent":
+                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 rocom-aoe-top-merchant-sync",
+                    Referer: "https://www.onebiji.com/",
+                },
+                signal: AbortSignal.timeout(20000),
+            },
+        );
+
+        const text = await response.text();
+
+        return {
+            reachable: response.ok,
+            status: response.status,
+            elapsedMs: Date.now() - started,
+            bodyLength: text.length,
+            hasGoods: text.includes("showShopinfo("),
+        };
+    } catch (error) {
+        return {
+            reachable: false,
+            status: null,
+            elapsedMs: Date.now() - started,
+            error: error.message,
+        };
+    }
+}
+
+// 盘上数据的时间戳才是「同步到底有没有生效」的唯一凭据，
+// 服务进程内的成功/失败计数只反映本次进程生命周期。
+function readMerchantGeneratedAt() {
+    try {
+        const payload = JSON.parse(
+            fs.readFileSync(path.join(publicDir, "data", "merchant.json"), "utf8"),
+        );
+        return typeof payload?.generated_at === "string" ? payload.generated_at : null;
+    } catch {
+        return null;
     }
 }
 
@@ -155,6 +239,16 @@ function isMerchantDataStale() {
         return Date.now() - generatedMs > MERCHANT_INTERVAL_MS;
     } catch {
         return true;
+    }
+}
+
+// 写盘权限自检：服务以非 root 用户跑、部署目录属主是别人时，抓取成功也会在写盘那步失败。
+function isMerchantDataWritable() {
+    try {
+        fs.accessSync(path.join(publicDir, "data"), fs.constants.W_OK);
+        return true;
+    } catch {
+        return false;
     }
 }
 
@@ -281,13 +375,38 @@ async function handleSyncRequest(request, response, urlPath) {
         response.end(body);
     };
 
+    // 源站自检：定位「服务器抓不到数据」是出网问题还是页面结构问题。
+    // 一并报运行时信息：抓取成功却写不进盘（部署目录属主与运行用户不一致）
+    // 这类环境差异从日志外面看不出来，必须让接口直接说清楚。
+    if (urlPath.startsWith("/api/sync/diagnose")) {
+        sendJson(200, {
+            checkedAt: beijingTimestamp(),
+            runtime: {
+                node: process.version,
+                platform: `${process.platform} ${process.arch}`,
+                cwd: rootDir,
+                scriptsPresent: fs.existsSync(
+                    path.join(rootDir, "scripts", "sync-merchant-data.mjs"),
+                ),
+                dataWritable: isMerchantDataWritable(),
+            },
+            source: await probeMerchantSource(),
+            lastError: lastMerchantError,
+        });
+        return;
+    }
+
     // 只读探测：页面加载时用它判断服务端是否支持手动同步。
     if (urlPath.startsWith("/api/sync/status")) {
         sendJson(200, {
             syncEnabled: !SYNC_DISABLED,
             running: merchantRunning,
             intervalMinutes: MERCHANT_INTERVAL_MS / 60000,
-            lastSyncAt: lastMerchantSyncAt ? beijingTimestamp() : null,
+            // lastSyncAt 保留字段名给旧前端，但语义改成「最后成功」，失败不再顶包。
+            lastSyncAt: lastMerchantSuccessAt,
+            lastAttemptAt: lastMerchantAttemptAt,
+            lastError: lastMerchantError,
+            dataGeneratedAt: readMerchantGeneratedAt(),
         });
         return;
     }
@@ -315,6 +434,7 @@ async function main() {
 
     server.listen(PORT, HOST, () => {
         log(`站点已启动: http://${HOST}:${PORT}`);
+        log(`Node ${process.version}（${process.platform} ${process.arch}）`);
         log(`/data 与 /assets 映射到 public（同步脚本写盘后即时生效）`);
     });
 

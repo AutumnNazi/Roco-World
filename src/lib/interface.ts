@@ -350,6 +350,19 @@ export interface IMerchantHistoryPayload {
     days: Record<string, IMerchantHistoryDay>;
 }
 
+// scripts/serve-local.mjs 的 /api/sync/status 返回值。
+// 纯静态托管没有这个接口（会被 SPA 回退成 index.html），页面据此判定是否展示服务端状态。
+export interface IMerchantServerStatus {
+    syncEnabled: boolean;
+    running: boolean;
+    intervalMinutes: number;
+    // 最后一次「成功」的时间；失败不再顶替成功，避免定时器全程失败却看着健康。
+    lastSyncAt: string | null;
+    lastAttemptAt: string | null;
+    lastError: string | null;
+    dataGeneratedAt: string | null;
+}
+
 export interface IFashionPiece {
     id: number;
     name: string;
