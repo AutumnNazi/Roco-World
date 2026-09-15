@@ -95,6 +95,10 @@ let merchantRunning = false;
 // 尝试时间与成功时间必须分开记：只记尝试时间会让「每次都失败」看起来像健康的定时同步。
 let lastMerchantAttemptAt = null;
 let lastMerchantSuccessAt = null;
+// 判断「数据是否该刷了」只能看最后一次成功校验的时刻，不能看盘上文件的
+// generated_at：商品没变化时同步脚本按设计不重写文件，generated_at 会长期不动，
+// 拿它当依据会让陈旧兜底每次都成立，页面每分钟取一次数据就抓一次源站。
+let lastMerchantCheckMs = 0;
 let lastMerchantError = null;
 
 function runScript(scriptName, label) {
@@ -156,6 +160,7 @@ async function syncMerchant(reason) {
 
         if (result.ok) {
             lastMerchantSuccessAt = beijingTimestamp();
+            lastMerchantCheckMs = Date.now();
             lastMerchantError = null;
             return { ok: true, message: "同步完成" };
         }
@@ -219,27 +224,17 @@ function readMerchantGeneratedAt() {
 
 // 数据陈旧兜底：定时器可能被休眠/重启打断，页面来取数据时再判一次，
 // 只要超过一个轮询周期就后台补一次，保证「打开页面就是新数据」。
+//
+// 判据是「最后一次成功校验的时刻」，不能用 merchant.json 的 generated_at：
+// 商品无变化时脚本按设计不重写文件，generated_at 会长期停在旧值，
+// 用它判断会永远为真——页面每分钟拉一次数据就抓一次源站，
+// 请求量比设定的间隔高出数倍，还会随在线页面数线性增长。
 function isMerchantDataStale() {
-    try {
-        const payload = JSON.parse(
-            fs.readFileSync(path.join(publicDir, "data", "merchant.json"), "utf8"),
-        );
-        const generatedAt = payload?.generated_at;
-
-        if (typeof generatedAt !== "string") {
-            return true;
-        }
-
-        const generatedMs = Date.parse(generatedAt.replace(" ", "T") + "+08:00");
-
-        if (!Number.isFinite(generatedMs)) {
-            return true;
-        }
-
-        return Date.now() - generatedMs > MERCHANT_INTERVAL_MS;
-    } catch {
+    if (!lastMerchantCheckMs) {
         return true;
     }
+
+    return Date.now() - lastMerchantCheckMs > MERCHANT_INTERVAL_MS;
 }
 
 // 写盘权限自检：服务以非 root 用户跑、部署目录属主是别人时，抓取成功也会在写盘那步失败。
