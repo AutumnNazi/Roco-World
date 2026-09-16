@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { mirrorFileToDist } from "./lib/mirror-to-dist.mjs";
 
 const currentFilePath = fileURLToPath(import.meta.url);
 const rootDir = path.resolve(path.dirname(currentFilePath), "..");
@@ -768,6 +769,10 @@ function cleanText(value) {
     const cleaned = value
         .replace(/<[^>]*>/g, "")
         .replace(/\r\n/g, "\n")
+        // 解包文案里混有零宽字符（如霹雳迪迪名字前的两个 U+200B）。JS 的 \s
+        // 不匹配 U+200B/200C/200D/2060，留着它们名字看着正常但按名匹配全落空：
+        // 精灵详情页用中文名去 pokedex-official.json 取官方描述/栖息地，会取不到。
+        .replace(/[\u200B-\u200D\u2060]/g, "")
         .replace(/\s+/g, " ")
         .trim();
 
@@ -2442,6 +2447,10 @@ async function syncMirroredTables() {
                     content,
                     "utf8",
                 );
+                await mirrorFileToDist(
+                    rootDir,
+                    path.join("data", "tables", fileName),
+                );
             } catch {
                 // Ignore table mirrors that do not have a BinData source.
             }
@@ -2467,25 +2476,53 @@ async function syncMirroredTables() {
     );
 }
 
-async function cleanGeneratedPetDetails() {
-    let fileNames = [];
-
+// 以 index.html 判断 dist 是否真的构建过，与 mirrorFileToDist 的判据保持一致。
+async function isDistBuilt() {
     try {
-        fileNames = await fs.readdir(petsDetailDir);
+        await fs.access(path.join(rootDir, "dist", "index.html"));
+        return true;
     } catch {
-        fileNames = [];
+        return false;
+    }
+}
+
+async function cleanGeneratedPetDetails() {
+    // dist 侧一并清空：某个精灵 id 不再产出时，只删 public 会让 dist 留下
+    // 一份永不更新的孤儿档案，纯静态部署下仍会被访问到。
+    // 仅在 dist 已构建（有 index.html）时才清，否则删了也没有镜像步骤补回来。
+    const dirs = [petsDetailDir];
+
+    if (await isDistBuilt()) {
+        dirs.push(path.join(rootDir, "dist", "data", "pets"));
     }
 
-    await Promise.all(
-        fileNames
-            .filter((fileName) => fileName.endsWith(".json"))
-            .map((fileName) => fs.unlink(path.join(petsDetailDir, fileName))),
-    );
+    for (const dir of dirs) {
+        let fileNames = [];
+
+        try {
+            fileNames = await fs.readdir(dir);
+        } catch {
+            continue;
+        }
+
+        await Promise.all(
+            fileNames
+                .filter((fileName) => fileName.endsWith(".json"))
+                .map((fileName) => fs.unlink(path.join(dir, fileName))),
+        );
+    }
 }
 
 async function writeJson(filePath, value, options = {}) {
     const indent = options.compact ? 0 : 4;
     await fs.writeFile(filePath, `${JSON.stringify(value, null, indent)}\n`, "utf8");
+    // 纯静态部署（deploy/sync-cron.sh、npm run preview）由 nginx 直接托管 dist，
+    // 只写 public 会让站点一直读构建那一刻的旧数据。其余同步脚本都做了镜像，
+    // 这里漏掉会让本脚本的修复在这类部署上完全看不到。
+    await mirrorFileToDist(
+        rootDir,
+        path.relative(path.join(rootDir, "public"), filePath),
+    );
 }
 
 function resolveItemIconId(row, labelType, skillById) {
