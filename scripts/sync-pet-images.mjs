@@ -43,7 +43,7 @@ const HEADERS = {
 async function main() {
     const onlyPetId = Number(process.argv[2] ?? "");
     const pets = await readImplementedPets(onlyPetId);
-    const nrcIllustrationById = await readNrcIllustrations();
+    const nrcIllustrations = await readNrcIllustrations();
     const existing = new Set(await fs.readdir(friendsDir));
 
     const missing = pets.filter(
@@ -69,7 +69,7 @@ async function main() {
         }
 
         try {
-            const found = await downloadPortrait(pet, nrcIllustrationById, () => {
+            const found = await downloadPortrait(pet, nrcIllustrations, () => {
                 externalPortraits ??= loadExternalPortraits();
                 return externalPortraits;
             });
@@ -114,12 +114,15 @@ async function main() {
 // 按顺序试各来源，**任一步失败都继续往下试**：
 // 某个源收录了条目但图已失效（404）时，只判空不再降级就永远补不上图。
 // 返回 null 表示各源都没有；返回 {buffer,url,origin} 表示拿到可用图片。
-async function downloadPortrait(pet, nrcIllustrationById, getExternalMap) {
+async function downloadPortrait(pet, nrcIllustrations, getExternalMap) {
     const sources = [
         {
             origin: "nrc",
             getUrl: () => {
-                const illustration = nrcIllustrationById.get(pet.displayName);
+                // 先按 game_id 对齐，再退回中文名：两站命名不一致的精灵只有 id 查得到。
+                const illustration =
+                    nrcIllustrations.byId.get(pet.id) ??
+                    nrcIllustrations.byName.get(pet.displayName);
                 return illustration
                     ? `${NRC_FILE_PATH}${encodeURIComponent(illustration)}`
                     : null;
@@ -242,22 +245,36 @@ function isImageBuffer(buffer) {
     return isWebp || isPng || isJpeg;
 }
 
+// nrc 档案按 game_id 建索引，同时保留中文名索引。
+// 两站对同一只精灵的命名常不一致（如 3233 本地叫「加尔」、nrc 叫「黑化加尔」），
+// 只按名字查会让这些精灵永远查不到立绘；game_id 才是两边稳定对齐的键。
 async function readNrcIllustrations() {
-    const map = new Map();
+    const byId = new Map();
+    const byName = new Map();
 
     try {
         const payload = JSON.parse(await fs.readFile(nrcPetsPath, "utf8"));
 
-        for (const entry of Object.values(payload?.entries ?? {})) {
-            if (entry?.name && entry?.illustration) {
-                map.set(entry.name, entry.illustration);
+        for (const [gameId, entry] of Object.entries(payload?.entries ?? {})) {
+            if (!entry?.illustration) {
+                continue;
+            }
+
+            const id = Number(gameId);
+
+            if (Number.isFinite(id)) {
+                byId.set(id, entry.illustration);
+            }
+
+            if (entry?.name) {
+                byName.set(entry.name, entry.illustration);
             }
         }
     } catch {
         // 没有 nrc 数据时只走 BWIKI。
     }
 
-    return map;
+    return { byId, byName };
 }
 
 async function readImplementedPets(onlyPetId) {
