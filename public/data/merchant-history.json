@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-15 21:50:51",
+    "updated_at": "2026-09-16 10:42:57",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -223,6 +223,37 @@
                             "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
                             "price": 36000,
                             "limit": 5,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-09-16": {
+            "date": "2026-09-16",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-09-16 08:00:00",
+                    "end_time": "2026-09-16 12:00:00",
+                    "recorded_at": "2026-09-16 10:42:57",
+                    "items": [
+                        {
+                            "name": "奇异血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "修改血脉的秘药，使精灵获得“奇异血脉”。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ab/eg7zj03u487p1l3f91z499w1nxdzac1.png/100px-Xuemai_qiyixuemai.png",
+                            "price": 160000,
+                            "limit": 3,
+                            "rare": false
+                        },
+                        {
+                            "name": "水系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量水系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c7/4fxef31uslze9psd9375td9zbqtbllv.png/100px-100123.png",
+                            "price": 500,
+                            "limit": 100,
                             "rare": false
                         }
                     ]
