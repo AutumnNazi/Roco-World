@@ -19,7 +19,13 @@ import type {
     IPetsDetail,
     IPetsMove,
     IMonsterTypeDetail,
+    IPersonality,
 } from "@/lib/interface";
+import {
+    decodeTeamSharePayload,
+    encodeTeamSharePayload,
+    serializeTeamShareState,
+} from "@/lib/teamShare";
 import {
     TEAM_ROLE_OPTIONS,
     buildSpeedReferenceEntries,
@@ -56,20 +62,6 @@ type StatKey =
     | "base_phy_def"
     | "base_mag_def"
     | "base_spd";
-
-interface IPersonality {
-    id: number;
-    name: string;
-    hp_mod_pct: number;
-    phy_atk_mod_pct: number;
-    mag_atk_mod_pct: number;
-    phy_def_mod_pct: number;
-    mag_def_mod_pct: number;
-    spd_mod_pct: number;
-    localized: {
-        zh: string;
-    };
-}
 
 interface IMagicItem {
     id: number;
@@ -891,7 +883,7 @@ const shareLink = computed(() => {
         return "";
     }
 
-    return `${currentPageUrl.value}?team=${encodeTeamState(teamState.value)}`;
+    return `${currentPageUrl.value}?team=${encodeTeamSharePayload(teamState.value)}`;
 });
 
 watch(
@@ -903,7 +895,7 @@ watch(
 
         window.localStorage.setItem(
             STORAGE_KEY,
-            JSON.stringify(serializeTeamState(state)),
+            JSON.stringify(serializeTeamShareState(state)),
         );
     },
     { deep: true },
@@ -969,20 +961,6 @@ function createEmptySlot(slotId: number): ITeamSlot {
         legacyTypeId: null,
         moveIds: [],
         roles: [],
-    };
-}
-
-function serializeTeamState(state: ITeamState) {
-    return {
-        name: state.name,
-        magicItemId: state.magicItemId,
-        slots: state.slots.map((slot) => ({
-            friendId: slot.friendId,
-            legacyTypeId: slot.legacyTypeId,
-            moveIds: slot.moveIds,
-            personalityId: slot.personalityId,
-            roles: slot.roles,
-        })),
     };
 }
 
@@ -1098,7 +1076,7 @@ async function resolveInitialTeamState() {
         typeof route.query.team === "string" ? route.query.team : "";
 
     if (routeTeam) {
-        const decoded = decodeTeamState(routeTeam);
+        const decoded = decodeTeamSharePayload(routeTeam);
 
         if (decoded) {
             return await hydrateTeamState(decoded);
@@ -2275,39 +2253,6 @@ async function copyShareLink() {
 
     await navigator.clipboard.writeText(shareLink.value);
     shareFeedback.value = "分享链接已复制。";
-}
-
-// 分享链接把队伍编码后手工拼进 ?team=，绕开了 router 的查询值编码。
-// 标准 base64 的 '+' 在 URL 查询里是空格的转义，vue-router 的 parseQuery 会把它
-// 还原成空格，载荷就此损坏（队伍名含中文时几乎必然出现 '+'）。改用 base64url：
-// '+/' 换成 '-_' 并去掉 '=' 填充，全字符集在查询串里都是安全的。
-function encodeTeamState(state: ITeamState) {
-    const json = JSON.stringify(serializeTeamState(state));
-    const bytes = new TextEncoder().encode(json);
-    let binary = "";
-
-    for (const byte of bytes) {
-        binary += String.fromCharCode(byte);
-    }
-
-    return btoa(binary)
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=+$/, "");
-}
-
-function decodeTeamState(payload: string) {
-    try {
-        // 兼容三种来源：新的 base64url、历史的标准 base64，以及历史链接被
-        // parseQuery 打成空格的 '+'（base64 字母表不含空格，还原不会误伤载荷）。
-        const normalized = payload.replace(/[-\s]/g, "+").replace(/_/g, "/");
-        const binary = atob(normalized);
-        const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
-        const json = new TextDecoder().decode(bytes);
-        return JSON.parse(json);
-    } catch {
-        return null;
-    }
 }
 
 function normalizeSelectValue(value: unknown) {
