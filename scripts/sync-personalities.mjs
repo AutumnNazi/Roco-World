@@ -75,8 +75,19 @@ async function main() {
 
     for (const entry of entries) {
         const parsed = parseDetail(entry.effect_detail);
-        entry[STAT_BY_LABEL[parsed.up]] = UP_VALUE;
-        entry[STAT_BY_LABEL[parsed.down]] = DOWN_VALUE;
+        const upKey = STAT_BY_LABEL[parsed.up];
+        const downKey = STAT_BY_LABEL[parsed.down];
+
+        // 属性名没落到已知的六项就直接失败：写进 entry[undefined] 不会报错，
+        // 产物里该性格的六项加成会全是 0，页面照常显示但数值静默失真。
+        if (!upKey || !downKey) {
+            throw new Error(
+                `性格「${entry.name}」的属性名无法映射（↑${parsed.up} / ↓${parsed.down}），源站文案可能已变更。`,
+            );
+        }
+
+        entry[upKey] = UP_VALUE;
+        entry[downKey] = DOWN_VALUE;
     }
 
     entries.sort((left, right) => left.id - right.id);
@@ -90,9 +101,14 @@ async function main() {
     }
 }
 
+// 只认 STAT_BY_LABEL 里的六个完整属性名。此前 [物魔]? 把前缀写成可选，
+// 「攻↑」这类缺前缀文本会匹配出 up="攻"，STAT_BY_LABEL 查不到而落到
+// entry[undefined]，六项加成全留 0：性格看着在表里，实际加成静默丢失。
+const STAT_LABEL_PATTERN = Object.keys(STAT_BY_LABEL).join("|");
+
 function parseDetail(detail) {
-    const up = detail.match(/([物魔]?[攻防]|速度|生命)\s*↑/u);
-    const down = detail.match(/([物魔]?[攻防]|速度|生命)\s*↓/u);
+    const up = detail.match(new RegExp(`(${STAT_LABEL_PATTERN})\\s*↑`, "u"));
+    const down = detail.match(new RegExp(`(${STAT_LABEL_PATTERN})\\s*↓`, "u"));
 
     if (!up || !down) {
         return null;
