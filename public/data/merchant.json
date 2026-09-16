@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-16 13:09:47",
+    "generated_at": "2026-09-16 20:59:53",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -77,7 +77,26 @@
             "end_ts": 1789560000,
             "start_time": "2026-09-16 16:00:00",
             "end_time": "2026-09-16 20:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "紫莲刚玉",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
+                    "price": 1000,
+                    "limit": 100,
+                    "rare": false
+                },
+                {
+                    "name": "魔力果",
+                    "category": "精灵喂养材料",
+                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                    "price": 6000,
+                    "limit": 20,
+                    "rare": false
+                }
+            ]
         },
         {
             "index": 4,
@@ -85,7 +104,17 @@
             "end_ts": 1789574400,
             "start_time": "2026-09-16 20:00:00",
             "end_time": "2026-09-17 00:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "魔力果",
+                    "category": "精灵喂养材料",
+                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                    "price": 6000,
+                    "limit": 20,
+                    "rare": false
+                }
+            ]
         }
     ]
 }
