@@ -77,25 +77,12 @@ async function recordHistory(payload) {
         return false;
     }
 
-    let history = { schema_version: 1, updated_at: null, days: {} };
-
-    try {
-        const previous = JSON.parse(await fs.readFile(merchantHistoryPath, "utf8"));
-
-        if (previous && typeof previous === "object" && previous.days) {
-            history = {
-                schema_version: 1,
-                updated_at: previous.updated_at ?? null,
-                days: previous.days,
-            };
-        }
-    } catch {
-        // 首次运行没有历史文件。
-    }
-
+    const history = await loadMergedHistory();
     const dayEntry = history.days[payload.date] ?? { date: payload.date, rounds: {} };
     const recordedAt = buildBeijingTimestamp();
-    let changed = false;
+    // 合并 dist 侧独有轮次本身就是一次改动，必须落盘，否则本轮无其他变化时
+    // 会走 return false 而把刚捞回来的历史又丢掉。
+    let changed = history.recovered;
 
     for (const round of payload.rounds) {
         if (!round.items.length) {
@@ -123,15 +110,78 @@ async function recordHistory(payload) {
 
     history.updated_at = recordedAt;
     history.days[payload.date] = dayEntry;
+    // recovered 只是本次合并的过程标记，不写进归档文件。
+    const { recovered: _recovered, ...persisted } = history;
     await fs.writeFile(
         merchantHistoryPath,
-        `${JSON.stringify(history, null, 4)}\n`,
+        `${JSON.stringify(persisted, null, 4)}\n`,
         "utf8",
     );
     console.log(
         `Recorded merchant history for ${payload.date} (rounds: ${Object.keys(dayEntry.rounds).sort().join(", ")}).`,
     );
     return true;
+}
+
+// 历史归档同时存在两份：public/data（git 跟踪）与 dist/data（gitignore）。
+// 高频同步下 dist 那份常比 public 更新，而 public 一旦被 git restore/checkout
+// 回滚到某次提交，就会把提交之后抓到的轮次整轮抹掉——本文件的 2026-09-15 第 4 轮
+// 就是这么丢的（只剩 dist 里有）。这里按轮次取 recorded_at 较新的一份合并，
+// 让任一侧被回滚都能从另一侧补回来。
+async function loadMergedHistory() {
+    const base = { schema_version: 1, updated_at: null, days: {}, recovered: false };
+    const publicHistory = await readHistoryOrNull(merchantHistoryPath);
+    const distHistory = await readHistoryOrNull(
+        path.join(rootDir, "dist", "data", "merchant-history.json"),
+    );
+
+    if (publicHistory) {
+        base.updated_at = publicHistory.updated_at ?? null;
+        base.days = publicHistory.days;
+    }
+
+    if (!distHistory) {
+        return base;
+    }
+
+    for (const [date, distDay] of Object.entries(distHistory.days)) {
+        const day = base.days[date] ?? { date, rounds: {} };
+
+        for (const [roundKey, distRound] of Object.entries(distDay?.rounds ?? {})) {
+            const current = day.rounds[roundKey];
+
+            if (!current || isNewerRecord(distRound, current)) {
+                day.rounds[roundKey] = distRound;
+                base.recovered = true;
+            }
+        }
+
+        base.days[date] = day;
+    }
+
+    if (base.recovered) {
+        console.log("已从 dist 侧历史补回被回滚的轮次。");
+    }
+
+    return base;
+}
+
+async function readHistoryOrNull(filePath) {
+    try {
+        const parsed = JSON.parse(await fs.readFile(filePath, "utf8"));
+
+        if (parsed && typeof parsed === "object" && parsed.days) {
+            return parsed;
+        }
+    } catch {
+        // 缺失或损坏都按「没有这份」处理。
+    }
+
+    return null;
+}
+
+function isNewerRecord(candidate, current) {
+    return String(candidate?.recorded_at ?? "") > String(current?.recorded_at ?? "");
 }
 
 function isSameRecordedRound(current, next) {
@@ -203,14 +253,18 @@ function parseMerchantItems(html) {
         const price = parsePrice(liBlock);
         const limit = parseLimit(liBlock);
 
+        const decodedName = decodeHtmlText(name);
+
         items.push({
-            name: decodeHtmlText(name),
+            name: decodedName,
             category: decodeHtmlText(category),
             description: decodeHtmlText(description),
             image: image || null,
             price,
             limit,
-            rare: RARE_ITEM_NAMES.has(name),
+            // 用解码后的名字比对：raw 里带首尾空白或零宽字符时，
+            // 稀有标记会静默失配，页面上国王球一类就不再高亮。
+            rare: RARE_ITEM_NAMES.has(decodedName),
             round_indexes: roundIndexes,
             round_end_ts: Number(endTimeSeconds),
         });
@@ -318,6 +372,9 @@ function decodeHtmlText(value) {
     return value
         .replace(/\\'/g, "'")
         .replace(/\\n/g, " ")
+        // 源站商品名混入过零宽字符，而 JS 的 \s 不匹配 U+200B/200C/200D/2060。
+        // 留着它们名字看着正常，但与 RARE_ITEM_NAMES 这类按名比对全都落空。
+        .replace(/[\u200B-\u200D\u2060]/g, "")
         .replace(/\s+/g, " ")
         .trim();
 }

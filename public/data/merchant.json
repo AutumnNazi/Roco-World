@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-16 10:42:57",
+    "generated_at": "2026-09-16 13:09:47",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -41,7 +41,35 @@
             "end_ts": 1789545600,
             "start_time": "2026-09-16 12:00:00",
             "end_time": "2026-09-16 16:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "首领血脉秘药",
+                    "category": "血脉修改道具",
+                    "description": "修改血脉的秘药，使特定精灵获得“首领血脉”。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/26/fbfwlhncfo0pstpv3ibxn1mj3ayg6di.png/100px-Xuemai_shoulingxuemai.png",
+                    "price": 320000,
+                    "limit": 1,
+                    "rare": false
+                },
+                {
+                    "name": "光系血脉秘药",
+                    "category": "血脉修改道具",
+                    "description": "能唤醒血脉力量的远古秘药，使精灵获得光系血脉。 “一段失落的秘密将被重拾。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/34/cz38ekzotsvoydbhmpo5wfxrqj2b3ny.png/100px-Xuemai_guang.png",
+                    "price": 160000,
+                    "limit": 3,
+                    "rare": false
+                },
+                {
+                    "name": "魔力果",
+                    "category": "精灵喂养材料",
+                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                    "price": 6000,
+                    "limit": 20,
+                    "rare": false
+                }
+            ]
         },
         {
             "index": 3,
