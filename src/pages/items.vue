@@ -47,6 +47,9 @@ const pageSize = ref(48);
 const expandedItemId = ref<number | null>(null);
 const highlightedItemId = ref<number | null>(null);
 const failedIcons = ref(new Set<number>());
+// 材料图标按 icon_id 记失败：同一个 icon_id 会被多个配方复用，
+// 按 id 记可以一次失败、处处退回首字占位。
+const failedMaterialIcons = ref(new Set<string>());
 
 let controller: AbortController | null = null;
 
@@ -182,8 +185,17 @@ function onIconError(itemId: number) {
 }
 
 function getMaterialIconSrc(iconId: string | null) {
-    if (!iconId) return null;
+    if (!iconId || failedMaterialIcons.value.has(iconId)) {
+        return null;
+    }
+
     return `/assets/webp/items/${iconId}.webp`;
+}
+
+function onMaterialIconError(iconId: string | null) {
+    if (iconId) {
+        failedMaterialIcons.value.add(iconId);
+    }
 }
 
 const itemById = computed(() => {
@@ -540,7 +552,8 @@ onBeforeUnmount(() => {
                                                                     <img v-if="getMaterialIconSrc(mat.icon_id)"
                                                                         :src="getMaterialIconSrc(mat.icon_id)!"
                                                                         :alt="mat.name"
-                                                                        class="h-4 w-4 object-contain" />
+                                                                        class="h-4 w-4 object-contain"
+                                                                        @error="onMaterialIconError(mat.icon_id)" />
                                                                     <span class="text-[11px] text-foreground">{{ mat.name }}</span>
                                                                 </button>
                                                             </HoverCardTrigger>
@@ -558,7 +571,8 @@ onBeforeUnmount(() => {
                                                                             <img v-if="getMaterialIconSrc(mat.icon_id)"
                                                                                 :src="getMaterialIconSrc(mat.icon_id)!"
                                                                                 :alt="mat.name"
-                                                                                class="h-full w-full object-contain p-1" />
+                                                                                class="h-full w-full object-contain p-1"
+                                                                                @error="onMaterialIconError(mat.icon_id)" />
                                                                             <span v-else :class="['text-sm font-bold', getQualityStyle(detail.quality).text]">
                                                                                 {{ mat.name.slice(0, 1) }}
                                                                             </span>
