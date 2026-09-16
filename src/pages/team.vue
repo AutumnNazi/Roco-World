@@ -2277,6 +2277,10 @@ async function copyShareLink() {
     shareFeedback.value = "分享链接已复制。";
 }
 
+// 分享链接把队伍编码后手工拼进 ?team=，绕开了 router 的查询值编码。
+// 标准 base64 的 '+' 在 URL 查询里是空格的转义，vue-router 的 parseQuery 会把它
+// 还原成空格，载荷就此损坏（队伍名含中文时几乎必然出现 '+'）。改用 base64url：
+// '+/' 换成 '-_' 并去掉 '=' 填充，全字符集在查询串里都是安全的。
 function encodeTeamState(state: ITeamState) {
     const json = JSON.stringify(serializeTeamState(state));
     const bytes = new TextEncoder().encode(json);
@@ -2286,12 +2290,18 @@ function encodeTeamState(state: ITeamState) {
         binary += String.fromCharCode(byte);
     }
 
-    return btoa(binary);
+    return btoa(binary)
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
 }
 
 function decodeTeamState(payload: string) {
     try {
-        const binary = atob(payload);
+        // 兼容三种来源：新的 base64url、历史的标准 base64，以及历史链接被
+        // parseQuery 打成空格的 '+'（base64 字母表不含空格，还原不会误伤载荷）。
+        const normalized = payload.replace(/[-\s]/g, "+").replace(/_/g, "/");
+        const binary = atob(normalized);
         const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
         const json = new TextDecoder().decode(bytes);
         return JSON.parse(json);
