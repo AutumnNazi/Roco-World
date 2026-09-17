@@ -55,4 +55,8 @@ jobs:
         run: |
           git add public/data public/assets
           git commit -m "🔄 data: 定时同步商人/图鉴/立绘数据"
+          # 两个 workflow 的 concurrency group 互不阻塞，手动触发本任务时可能
+          # 撞上 merchant-sync 刚推的提交。不 rebase 会让图鉴/立绘这次更新整轮丢掉，
+          # 要等到第二天 04:20 才有机会再入库。
+          git pull --rebase --autostash origin main
           git push

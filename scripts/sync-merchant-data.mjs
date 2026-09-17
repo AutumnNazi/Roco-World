@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { mirrorFileToDist } from "./lib/mirror-to-dist.mjs";
+import { withFileLock, writeFileAtomic } from "./lib/file-lock.mjs";
 
 const currentFilePath = fileURLToPath(import.meta.url);
 const rootDir = path.resolve(path.dirname(currentFilePath), "..");
@@ -72,11 +73,19 @@ async function main() {
 
 // 把当天各轮商品并入历史归档：只记录已上架的轮次，
 // 同一轮商品发生变化（源站补货/改价）时覆盖该轮，其余日期原样保留。
+// 读-改-写整段必须在锁内：历史档案是「读出全量、内存里改、整体覆盖」的形式，
+// 两个写入者交错时后写的那个会拿着陈旧快照覆盖掉先写的轮次（实测 8 并发只剩 1 轮）。
+// 现实中能撞上的组合是 README 方案 A 的常驻服务与方案 B 的 cron 同时部署，
+// 或有人在服务跑着时手动执行一次 npm run sync:merchant-data。
 async function recordHistory(payload) {
     if (!payload.date) {
         return false;
     }
 
+    return withFileLock(merchantHistoryPath, () => recordHistoryLocked(payload));
+}
+
+async function recordHistoryLocked(payload) {
     const history = await loadMergedHistory();
     const dayEntry = history.days[payload.date] ?? { date: payload.date, rounds: {} };
     const recordedAt = buildBeijingTimestamp();
@@ -112,10 +121,11 @@ async function recordHistory(payload) {
     history.days[payload.date] = dayEntry;
     // recovered 只是本次合并的过程标记，不写进归档文件。
     const { recovered: _recovered, ...persisted } = history;
-    await fs.writeFile(
+    // 已持锁，rename 不会与别的写入者争用；原子写让读取方（站点 fetch、
+    // mirrorFileToDist 的 copyFile）不会读到写一半的 JSON。
+    await writeFileAtomic(
         merchantHistoryPath,
         `${JSON.stringify(persisted, null, 4)}\n`,
-        "utf8",
     );
     console.log(
         `Recorded merchant history for ${payload.date} (rounds: ${Object.keys(dayEntry.rounds).sort().join(", ")}).`,
@@ -419,7 +429,9 @@ function buildBeijingTimestamp() {
 }
 
 async function writeJson(filePath, value) {
-    await fs.writeFile(filePath, `${JSON.stringify(value, null, 4)}\n`, "utf8");
+    // 站点会在同步进行中 fetch /data/merchant.json，mirrorFileToDist 也会 copyFile 它。
+    // 直接覆盖写有中间态，读到一半就是 JSON.parse 失败（页面表现为「数据加载失败」）。
+    await writeFileAtomic(filePath, `${JSON.stringify(value, null, 4)}\n`);
 }
 
 // 轮询式同步下，仅时间戳变化的内容不应产生提交；
