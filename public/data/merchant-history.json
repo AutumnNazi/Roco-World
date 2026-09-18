@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-18 15:35:45",
+    "updated_at": "2026-09-18 20:21:28",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -524,7 +524,7 @@
                     "index": 3,
                     "start_time": "2026-09-18 16:00:00",
                     "end_time": "2026-09-18 20:00:00",
-                    "recorded_at": "2026-09-18 10:34:08",
+                    "recorded_at": "2026-09-18 20:21:28",
                     "items": [
                         {
                             "name": "变幻球",
@@ -534,6 +534,24 @@
                             "price": 3000,
                             "limit": 200,
                             "rare": false
+                        },
+                        {
+                            "name": "翼系血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "能唤醒血脉力量的远古秘药，使精灵获得翼系血脉。 “一段失落的秘密将被重拾。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/1/15/t49aceulmmb7q8ohahmkyqvrdl2qdkz.png/100px-Xuemai_yi.png",
+                            "price": 160000,
+                            "limit": 3,
+                            "rare": false
+                        },
+                        {
+                            "name": "武系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量武系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/23/su3uy9wfjwvx3ifjaia3l88j2kjr5mg.png/100px-100135.png",
+                            "price": 500,
+                            "limit": 100,
+                            "rare": false
                         }
                     ]
                 },
@@ -541,7 +559,7 @@
                     "index": 4,
                     "start_time": "2026-09-18 20:00:00",
                     "end_time": "2026-09-19 00:00:00",
-                    "recorded_at": "2026-09-18 10:34:08",
+                    "recorded_at": "2026-09-18 20:21:28",
                     "items": [
                         {
                             "name": "变幻球",
@@ -550,6 +568,24 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "火系血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "能唤醒血脉力量的远古秘药，使精灵获得火系血脉。 “一段失落的秘密将被重拾。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/58/qcen9i07u68symzdrga5qcli2wq6ws3.png/100px-Xuemai_huo.png",
+                            "price": 160000,
+                            "limit": 3,
+                            "rare": false
+                        },
+                        {
+                            "name": "魔力果",
+                            "category": "精灵喂养材料",
+                            "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                            "price": 6000,
+                            "limit": 20,
                             "rare": false
                         }
                     ]
