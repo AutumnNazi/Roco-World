@@ -1,19 +1,19 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-18 20:21:28",
+    "generated_at": "2026-09-19 10:32:56",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
         "image_source": "哔哩哔哩洛克王国 BWIKI 图床"
     },
-    "date": "2026-09-18",
+    "date": "2026-09-19",
     "rounds": [
         {
             "index": 1,
-            "start_ts": 1789689600,
-            "end_ts": 1789704000,
-            "start_time": "2026-09-18 08:00:00",
-            "end_time": "2026-09-18 12:00:00",
+            "start_ts": 1789776000,
+            "end_ts": 1789790400,
+            "start_time": "2026-09-19 08:00:00",
+            "end_time": "2026-09-19 12:00:00",
             "items": [
                 {
                     "name": "变幻球",
@@ -22,60 +22,6 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
                     "price": 3000,
                     "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "奇异血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "修改血脉的秘药，使精灵获得“奇异血脉”。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ab/eg7zj03u487p1l3f91z499w1nxdzac1.png/100px-Xuemai_qiyixuemai.png",
-                    "price": 160000,
-                    "limit": 3,
-                    "rare": false
-                },
-                {
-                    "name": "魔力果",
-                    "category": "精灵喂养材料",
-                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-                    "price": 6000,
-                    "limit": 20,
-                    "rare": false
-                }
-            ]
-        },
-        {
-            "index": 2,
-            "start_ts": 1789704000,
-            "end_ts": 1789718400,
-            "start_time": "2026-09-18 12:00:00",
-            "end_time": "2026-09-18 16:00:00",
-            "items": [
-                {
-                    "name": "变幻球",
-                    "category": "特制咕噜球",
-                    "description": "更适合用来捕捉幻系、机械系的精灵。 难以揣测的球。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
-                    "price": 3000,
-                    "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "黄石榴石",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "魔力果",
-                    "category": "精灵喂养材料",
-                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-                    "price": 6000,
-                    "limit": 20,
                     "rare": false
                 },
                 {
@@ -90,11 +36,11 @@
             ]
         },
         {
-            "index": 3,
-            "start_ts": 1789718400,
-            "end_ts": 1789732800,
-            "start_time": "2026-09-18 16:00:00",
-            "end_time": "2026-09-18 20:00:00",
+            "index": 2,
+            "start_ts": 1789790400,
+            "end_ts": 1789804800,
+            "start_time": "2026-09-19 12:00:00",
+            "end_time": "2026-09-19 16:00:00",
             "items": [
                 {
                     "name": "变幻球",
@@ -104,33 +50,33 @@
                     "price": 3000,
                     "limit": 200,
                     "rare": false
-                },
+                }
+            ]
+        },
+        {
+            "index": 3,
+            "start_ts": 1789804800,
+            "end_ts": 1789819200,
+            "start_time": "2026-09-19 16:00:00",
+            "end_time": "2026-09-19 20:00:00",
+            "items": [
                 {
-                    "name": "翼系血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "能唤醒血脉力量的远古秘药，使精灵获得翼系血脉。 “一段失落的秘密将被重拾。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/1/15/t49aceulmmb7q8ohahmkyqvrdl2qdkz.png/100px-Xuemai_yi.png",
-                    "price": 160000,
-                    "limit": 3,
-                    "rare": false
-                },
-                {
-                    "name": "武系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量武系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/23/su3uy9wfjwvx3ifjaia3l88j2kjr5mg.png/100px-100135.png",
-                    "price": 500,
-                    "limit": 100,
+                    "name": "变幻球",
+                    "category": "特制咕噜球",
+                    "description": "更适合用来捕捉幻系、机械系的精灵。 难以揣测的球。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
+                    "price": 3000,
+                    "limit": 200,
                     "rare": false
                 }
             ]
         },
         {
             "index": 4,
-            "start_ts": 1789732800,
-            "end_ts": 1789747200,
-            "start_time": "2026-09-18 20:00:00",
-            "end_time": "2026-09-19 00:00:00",
+            "start_ts": 1789819200,
+            "end_ts": 1789833600,
+            "start_time": "2026-09-19 20:00:00",
+            "end_time": "2026-09-20 00:00:00",
             "items": [
                 {
                     "name": "变幻球",
@@ -139,24 +85,6 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
                     "price": 3000,
                     "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "火系血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "能唤醒血脉力量的远古秘药，使精灵获得火系血脉。 “一段失落的秘密将被重拾。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/58/qcen9i07u68symzdrga5qcli2wq6ws3.png/100px-Xuemai_huo.png",
-                    "price": 160000,
-                    "limit": 3,
-                    "rare": false
-                },
-                {
-                    "name": "魔力果",
-                    "category": "精灵喂养材料",
-                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-                    "price": 6000,
-                    "limit": 20,
                     "rare": false
                 }
             ]
