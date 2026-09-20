@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-19 20:01:30",
+    "updated_at": "2026-09-20 10:44:27",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -704,6 +704,106 @@
                             "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
                             "price": 36000,
                             "limit": 5,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-09-20": {
+            "date": "2026-09-20",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-09-20 08:00:00",
+                    "end_time": "2026-09-20 12:00:00",
+                    "recorded_at": "2026-09-20 10:44:27",
+                    "items": [
+                        {
+                            "name": "祝福项坠",
+                            "category": "珍稀货币",
+                            "description": "进行精灵赐福的必要道具。能容纳祝福的神秘容器。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_56aa7234a2be18aae2069541da77b555.png",
+                            "price": 800000,
+                            "limit": 1,
+                            "rare": false
+                        },
+                        {
+                            "name": "蓝晶碧玺",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "变幻球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉幻系、机械系的精灵。 难以揣测的球。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
+                            "price": 3000,
+                            "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
+                            "rare": false
+                        }
+                    ]
+                },
+                "2": {
+                    "index": 2,
+                    "start_time": "2026-09-20 12:00:00",
+                    "end_time": "2026-09-20 16:00:00",
+                    "recorded_at": "2026-09-20 10:44:27",
+                    "items": [
+                        {
+                            "name": "变幻球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉幻系、机械系的精灵。 难以揣测的球。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
+                            "price": 3000,
+                            "limit": 200,
+                            "rare": false
+                        }
+                    ]
+                },
+                "3": {
+                    "index": 3,
+                    "start_time": "2026-09-20 16:00:00",
+                    "end_time": "2026-09-20 20:00:00",
+                    "recorded_at": "2026-09-20 10:44:27",
+                    "items": [
+                        {
+                            "name": "变幻球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉幻系、机械系的精灵。 难以揣测的球。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
+                            "price": 3000,
+                            "limit": 200,
+                            "rare": false
+                        }
+                    ]
+                },
+                "4": {
+                    "index": 4,
+                    "start_time": "2026-09-20 20:00:00",
+                    "end_time": "2026-09-21 00:00:00",
+                    "recorded_at": "2026-09-20 10:44:27",
+                    "items": [
+                        {
+                            "name": "变幻球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉幻系、机械系的精灵。 难以揣测的球。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
+                            "price": 3000,
+                            "limit": 200,
                             "rare": false
                         }
                     ]
