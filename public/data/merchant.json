@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-20 15:56:02",
+    "generated_at": "2026-09-20 20:48:44",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -113,6 +113,15 @@
                     "price": 3000,
                     "limit": 200,
                     "rare": false
+                },
+                {
+                    "name": "炫彩蛋",
+                    "category": "精灵蛋",
+                    "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
+                    "price": 1600000,
+                    "limit": 1,
+                    "rare": false
                 }
             ]
         },
@@ -130,6 +139,24 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
                     "price": 3000,
                     "limit": 200,
+                    "rare": false
+                },
+                {
+                    "name": "光系粉尘",
+                    "category": "炼金材料",
+                    "description": "常见的炼金材料，蕴含少量光系魔法，是合成技能石的主要触媒。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9d/t3udkq5fg8o3je088pcjktersn9wfrt.png/100px-100124.png",
+                    "price": 500,
+                    "limit": 100,
+                    "rare": false
+                },
+                {
+                    "name": "普通粉尘",
+                    "category": "炼金材料",
+                    "description": "常见的炼金材料，蕴含少量普通系魔法，是合成技能石的主要触媒。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f6/ls7hsygs9epizddf1xo4q9b2iu1dduu.png/100px-100127.png",
+                    "price": 500,
+                    "limit": 100,
                     "rare": false
                 }
             ]
