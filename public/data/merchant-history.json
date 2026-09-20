@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-20 10:44:27",
+    "updated_at": "2026-09-20 15:56:02",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -761,7 +761,7 @@
                     "index": 2,
                     "start_time": "2026-09-20 12:00:00",
                     "end_time": "2026-09-20 16:00:00",
-                    "recorded_at": "2026-09-20 10:44:27",
+                    "recorded_at": "2026-09-20 15:56:02",
                     "items": [
                         {
                             "name": "变幻球",
@@ -770,6 +770,33 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "国王球",
+                            "category": "咕噜球",
+                            "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵，并能提升精灵的天分。 曾经专供贵族使用，制作方法不明。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2e/jygbfxpdbup5weqy4zaqnyaw2fcfyrq.png/100px-100255.png",
+                            "price": 160000,
+                            "limit": 3,
+                            "rare": true
+                        },
+                        {
+                            "name": "草系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量草系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/32/2k88qbruf464xxyf02grnmkvun59h0c.png/100px-100121.png",
+                            "price": 500,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "毒系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量毒系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/41/qgthc06nxeq4r9tzejgwwox7qtqp86w.png/100px-100133.png",
+                            "price": 500,
+                            "limit": 100,
                             "rare": false
                         }
                     ]
