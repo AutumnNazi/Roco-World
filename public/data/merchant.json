@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-21 10:41:39",
+    "generated_at": "2026-09-21 16:12:40",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -50,7 +50,26 @@
             "end_ts": 1789977600,
             "start_time": "2026-09-21 12:00:00",
             "end_time": "2026-09-21 16:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "幽系血脉秘药",
+                    "category": "血脉修改道具",
+                    "description": "能唤醒血脉力量的远古秘药，使精灵获得幽系血脉。 “一段失落的秘密将被重拾。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/31/79r65pjlgs4boduwx17vu94sqn0i2t6.png/100px-Xuemai_youling.png",
+                    "price": 160000,
+                    "limit": 3,
+                    "rare": false
+                },
+                {
+                    "name": "龙系粉尘",
+                    "category": "炼金材料",
+                    "description": "常见的炼金材料，蕴含少量龙系魔法，是合成技能石的主要触媒。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ac/jhbsu0fzhq55ivqu89qz81366owvkki.png/100px-100131.png",
+                    "price": 500,
+                    "limit": 100,
+                    "rare": false
+                }
+            ]
         },
         {
             "index": 3,
@@ -58,7 +77,17 @@
             "end_ts": 1789992000,
             "start_time": "2026-09-21 16:00:00",
             "end_time": "2026-09-21 20:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "黑晶琉璃",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+                    "price": 1000,
+                    "limit": 100,
+                    "rare": false
+                }
+            ]
         },
         {
             "index": 4,
