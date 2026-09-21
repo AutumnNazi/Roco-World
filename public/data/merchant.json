@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-21 16:12:40",
+    "generated_at": "2026-09-21 23:06:28",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -95,7 +95,17 @@
             "end_ts": 1790006400,
             "start_time": "2026-09-21 20:00:00",
             "end_time": "2026-09-22 00:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "冰系粉尘",
+                    "category": "炼金材料",
+                    "description": "常见的炼金材料，蕴含少量冰系魔法，是合成技能石的主要触媒。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a9/no0rhm0wky3e406wni3ef13z6zvfxw1.png/100px-100130.png",
+                    "price": 500,
+                    "limit": 100,
+                    "rare": false
+                }
+            ]
         }
     ]
 }
