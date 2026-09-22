@@ -1,29 +1,20 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-21 23:06:28",
+    "generated_at": "2026-09-22 10:42:56",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
         "image_source": "哔哩哔哩洛克王国 BWIKI 图床"
     },
-    "date": "2026-09-21",
+    "date": "2026-09-22",
     "rounds": [
         {
             "index": 1,
-            "start_ts": 1789948800,
-            "end_ts": 1789963200,
-            "start_time": "2026-09-21 08:00:00",
-            "end_time": "2026-09-21 12:00:00",
+            "start_ts": 1790035200,
+            "end_ts": 1790049600,
+            "start_time": "2026-09-22 08:00:00",
+            "end_time": "2026-09-22 12:00:00",
             "items": [
-                {
-                    "name": "黑晶琉璃",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
                 {
                     "name": "紫莲刚玉",
                     "category": "炼金材料",
@@ -32,80 +23,32 @@
                     "price": 1000,
                     "limit": 100,
                     "rare": false
-                },
-                {
-                    "name": "魔力果",
-                    "category": "精灵喂养材料",
-                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-                    "price": 6000,
-                    "limit": 20,
-                    "rare": false
                 }
             ]
         },
         {
             "index": 2,
-            "start_ts": 1789963200,
-            "end_ts": 1789977600,
-            "start_time": "2026-09-21 12:00:00",
-            "end_time": "2026-09-21 16:00:00",
-            "items": [
-                {
-                    "name": "幽系血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "能唤醒血脉力量的远古秘药，使精灵获得幽系血脉。 “一段失落的秘密将被重拾。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/31/79r65pjlgs4boduwx17vu94sqn0i2t6.png/100px-Xuemai_youling.png",
-                    "price": 160000,
-                    "limit": 3,
-                    "rare": false
-                },
-                {
-                    "name": "龙系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量龙系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ac/jhbsu0fzhq55ivqu89qz81366owvkki.png/100px-100131.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
+            "start_ts": 1790049600,
+            "end_ts": 1790064000,
+            "start_time": "2026-09-22 12:00:00",
+            "end_time": "2026-09-22 16:00:00",
+            "items": []
         },
         {
             "index": 3,
-            "start_ts": 1789977600,
-            "end_ts": 1789992000,
-            "start_time": "2026-09-21 16:00:00",
-            "end_time": "2026-09-21 20:00:00",
-            "items": [
-                {
-                    "name": "黑晶琉璃",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
+            "start_ts": 1790064000,
+            "end_ts": 1790078400,
+            "start_time": "2026-09-22 16:00:00",
+            "end_time": "2026-09-22 20:00:00",
+            "items": []
         },
         {
             "index": 4,
-            "start_ts": 1789992000,
-            "end_ts": 1790006400,
-            "start_time": "2026-09-21 20:00:00",
-            "end_time": "2026-09-22 00:00:00",
-            "items": [
-                {
-                    "name": "冰系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量冰系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a9/no0rhm0wky3e406wni3ef13z6zvfxw1.png/100px-100130.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
+            "start_ts": 1790078400,
+            "end_ts": 1790092800,
+            "start_time": "2026-09-22 20:00:00",
+            "end_time": "2026-09-23 00:00:00",
+            "items": []
         }
     ]
 }
