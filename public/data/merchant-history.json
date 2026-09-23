@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-22 21:06:54",
+    "updated_at": "2026-09-23 10:43:17",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -1051,6 +1051,28 @@
                             "limit": 100,
                             "rare": false
                         },
+                        {
+                            "name": "黄石榴石",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-09-23": {
+            "date": "2026-09-23",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-09-23 08:00:00",
+                    "end_time": "2026-09-23 12:00:00",
+                    "recorded_at": "2026-09-23 10:43:17",
+                    "items": [
                         {
                             "name": "黄石榴石",
                             "category": "炼金材料",
