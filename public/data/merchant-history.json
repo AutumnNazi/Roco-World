@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-23 15:58:36",
+    "updated_at": "2026-09-23 21:26:12",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -1106,6 +1106,49 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
                             "price": 6000,
                             "limit": 20,
+                            "rare": false
+                        }
+                    ]
+                },
+                "3": {
+                    "index": 3,
+                    "start_time": "2026-09-23 16:00:00",
+                    "end_time": "2026-09-23 20:00:00",
+                    "recorded_at": "2026-09-23 21:26:12",
+                    "items": [
+                        {
+                            "name": "火系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量火系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a6/a5v60zfm9ivyri166tias4efjnp5vyt.png/100px-100122.png",
+                            "price": 500,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                },
+                "4": {
+                    "index": 4,
+                    "start_time": "2026-09-23 20:00:00",
+                    "end_time": "2026-09-24 00:00:00",
+                    "recorded_at": "2026-09-23 21:26:12",
+                    "items": [
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
+                            "rare": false
+                        },
+                        {
+                            "name": "幻系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量幻系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/24/sgt0lc5llwfvlcmjhr1awhwq6st35fj.png/100px-100139.png",
+                            "price": 500,
+                            "limit": 100,
                             "rare": false
                         }
                     ]
