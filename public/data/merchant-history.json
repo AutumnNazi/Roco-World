@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-23 21:26:12",
+    "updated_at": "2026-09-24 10:32:58",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -1148,6 +1148,28 @@
                             "description": "常见的炼金材料，蕴含少量幻系魔法，是合成技能石的主要触媒。",
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/24/sgt0lc5llwfvlcmjhr1awhwq6st35fj.png/100px-100139.png",
                             "price": 500,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-09-24": {
+            "date": "2026-09-24",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-09-24 08:00:00",
+                    "end_time": "2026-09-24 12:00:00",
+                    "recorded_at": "2026-09-24 10:32:58",
+                    "items": [
+                        {
+                            "name": "蓝晶碧玺",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
+                            "price": 1000,
                             "limit": 100,
                             "rare": false
                         }
