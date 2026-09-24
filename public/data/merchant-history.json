@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-24 10:32:58",
+    "updated_at": "2026-09-24 15:46:58",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -1170,6 +1170,41 @@
                             "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
                             "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                },
+                "2": {
+                    "index": 2,
+                    "start_time": "2026-09-24 12:00:00",
+                    "end_time": "2026-09-24 16:00:00",
+                    "recorded_at": "2026-09-24 15:46:58",
+                    "items": [
+                        {
+                            "name": "蓝晶碧玺",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
+                            "rare": false
+                        },
+                        {
+                            "name": "普通粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量普通系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f6/ls7hsygs9epizddf1xo4q9b2iu1dduu.png/100px-100127.png",
+                            "price": 500,
                             "limit": 100,
                             "rare": false
                         }
