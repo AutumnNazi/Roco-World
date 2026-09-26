@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-25 21:47:03",
+    "updated_at": "2026-09-26 10:53:05",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -1421,6 +1421,88 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
                             "price": 6000,
                             "limit": 20,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-09-26": {
+            "date": "2026-09-26",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-09-26 08:00:00",
+                    "end_time": "2026-09-26 12:00:00",
+                    "recorded_at": "2026-09-26 10:53:05",
+                    "items": [
+                        {
+                            "name": "网兜球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
+                            "price": 3000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
+                            "rare": false
+                        }
+                    ]
+                },
+                "2": {
+                    "index": 2,
+                    "start_time": "2026-09-26 12:00:00",
+                    "end_time": "2026-09-26 16:00:00",
+                    "recorded_at": "2026-09-26 10:53:05",
+                    "items": [
+                        {
+                            "name": "网兜球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
+                            "price": 3000,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                },
+                "3": {
+                    "index": 3,
+                    "start_time": "2026-09-26 16:00:00",
+                    "end_time": "2026-09-26 20:00:00",
+                    "recorded_at": "2026-09-26 10:53:05",
+                    "items": [
+                        {
+                            "name": "网兜球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
+                            "price": 3000,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                },
+                "4": {
+                    "index": 4,
+                    "start_time": "2026-09-26 20:00:00",
+                    "end_time": "2026-09-27 00:00:00",
+                    "recorded_at": "2026-09-26 10:53:05",
+                    "items": [
+                        {
+                            "name": "网兜球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
+                            "price": 3000,
+                            "limit": 100,
                             "rare": false
                         }
                     ]
