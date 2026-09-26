@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-09-26 16:02:11",
+    "updated_at": "2026-09-26 20:59:09",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -1530,7 +1530,7 @@
                     "index": 4,
                     "start_time": "2026-09-26 20:00:00",
                     "end_time": "2026-09-27 00:00:00",
-                    "recorded_at": "2026-09-26 10:53:05",
+                    "recorded_at": "2026-09-26 20:59:09",
                     "items": [
                         {
                             "name": "网兜球",
@@ -1539,6 +1539,15 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
                             "price": 3000,
                             "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "魔力果",
+                            "category": "精灵喂养材料",
+                            "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                            "price": 6000,
+                            "limit": 20,
                             "rare": false
                         }
                     ]
