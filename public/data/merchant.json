@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-28 17:10:52",
+    "generated_at": "2026-09-29 01:38:26",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -77,7 +77,26 @@
             "end_ts": 1790611200,
             "start_time": "2026-09-28 20:00:00",
             "end_time": "2026-09-29 00:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "蓝晶碧玺",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
+                    "price": 1000,
+                    "limit": 100,
+                    "rare": false
+                },
+                {
+                    "name": "紫莲刚玉",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
+                    "price": 1000,
+                    "limit": 100,
+                    "rare": false
+                }
+            ]
         }
     ]
 }
