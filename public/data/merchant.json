@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-28 10:54:50",
+    "generated_at": "2026-09-28 17:10:52",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -41,7 +41,17 @@
             "end_ts": 1790582400,
             "start_time": "2026-09-28 12:00:00",
             "end_time": "2026-09-28 16:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "蓝晶碧玺",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
+                    "price": 1000,
+                    "limit": 100,
+                    "rare": false
+                }
+            ]
         },
         {
             "index": 3,
@@ -49,7 +59,17 @@
             "end_ts": 1790596800,
             "start_time": "2026-09-28 16:00:00",
             "end_time": "2026-09-28 20:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "电系粉尘",
+                    "category": "炼金材料",
+                    "description": "常见的炼金材料，蕴含少量电系魔法，是合成技能石的主要触媒。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2f/2sux0g15uo8at77bwpoxrg32rv3l4dz.png/100px-100132.png",
+                    "price": 500,
+                    "limit": 100,
+                    "rare": false
+                }
+            ]
         },
         {
             "index": 4,
