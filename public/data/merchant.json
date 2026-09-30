@@ -1,73 +1,19 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-09-30 00:28:44",
+    "generated_at": "2026-09-30 11:21:18",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
         "image_source": "哔哩哔哩洛克王国 BWIKI 图床"
     },
-    "date": "2026-09-29",
+    "date": "2026-09-30",
     "rounds": [
         {
             "index": 1,
-            "start_ts": 1790640000,
-            "end_ts": 1790654400,
-            "start_time": "2026-09-29 08:00:00",
-            "end_time": "2026-09-29 12:00:00",
-            "items": [
-                {
-                    "name": "恶系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量恶系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/e/ec/mbugzr13ol6m9ay5focjw9kctt14g5h.png/100px-100125.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "萌系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量萌系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/26/58llleh28pa33kxom2cub80nnf0y9zd.png/100px-100137.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
-        },
-        {
-            "index": 2,
-            "start_ts": 1790654400,
-            "end_ts": 1790668800,
-            "start_time": "2026-09-29 12:00:00",
-            "end_time": "2026-09-29 16:00:00",
-            "items": [
-                {
-                    "name": "国王球",
-                    "category": "咕噜球",
-                    "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵，并能提升精灵的天分。 曾经专供贵族使用，制作方法不明。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2e/jygbfxpdbup5weqy4zaqnyaw2fcfyrq.png/100px-100255.png",
-                    "price": 160000,
-                    "limit": 3,
-                    "rare": true
-                },
-                {
-                    "name": "魔力果",
-                    "category": "精灵喂养材料",
-                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-                    "price": 6000,
-                    "limit": 20,
-                    "rare": false
-                }
-            ]
-        },
-        {
-            "index": 3,
-            "start_ts": 1790668800,
-            "end_ts": 1790683200,
-            "start_time": "2026-09-29 16:00:00",
-            "end_time": "2026-09-29 20:00:00",
+            "start_ts": 1790726400,
+            "end_ts": 1790740800,
+            "start_time": "2026-09-30 08:00:00",
+            "end_time": "2026-09-30 12:00:00",
             "items": [
                 {
                     "name": "黄石榴石",
@@ -79,32 +25,14 @@
                     "rare": false
                 },
                 {
-                    "name": "武系血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "能唤醒血脉力量的远古秘药，使精灵获得武系血脉。 “一段失落的秘密将被重拾。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/6/60/07uvni7t86lah2a9c219z9x8smkdnzj.png/100px-Xuemai_wu.png",
-                    "price": 160000,
-                    "limit": 3,
+                    "name": "蓝晶碧玺",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
+                    "price": 1000,
+                    "limit": 100,
                     "rare": false
                 },
-                {
-                    "name": "魔力果",
-                    "category": "精灵喂养材料",
-                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-                    "price": 6000,
-                    "limit": 20,
-                    "rare": false
-                }
-            ]
-        },
-        {
-            "index": 4,
-            "start_ts": 1790683200,
-            "end_ts": 1790697600,
-            "start_time": "2026-09-29 20:00:00",
-            "end_time": "2026-09-30 00:00:00",
-            "items": [
                 {
                     "name": "紫莲刚玉",
                     "category": "炼金材料",
@@ -113,26 +41,32 @@
                     "price": 1000,
                     "limit": 100,
                     "rare": false
-                },
-                {
-                    "name": "魔力果",
-                    "category": "精灵喂养材料",
-                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-                    "price": 6000,
-                    "limit": 20,
-                    "rare": false
-                },
-                {
-                    "name": "火系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量火系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a6/a5v60zfm9ivyri166tias4efjnp5vyt.png/100px-100122.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
                 }
             ]
+        },
+        {
+            "index": 2,
+            "start_ts": 1790740800,
+            "end_ts": 1790755200,
+            "start_time": "2026-09-30 12:00:00",
+            "end_time": "2026-09-30 16:00:00",
+            "items": []
+        },
+        {
+            "index": 3,
+            "start_ts": 1790755200,
+            "end_ts": 1790769600,
+            "start_time": "2026-09-30 16:00:00",
+            "end_time": "2026-09-30 20:00:00",
+            "items": []
+        },
+        {
+            "index": 4,
+            "start_ts": 1790769600,
+            "end_ts": 1790784000,
+            "start_time": "2026-09-30 20:00:00",
+            "end_time": "2026-10-01 00:00:00",
+            "items": []
         }
     ]
 }
