@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-01 00:07:01",
+    "updated_at": "2026-10-01 11:27:35",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -2029,6 +2029,169 @@
                             "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
                             "price": 36000,
                             "limit": 5,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-10-01": {
+            "date": "2026-10-01",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-10-01 08:00:00",
+                    "end_time": "2026-10-01 12:00:00",
+                    "recorded_at": "2026-10-01 11:27:35",
+                    "items": [
+                        {
+                            "name": "棱镜球",
+                            "category": "特制咕噜球",
+                            "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵。 蕴含改变精灵外观、提升天分的神秘力量，还能使其个体资质变为极致。 棱镜中反射出无数个世界。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9b/kkwd244su5nzzg5pj99volbt84ohied.png/100px-100795.png",
+                            "price": 3200000,
+                            "limit": 1,
+                            "rare": true
+                        },
+                        {
+                            "name": "黑晶琉璃",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "可可果球",
+                            "category": "特制咕噜球",
+                            "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                            "price": 50,
+                            "limit": 30,
+                            "rare": false
+                        },
+                        {
+                            "name": "美妙球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉萌系、普通系的精灵。 活泼的球，开心的精灵会被吸引。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
+                            "price": 3000,
+                            "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
+                            "rare": false
+                        }
+                    ]
+                },
+                "2": {
+                    "index": 2,
+                    "start_time": "2026-10-01 12:00:00",
+                    "end_time": "2026-10-01 16:00:00",
+                    "recorded_at": "2026-10-01 11:27:35",
+                    "items": [
+                        {
+                            "name": "棱镜球",
+                            "category": "特制咕噜球",
+                            "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵。 蕴含改变精灵外观、提升天分的神秘力量，还能使其个体资质变为极致。 棱镜中反射出无数个世界。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9b/kkwd244su5nzzg5pj99volbt84ohied.png/100px-100795.png",
+                            "price": 3200000,
+                            "limit": 1,
+                            "rare": true
+                        },
+                        {
+                            "name": "可可果球",
+                            "category": "特制咕噜球",
+                            "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                            "price": 50,
+                            "limit": 30,
+                            "rare": false
+                        },
+                        {
+                            "name": "美妙球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉萌系、普通系的精灵。 活泼的球，开心的精灵会被吸引。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
+                            "price": 3000,
+                            "limit": 200,
+                            "rare": false
+                        }
+                    ]
+                },
+                "3": {
+                    "index": 3,
+                    "start_time": "2026-10-01 16:00:00",
+                    "end_time": "2026-10-01 20:00:00",
+                    "recorded_at": "2026-10-01 11:27:35",
+                    "items": [
+                        {
+                            "name": "棱镜球",
+                            "category": "特制咕噜球",
+                            "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵。 蕴含改变精灵外观、提升天分的神秘力量，还能使其个体资质变为极致。 棱镜中反射出无数个世界。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9b/kkwd244su5nzzg5pj99volbt84ohied.png/100px-100795.png",
+                            "price": 3200000,
+                            "limit": 1,
+                            "rare": true
+                        },
+                        {
+                            "name": "可可果球",
+                            "category": "特制咕噜球",
+                            "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                            "price": 50,
+                            "limit": 30,
+                            "rare": false
+                        },
+                        {
+                            "name": "美妙球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉萌系、普通系的精灵。 活泼的球，开心的精灵会被吸引。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
+                            "price": 3000,
+                            "limit": 200,
+                            "rare": false
+                        }
+                    ]
+                },
+                "4": {
+                    "index": 4,
+                    "start_time": "2026-10-01 20:00:00",
+                    "end_time": "2026-10-02 00:00:00",
+                    "recorded_at": "2026-10-01 11:27:35",
+                    "items": [
+                        {
+                            "name": "棱镜球",
+                            "category": "特制咕噜球",
+                            "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵。 蕴含改变精灵外观、提升天分的神秘力量，还能使其个体资质变为极致。 棱镜中反射出无数个世界。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9b/kkwd244su5nzzg5pj99volbt84ohied.png/100px-100795.png",
+                            "price": 3200000,
+                            "limit": 1,
+                            "rare": true
+                        },
+                        {
+                            "name": "可可果球",
+                            "category": "特制咕噜球",
+                            "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                            "price": 50,
+                            "limit": 30,
+                            "rare": false
+                        },
+                        {
+                            "name": "美妙球",
+                            "category": "特制咕噜球",
+                            "description": "更适合用来捕捉萌系、普通系的精灵。 活泼的球，开心的精灵会被吸引。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
+                            "price": 3000,
+                            "limit": 200,
                             "rare": false
                         }
                     ]
