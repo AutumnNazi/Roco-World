@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-01 11:27:35",
+    "updated_at": "2026-10-01 18:22:25",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -2095,7 +2095,7 @@
                     "index": 2,
                     "start_time": "2026-10-01 12:00:00",
                     "end_time": "2026-10-01 16:00:00",
-                    "recorded_at": "2026-10-01 11:27:35",
+                    "recorded_at": "2026-10-01 18:22:25",
                     "items": [
                         {
                             "name": "棱镜球",
@@ -2122,6 +2122,15 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "龙系血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "能唤醒血脉力量的远古秘药，使精灵获得龙系血脉。 “一段失落的秘密将被重拾。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/88wm27imouqbkxv6d9tlof24xs20nrv.png/100px-Xuemai_long.png",
+                            "price": 160000,
+                            "limit": 3,
                             "rare": false
                         }
                     ]
@@ -2130,7 +2139,7 @@
                     "index": 3,
                     "start_time": "2026-10-01 16:00:00",
                     "end_time": "2026-10-01 20:00:00",
-                    "recorded_at": "2026-10-01 11:27:35",
+                    "recorded_at": "2026-10-01 18:22:25",
                     "items": [
                         {
                             "name": "棱镜球",
@@ -2157,6 +2166,24 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "武系血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "能唤醒血脉力量的远古秘药，使精灵获得武系血脉。 “一段失落的秘密将被重拾。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/6/60/07uvni7t86lah2a9c219z9x8smkdnzj.png/100px-Xuemai_wu.png",
+                            "price": 160000,
+                            "limit": 3,
+                            "rare": false
+                        },
+                        {
+                            "name": "恶系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量恶系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/e/ec/mbugzr13ol6m9ay5focjw9kctt14g5h.png/100px-100125.png",
+                            "price": 500,
+                            "limit": 100,
                             "rare": false
                         }
                     ]
