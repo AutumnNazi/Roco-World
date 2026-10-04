@@ -1,20 +1,38 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-10-03 22:17:28",
+    "generated_at": "2026-10-04 11:40:09",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
         "image_source": "哔哩哔哩洛克王国 BWIKI 图床"
     },
-    "date": "2026-10-03",
+    "date": "2026-10-04",
     "rounds": [
         {
             "index": 1,
-            "start_ts": 1790985600,
-            "end_ts": 1791000000,
-            "start_time": "2026-10-03 08:00:00",
-            "end_time": "2026-10-03 12:00:00",
+            "start_ts": 1791072000,
+            "end_ts": 1791086400,
+            "start_time": "2026-10-04 08:00:00",
+            "end_time": "2026-10-04 12:00:00",
             "items": [
+                {
+                    "name": "黑晶琉璃",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+                    "price": 1000,
+                    "limit": 100,
+                    "rare": false
+                },
+                {
+                    "name": "可可果球",
+                    "category": "特制咕噜球",
+                    "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                    "price": 50,
+                    "limit": 30,
+                    "rare": false
+                },
                 {
                     "name": "美妙球",
                     "category": "特制咕噜球",
@@ -25,23 +43,32 @@
                     "rare": false
                 },
                 {
-                    "name": "神奇的蛋",
-                    "category": "精灵蛋",
-                    "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-                    "price": 36000,
-                    "limit": 5,
+                    "name": "翼系粉尘",
+                    "category": "炼金材料",
+                    "description": "常见的炼金材料，蕴含少量翼系魔法，是合成技能石的主要触媒。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/35/5mp1ohcm72pgsxax5kq3x1aophw3lh0.png/100px-100136.png",
+                    "price": 500,
+                    "limit": 100,
                     "rare": false
                 }
             ]
         },
         {
             "index": 2,
-            "start_ts": 1791000000,
-            "end_ts": 1791014400,
-            "start_time": "2026-10-03 12:00:00",
-            "end_time": "2026-10-03 16:00:00",
+            "start_ts": 1791086400,
+            "end_ts": 1791100800,
+            "start_time": "2026-10-04 12:00:00",
+            "end_time": "2026-10-04 16:00:00",
             "items": [
+                {
+                    "name": "可可果球",
+                    "category": "特制咕噜球",
+                    "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                    "price": 50,
+                    "limit": 30,
+                    "rare": false
+                },
                 {
                     "name": "美妙球",
                     "category": "特制咕噜球",
@@ -49,26 +76,26 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                     "price": 3000,
                     "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "光系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量光系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9d/t3udkq5fg8o3je088pcjktersn9wfrt.png/100px-100124.png",
-                    "price": 500,
-                    "limit": 100,
                     "rare": false
                 }
             ]
         },
         {
             "index": 3,
-            "start_ts": 1791014400,
-            "end_ts": 1791028800,
-            "start_time": "2026-10-03 16:00:00",
-            "end_time": "2026-10-03 20:00:00",
+            "start_ts": 1791100800,
+            "end_ts": 1791115200,
+            "start_time": "2026-10-04 16:00:00",
+            "end_time": "2026-10-04 20:00:00",
             "items": [
+                {
+                    "name": "可可果球",
+                    "category": "特制咕噜球",
+                    "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                    "price": 50,
+                    "limit": 30,
+                    "rare": false
+                },
                 {
                     "name": "美妙球",
                     "category": "特制咕噜球",
@@ -76,35 +103,26 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                     "price": 3000,
                     "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "蓝晶碧玺",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "武系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量武系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/23/su3uy9wfjwvx3ifjaia3l88j2kjr5mg.png/100px-100135.png",
-                    "price": 500,
-                    "limit": 100,
                     "rare": false
                 }
             ]
         },
         {
             "index": 4,
-            "start_ts": 1791028800,
-            "end_ts": 1791043200,
-            "start_time": "2026-10-03 20:00:00",
-            "end_time": "2026-10-04 00:00:00",
+            "start_ts": 1791115200,
+            "end_ts": 1791129600,
+            "start_time": "2026-10-04 20:00:00",
+            "end_time": "2026-10-05 00:00:00",
             "items": [
+                {
+                    "name": "可可果球",
+                    "category": "特制咕噜球",
+                    "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                    "price": 50,
+                    "limit": 30,
+                    "rare": false
+                },
                 {
                     "name": "美妙球",
                     "category": "特制咕噜球",
@@ -112,33 +130,6 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                     "price": 3000,
                     "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "紫莲刚玉",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "虫系血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "能唤醒血脉力量的远古秘药，使精灵获得虫系血脉。 “一段失落的秘密将被重拾。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/fa/kcywd1p2ikx394lixtb73roqc9fmx4a.png/100px-Xuemai_chong.png",
-                    "price": 160000,
-                    "limit": 3,
-                    "rare": false
-                },
-                {
-                    "name": "冰系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量冰系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a9/no0rhm0wky3e406wni3ef13z6zvfxw1.png/100px-100130.png",
-                    "price": 500,
-                    "limit": 100,
                     "rare": false
                 }
             ]
