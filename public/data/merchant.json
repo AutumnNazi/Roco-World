@@ -1,20 +1,47 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-10-07 01:13:56",
+    "generated_at": "2026-10-07 11:38:14",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
         "image_source": "哔哩哔哩洛克王国 BWIKI 图床"
     },
-    "date": "2026-10-06",
+    "date": "2026-10-07",
     "rounds": [
         {
             "index": 1,
-            "start_ts": 1791244800,
-            "end_ts": 1791259200,
-            "start_time": "2026-10-06 08:00:00",
-            "end_time": "2026-10-06 12:00:00",
+            "start_ts": 1791331200,
+            "end_ts": 1791345600,
+            "start_time": "2026-10-07 08:00:00",
+            "end_time": "2026-10-07 12:00:00",
             "items": [
+                {
+                    "name": "国王球",
+                    "category": "咕噜球",
+                    "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵，并能提升精灵的天分。 曾经专供贵族使用，制作方法不明。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2e/jygbfxpdbup5weqy4zaqnyaw2fcfyrq.png/100px-100255.png",
+                    "price": 160000,
+                    "limit": 3,
+                    "rare": true
+                },
+                {
+                    "name": "黄石榴石",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
+                    "price": 1000,
+                    "limit": 100,
+                    "rare": false
+                },
+                {
+                    "name": "可可果球",
+                    "category": "特制咕噜球",
+                    "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                    "price": 50,
+                    "limit": 30,
+                    "rare": false
+                },
                 {
                     "name": "美妙球",
                     "category": "特制咕噜球",
@@ -25,41 +52,32 @@
                     "rare": false
                 },
                 {
-                    "name": "草系血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "能唤醒血脉力量的远古秘药，使精灵获得草系血脉。 “一段失落的秘密将被重拾。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/e/e3/q44lm9csnpdmdswihzewb1gj6yln2v6.png/100px-Xuemai_cao.png",
-                    "price": 160000,
-                    "limit": 3,
-                    "rare": false
-                },
-                {
-                    "name": "电系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量电系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2f/2sux0g15uo8at77bwpoxrg32rv3l4dz.png/100px-100132.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "机械粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量机械系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/1/1c/lcsenwszmlkz002ai6du9f32tbfpi19.png/100px-100138.png",
-                    "price": 500,
-                    "limit": 100,
+                    "name": "魔力果",
+                    "category": "精灵喂养材料",
+                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                    "price": 6000,
+                    "limit": 20,
                     "rare": false
                 }
             ]
         },
         {
             "index": 2,
-            "start_ts": 1791259200,
-            "end_ts": 1791273600,
-            "start_time": "2026-10-06 12:00:00",
-            "end_time": "2026-10-06 16:00:00",
+            "start_ts": 1791345600,
+            "end_ts": 1791360000,
+            "start_time": "2026-10-07 12:00:00",
+            "end_time": "2026-10-07 16:00:00",
             "items": [
+                {
+                    "name": "可可果球",
+                    "category": "特制咕噜球",
+                    "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                    "price": 50,
+                    "limit": 30,
+                    "rare": false
+                },
                 {
                     "name": "美妙球",
                     "category": "特制咕噜球",
@@ -67,44 +85,26 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                     "price": 3000,
                     "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "蓝晶碧玺",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "普通血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "能唤醒血脉力量的远古秘药，使精灵获得普通系血脉。 “一段失落的秘密将被重拾。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a8/lx9q220586a1qpy109sy34ghfgtrs6w.png/100px-Xuemai_putong.png",
-                    "price": 160000,
-                    "limit": 3,
-                    "rare": false
-                },
-                {
-                    "name": "魔力果",
-                    "category": "精灵喂养材料",
-                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-                    "price": 6000,
-                    "limit": 20,
                     "rare": false
                 }
             ]
         },
         {
             "index": 3,
-            "start_ts": 1791273600,
-            "end_ts": 1791288000,
-            "start_time": "2026-10-06 16:00:00",
-            "end_time": "2026-10-06 20:00:00",
+            "start_ts": 1791360000,
+            "end_ts": 1791374400,
+            "start_time": "2026-10-07 16:00:00",
+            "end_time": "2026-10-07 20:00:00",
             "items": [
+                {
+                    "name": "可可果球",
+                    "category": "特制咕噜球",
+                    "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                    "price": 50,
+                    "limit": 30,
+                    "rare": false
+                },
                 {
                     "name": "美妙球",
                     "category": "特制咕噜球",
@@ -112,26 +112,26 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                     "price": 3000,
                     "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "神奇的蛋",
-                    "category": "精灵蛋",
-                    "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-                    "price": 36000,
-                    "limit": 5,
                     "rare": false
                 }
             ]
         },
         {
             "index": 4,
-            "start_ts": 1791288000,
-            "end_ts": 1791302400,
-            "start_time": "2026-10-06 20:00:00",
-            "end_time": "2026-10-07 00:00:00",
+            "start_ts": 1791374400,
+            "end_ts": 1791388800,
+            "start_time": "2026-10-07 20:00:00",
+            "end_time": "2026-10-08 00:00:00",
             "items": [
+                {
+                    "name": "可可果球",
+                    "category": "特制咕噜球",
+                    "description": "天然的咕噜球，暂未研究出其炼制配方。 为庆祝可可果节而设计的咕噜球，闻起来有可可果的香甜气息。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d2/t2rpfj5xsrcxxwnwkrh43f3nczmt59f.png/100px-100825.png",
+                    "price": 50,
+                    "limit": 30,
+                    "rare": false
+                },
                 {
                     "name": "美妙球",
                     "category": "特制咕噜球",
@@ -139,33 +139,6 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                     "price": 3000,
                     "limit": 200,
-                    "rare": false
-                },
-                {
-                    "name": "武系血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "能唤醒血脉力量的远古秘药，使精灵获得武系血脉。 “一段失落的秘密将被重拾。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/6/60/07uvni7t86lah2a9c219z9x8smkdnzj.png/100px-Xuemai_wu.png",
-                    "price": 160000,
-                    "limit": 3,
-                    "rare": false
-                },
-                {
-                    "name": "魔力果",
-                    "category": "精灵喂养材料",
-                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-                    "price": 6000,
-                    "limit": 20,
-                    "rare": false
-                },
-                {
-                    "name": "神奇的蛋",
-                    "category": "精灵蛋",
-                    "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-                    "price": 36000,
-                    "limit": 5,
                     "rare": false
                 }
             ]
