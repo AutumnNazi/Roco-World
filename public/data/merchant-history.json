@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-09 19:08:19",
+    "updated_at": "2026-10-10 01:25:42",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -3406,7 +3406,7 @@
                     "index": 4,
                     "start_time": "2026-10-09 20:00:00",
                     "end_time": "2026-10-10 00:00:00",
-                    "recorded_at": "2026-10-09 08:23:25",
+                    "recorded_at": "2026-10-10 01:25:42",
                     "items": [
                         {
                             "name": "暗星球",
@@ -3423,6 +3423,15 @@
                             "description": "更适合用来捕捉地系、虫系的精灵。 沉重的球，没法扔太远。",
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/8/81/7pzswfbn9l7hip6ptdg7f2mo341ztui.png/100px-Img_shaliqiu.png",
                             "price": 3000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "蓝晶碧玺",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
+                            "price": 1000,
                             "limit": 100,
                             "rare": false
                         }
