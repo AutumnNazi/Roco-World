@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-10 18:08:04",
+    "updated_at": "2026-10-10 23:51:07",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -3596,7 +3596,7 @@
                     "index": 4,
                     "start_time": "2026-10-10 20:00:00",
                     "end_time": "2026-10-11 00:00:00",
-                    "recorded_at": "2026-10-10 08:02:31",
+                    "recorded_at": "2026-10-10 23:51:07",
                     "items": [
                         {
                             "name": "暗星球",
@@ -3614,6 +3614,24 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/8/81/7pzswfbn9l7hip6ptdg7f2mo341ztui.png/100px-Img_shaliqiu.png",
                             "price": 3000,
                             "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "炫彩蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
+                            "price": 1600000,
+                            "limit": 1,
+                            "rare": false
+                        },
+                        {
+                            "name": "魔力果",
+                            "category": "精灵喂养材料",
+                            "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                            "price": 6000,
+                            "limit": 20,
                             "rare": false
                         }
                     ]
