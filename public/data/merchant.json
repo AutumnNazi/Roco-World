@@ -1,19 +1,19 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-10-10 01:25:42",
+    "generated_at": "2026-10-10 08:02:31",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
         "image_source": "哔哩哔哩洛克王国 BWIKI 图床"
     },
-    "date": "2026-10-09",
+    "date": "2026-10-10",
     "rounds": [
         {
             "index": 1,
-            "start_ts": 1791504000,
-            "end_ts": 1791518400,
-            "start_time": "2026-10-09 08:00:00",
-            "end_time": "2026-10-09 12:00:00",
+            "start_ts": 1791590400,
+            "end_ts": 1791604800,
+            "start_time": "2026-10-10 08:00:00",
+            "end_time": "2026-10-10 12:00:00",
             "items": [
                 {
                     "name": "暗星球",
@@ -43,10 +43,10 @@
                     "rare": false
                 },
                 {
-                    "name": "光系粉尘",
+                    "name": "火系粉尘",
                     "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量光系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9d/t3udkq5fg8o3je088pcjktersn9wfrt.png/100px-100124.png",
+                    "description": "常见的炼金材料，蕴含少量火系魔法，是合成技能石的主要触媒。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a6/a5v60zfm9ivyri166tias4efjnp5vyt.png/100px-100122.png",
                     "price": 500,
                     "limit": 100,
                     "rare": false
@@ -55,10 +55,10 @@
         },
         {
             "index": 2,
-            "start_ts": 1791518400,
-            "end_ts": 1791532800,
-            "start_time": "2026-10-09 12:00:00",
-            "end_time": "2026-10-09 16:00:00",
+            "start_ts": 1791604800,
+            "end_ts": 1791619200,
+            "start_time": "2026-10-10 12:00:00",
+            "end_time": "2026-10-10 16:00:00",
             "items": [
                 {
                     "name": "暗星球",
@@ -76,25 +76,16 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/8/81/7pzswfbn9l7hip6ptdg7f2mo341ztui.png/100px-Img_shaliqiu.png",
                     "price": 3000,
                     "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "奇异血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "修改血脉的秘药，使精灵获得“奇异血脉”。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ab/eg7zj03u487p1l3f91z499w1nxdzac1.png/100px-Xuemai_qiyixuemai.png",
-                    "price": 160000,
-                    "limit": 3,
                     "rare": false
                 }
             ]
         },
         {
             "index": 3,
-            "start_ts": 1791532800,
-            "end_ts": 1791547200,
-            "start_time": "2026-10-09 16:00:00",
-            "end_time": "2026-10-09 20:00:00",
+            "start_ts": 1791619200,
+            "end_ts": 1791633600,
+            "start_time": "2026-10-10 16:00:00",
+            "end_time": "2026-10-10 20:00:00",
             "items": [
                 {
                     "name": "暗星球",
@@ -111,15 +102,6 @@
                     "description": "更适合用来捕捉地系、虫系的精灵。 沉重的球，没法扔太远。",
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/8/81/7pzswfbn9l7hip6ptdg7f2mo341ztui.png/100px-Img_shaliqiu.png",
                     "price": 3000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "紫莲刚玉",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
-                    "price": 1000,
                     "limit": 100,
                     "rare": false
                 }
@@ -127,10 +109,10 @@
         },
         {
             "index": 4,
-            "start_ts": 1791547200,
-            "end_ts": 1791561600,
-            "start_time": "2026-10-09 20:00:00",
-            "end_time": "2026-10-10 00:00:00",
+            "start_ts": 1791633600,
+            "end_ts": 1791648000,
+            "start_time": "2026-10-10 20:00:00",
+            "end_time": "2026-10-11 00:00:00",
             "items": [
                 {
                     "name": "暗星球",
@@ -147,15 +129,6 @@
                     "description": "更适合用来捕捉地系、虫系的精灵。 沉重的球，没法扔太远。",
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/8/81/7pzswfbn9l7hip6ptdg7f2mo341ztui.png/100px-Img_shaliqiu.png",
                     "price": 3000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "蓝晶碧玺",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
-                    "price": 1000,
                     "limit": 100,
                     "rare": false
                 }
