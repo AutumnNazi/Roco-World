@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-12 00:16:15",
+    "updated_at": "2026-10-12 11:38:16",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -3849,6 +3849,28 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a6/a5v60zfm9ivyri166tias4efjnp5vyt.png/100px-100122.png",
                             "price": 500,
                             "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-10-12": {
+            "date": "2026-10-12",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-10-12 08:00:00",
+                    "end_time": "2026-10-12 12:00:00",
+                    "recorded_at": "2026-10-12 11:38:16",
+                    "items": [
+                        {
+                            "name": "炫彩蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
+                            "price": 1600000,
+                            "limit": 1,
                             "rare": false
                         }
                     ]
