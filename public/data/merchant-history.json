@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-12 19:18:44",
+    "updated_at": "2026-10-13 04:19:57",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -3939,6 +3939,32 @@
                             "category": "炼金材料",
                             "description": "常见的炼金材料，蕴含少量龙系魔法，是合成技能石的主要触媒。",
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ac/jhbsu0fzhq55ivqu89qz81366owvkki.png/100px-100131.png",
+                            "price": 500,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                },
+                "4": {
+                    "index": 4,
+                    "start_time": "2026-10-12 20:00:00",
+                    "end_time": "2026-10-13 00:00:00",
+                    "recorded_at": "2026-10-13 04:19:57",
+                    "items": [
+                        {
+                            "name": "魔力果",
+                            "category": "精灵喂养材料",
+                            "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                            "price": 6000,
+                            "limit": 20,
+                            "rare": false
+                        },
+                        {
+                            "name": "火系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量火系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a6/a5v60zfm9ivyri166tias4efjnp5vyt.png/100px-100122.png",
                             "price": 500,
                             "limit": 100,
                             "rare": false
