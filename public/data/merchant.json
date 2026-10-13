@@ -1,129 +1,63 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-10-13 04:19:57",
+    "generated_at": "2026-10-13 10:01:01",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
         "image_source": "哔哩哔哩洛克王国 BWIKI 图床"
     },
-    "date": "2026-10-12",
+    "date": "2026-10-13",
     "rounds": [
         {
             "index": 1,
-            "start_ts": 1791763200,
-            "end_ts": 1791777600,
-            "start_time": "2026-10-12 08:00:00",
-            "end_time": "2026-10-12 12:00:00",
+            "start_ts": 1791849600,
+            "end_ts": 1791864000,
+            "start_time": "2026-10-13 08:00:00",
+            "end_time": "2026-10-13 12:00:00",
             "items": [
                 {
-                    "name": "炫彩蛋",
-                    "category": "精灵蛋",
-                    "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
-                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
-                    "price": 1600000,
-                    "limit": 1,
+                    "name": "紫莲刚玉",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
+                    "price": 1000,
+                    "limit": 100,
+                    "rare": false
+                },
+                {
+                    "name": "毒系粉尘",
+                    "category": "炼金材料",
+                    "description": "常见的炼金材料，蕴含少量毒系魔法，是合成技能石的主要触媒。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/41/qgthc06nxeq4r9tzejgwwox7qtqp86w.png/100px-100133.png",
+                    "price": 500,
+                    "limit": 100,
                     "rare": false
                 }
             ]
         },
         {
             "index": 2,
-            "start_ts": 1791777600,
-            "end_ts": 1791792000,
-            "start_time": "2026-10-12 12:00:00",
-            "end_time": "2026-10-12 16:00:00",
-            "items": [
-                {
-                    "name": "黑晶琉璃",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "幽系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量幽系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/20/okbnyp4feg52iaxuijvjzv6wodaqjmi.png/100px-100126.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "电系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量电系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2f/2sux0g15uo8at77bwpoxrg32rv3l4dz.png/100px-100132.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
+            "start_ts": 1791864000,
+            "end_ts": 1791878400,
+            "start_time": "2026-10-13 12:00:00",
+            "end_time": "2026-10-13 16:00:00",
+            "items": []
         },
         {
             "index": 3,
-            "start_ts": 1791792000,
-            "end_ts": 1791806400,
-            "start_time": "2026-10-12 16:00:00",
-            "end_time": "2026-10-12 20:00:00",
-            "items": [
-                {
-                    "name": "神奇的蛋",
-                    "category": "精灵蛋",
-                    "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-                    "price": 36000,
-                    "limit": 5,
-                    "rare": false
-                },
-                {
-                    "name": "水系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量水系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c7/4fxef31uslze9psd9375td9zbqtbllv.png/100px-100123.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "龙系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量龙系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ac/jhbsu0fzhq55ivqu89qz81366owvkki.png/100px-100131.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
+            "start_ts": 1791878400,
+            "end_ts": 1791892800,
+            "start_time": "2026-10-13 16:00:00",
+            "end_time": "2026-10-13 20:00:00",
+            "items": []
         },
         {
             "index": 4,
-            "start_ts": 1791806400,
-            "end_ts": 1791820800,
-            "start_time": "2026-10-12 20:00:00",
-            "end_time": "2026-10-13 00:00:00",
-            "items": [
-                {
-                    "name": "魔力果",
-                    "category": "精灵喂养材料",
-                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-                    "price": 6000,
-                    "limit": 20,
-                    "rare": false
-                },
-                {
-                    "name": "火系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量火系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a6/a5v60zfm9ivyri166tias4efjnp5vyt.png/100px-100122.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
+            "start_ts": 1791892800,
+            "end_ts": 1791907200,
+            "start_time": "2026-10-13 20:00:00",
+            "end_time": "2026-10-14 00:00:00",
+            "items": []
         }
     ]
 }
