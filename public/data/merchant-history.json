@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-14 21:58:09",
+    "updated_at": "2026-10-15 10:38:38",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -4194,6 +4194,28 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
                             "price": 1000,
                             "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-10-15": {
+            "date": "2026-10-15",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-10-15 08:00:00",
+                    "end_time": "2026-10-15 12:00:00",
+                    "recorded_at": "2026-10-15 10:38:38",
+                    "items": [
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
                             "rare": false
                         }
                     ]
