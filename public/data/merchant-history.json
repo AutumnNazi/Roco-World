@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-16 15:29:12",
+    "updated_at": "2026-10-16 20:39:29",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -4377,7 +4377,7 @@
                     "index": 3,
                     "start_time": "2026-10-16 16:00:00",
                     "end_time": "2026-10-16 20:00:00",
-                    "recorded_at": "2026-10-16 10:34:19",
+                    "recorded_at": "2026-10-16 20:39:29",
                     "items": [
                         {
                             "name": "美妙球",
@@ -4387,6 +4387,15 @@
                             "price": 3000,
                             "limit": 200,
                             "rare": false
+                        },
+                        {
+                            "name": "炫彩蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
+                            "price": 1600000,
+                            "limit": 1,
+                            "rare": false
                         }
                     ]
                 },
@@ -4394,7 +4403,7 @@
                     "index": 4,
                     "start_time": "2026-10-16 20:00:00",
                     "end_time": "2026-10-17 00:00:00",
-                    "recorded_at": "2026-10-16 10:34:19",
+                    "recorded_at": "2026-10-16 20:39:29",
                     "items": [
                         {
                             "name": "美妙球",
@@ -4403,6 +4412,24 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "紫莲刚玉",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "龙系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量龙系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ac/jhbsu0fzhq55ivqu89qz81366owvkki.png/100px-100131.png",
+                            "price": 500,
+                            "limit": 100,
                             "rare": false
                         }
                     ]
