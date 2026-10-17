@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-17 10:26:50",
+    "updated_at": "2026-10-17 15:06:38",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -4487,7 +4487,7 @@
                     "index": 2,
                     "start_time": "2026-10-17 12:00:00",
                     "end_time": "2026-10-17 16:00:00",
-                    "recorded_at": "2026-10-17 10:26:50",
+                    "recorded_at": "2026-10-17 15:06:38",
                     "items": [
                         {
                             "name": "美妙球",
@@ -4496,6 +4496,15 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
                             "rare": false
                         }
                     ]
