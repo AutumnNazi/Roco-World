@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-18 15:21:04",
+    "updated_at": "2026-10-18 20:06:40",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -4649,7 +4649,7 @@
                     "index": 3,
                     "start_time": "2026-10-18 16:00:00",
                     "end_time": "2026-10-18 20:00:00",
-                    "recorded_at": "2026-10-18 10:26:58",
+                    "recorded_at": "2026-10-18 20:06:40",
                     "items": [
                         {
                             "name": "美妙球",
@@ -4659,6 +4659,15 @@
                             "price": 3000,
                             "limit": 200,
                             "rare": false
+                        },
+                        {
+                            "name": "地系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量地系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/7/7a/n6n70lv43avntp8zie9k18a4zw41l8i.png/100px-100129.png",
+                            "price": 500,
+                            "limit": 100,
+                            "rare": false
                         }
                     ]
                 },
@@ -4666,7 +4675,7 @@
                     "index": 4,
                     "start_time": "2026-10-18 20:00:00",
                     "end_time": "2026-10-19 00:00:00",
-                    "recorded_at": "2026-10-18 10:26:58",
+                    "recorded_at": "2026-10-18 20:06:40",
                     "items": [
                         {
                             "name": "美妙球",
@@ -4675,6 +4684,15 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "黄石榴石",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
+                            "price": 1000,
+                            "limit": 100,
                             "rare": false
                         }
                     ]
