@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-19 23:31:46",
+    "updated_at": "2026-10-20 10:53:01",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -4784,6 +4784,46 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/23/su3uy9wfjwvx3ifjaia3l88j2kjr5mg.png/100px-100135.png",
                             "price": 500,
                             "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-10-20": {
+            "date": "2026-10-20",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-10-20 08:00:00",
+                    "end_time": "2026-10-20 12:00:00",
+                    "recorded_at": "2026-10-20 10:53:01",
+                    "items": [
+                        {
+                            "name": "祝福项坠",
+                            "category": "珍稀货币",
+                            "description": "进行精灵赐福的必要道具。能容纳祝福的神秘容器。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_56aa7234a2be18aae2069541da77b555.png",
+                            "price": 800000,
+                            "limit": 1,
+                            "rare": false
+                        },
+                        {
+                            "name": "奇异血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "修改血脉的秘药，使精灵获得“奇异血脉”。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ab/eg7zj03u487p1l3f91z499w1nxdzac1.png/100px-Xuemai_qiyixuemai.png",
+                            "price": 160000,
+                            "limit": 3,
+                            "rare": false
+                        },
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
                             "rare": false
                         }
                     ]

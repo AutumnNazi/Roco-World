@@ -1,102 +1,72 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-10-19 23:31:46",
+    "generated_at": "2026-10-20 10:53:01",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
         "image_source": "哔哩哔哩洛克王国 BWIKI 图床"
     },
-    "date": "2026-10-19",
+    "date": "2026-10-20",
     "rounds": [
         {
             "index": 1,
-            "start_ts": 1792368000,
-            "end_ts": 1792382400,
-            "start_time": "2026-10-19 08:00:00",
-            "end_time": "2026-10-19 12:00:00",
+            "start_ts": 1792454400,
+            "end_ts": 1792468800,
+            "start_time": "2026-10-20 08:00:00",
+            "end_time": "2026-10-20 12:00:00",
             "items": [
                 {
-                    "name": "炫彩蛋",
-                    "category": "精灵蛋",
-                    "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
-                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
-                    "price": 1600000,
+                    "name": "祝福项坠",
+                    "category": "珍稀货币",
+                    "description": "进行精灵赐福的必要道具。能容纳祝福的神秘容器。",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_56aa7234a2be18aae2069541da77b555.png",
+                    "price": 800000,
                     "limit": 1,
+                    "rare": false
+                },
+                {
+                    "name": "奇异血脉秘药",
+                    "category": "血脉修改道具",
+                    "description": "修改血脉的秘药，使精灵获得“奇异血脉”。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ab/eg7zj03u487p1l3f91z499w1nxdzac1.png/100px-Xuemai_qiyixuemai.png",
+                    "price": 160000,
+                    "limit": 3,
+                    "rare": false
+                },
+                {
+                    "name": "神奇的蛋",
+                    "category": "精灵蛋",
+                    "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                    "price": 36000,
+                    "limit": 5,
                     "rare": false
                 }
             ]
         },
         {
             "index": 2,
-            "start_ts": 1792382400,
-            "end_ts": 1792396800,
-            "start_time": "2026-10-19 12:00:00",
-            "end_time": "2026-10-19 16:00:00",
-            "items": [
-                {
-                    "name": "翼系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量翼系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/35/5mp1ohcm72pgsxax5kq3x1aophw3lh0.png/100px-100136.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
+            "start_ts": 1792468800,
+            "end_ts": 1792483200,
+            "start_time": "2026-10-20 12:00:00",
+            "end_time": "2026-10-20 16:00:00",
+            "items": []
         },
         {
             "index": 3,
-            "start_ts": 1792396800,
-            "end_ts": 1792411200,
-            "start_time": "2026-10-19 16:00:00",
-            "end_time": "2026-10-19 20:00:00",
-            "items": [
-                {
-                    "name": "武系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量武系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/23/su3uy9wfjwvx3ifjaia3l88j2kjr5mg.png/100px-100135.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
+            "start_ts": 1792483200,
+            "end_ts": 1792497600,
+            "start_time": "2026-10-20 16:00:00",
+            "end_time": "2026-10-20 20:00:00",
+            "items": []
         },
         {
             "index": 4,
-            "start_ts": 1792411200,
-            "end_ts": 1792425600,
-            "start_time": "2026-10-19 20:00:00",
-            "end_time": "2026-10-20 00:00:00",
-            "items": [
-                {
-                    "name": "黄石榴石",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "恶系血脉秘药",
-                    "category": "血脉修改道具",
-                    "description": "能唤醒血脉力量的远古秘药，使精灵获得恶系血脉。 “一段失落的秘密将被重拾。”",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/e/ee/sm6n1f4ng52m6fvbr6lf2yekhw3q1a5.png/100px-Xuemai_emo.png",
-                    "price": 160000,
-                    "limit": 3,
-                    "rare": false
-                },
-                {
-                    "name": "武系粉尘",
-                    "category": "炼金材料",
-                    "description": "常见的炼金材料，蕴含少量武系魔法，是合成技能石的主要触媒。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/23/su3uy9wfjwvx3ifjaia3l88j2kjr5mg.png/100px-100135.png",
-                    "price": 500,
-                    "limit": 100,
-                    "rare": false
-                }
-            ]
+            "start_ts": 1792497600,
+            "end_ts": 1792512000,
+            "start_time": "2026-10-20 20:00:00",
+            "end_time": "2026-10-21 00:00:00",
+            "items": []
         }
     ]
 }
