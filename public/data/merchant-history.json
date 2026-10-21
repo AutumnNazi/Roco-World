@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-20 21:22:34",
+    "updated_at": "2026-10-21 10:47:15",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -4910,6 +4910,28 @@
                             "description": "常见的炼金材料，蕴含少量武系魔法，是合成技能石的主要触媒。",
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/23/su3uy9wfjwvx3ifjaia3l88j2kjr5mg.png/100px-100135.png",
                             "price": 500,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-10-21": {
+            "date": "2026-10-21",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-10-21 08:00:00",
+                    "end_time": "2026-10-21 12:00:00",
+                    "recorded_at": "2026-10-21 10:47:15",
+                    "items": [
+                        {
+                            "name": "黑晶琉璃",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+                            "price": 1000,
                             "limit": 100,
                             "rare": false
                         }
