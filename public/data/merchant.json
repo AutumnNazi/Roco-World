@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-10-22 10:45:34",
+    "generated_at": "2026-10-22 15:58:49",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -50,7 +50,17 @@
             "end_ts": 1792656000,
             "start_time": "2026-10-22 12:00:00",
             "end_time": "2026-10-22 16:00:00",
-            "items": []
+            "items": [
+                {
+                    "name": "黑晶琉璃",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+                    "price": 1000,
+                    "limit": 100,
+                    "rare": false
+                }
+            ]
         },
         {
             "index": 3,
