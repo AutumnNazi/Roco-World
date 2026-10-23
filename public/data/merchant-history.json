@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-23 10:49:24",
+    "updated_at": "2026-10-23 15:58:08",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -5132,7 +5132,7 @@
                     "index": 2,
                     "start_time": "2026-10-23 12:00:00",
                     "end_time": "2026-10-23 16:00:00",
-                    "recorded_at": "2026-10-23 10:49:24",
+                    "recorded_at": "2026-10-23 15:58:08",
                     "items": [
                         {
                             "name": "网兜球",
@@ -5150,6 +5150,15 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/5a/hif6470l7ojdexwm72t9brp0f0x3h4x.png/100px-Img_daodanqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "幽系血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "能唤醒血脉力量的远古秘药，使精灵获得幽系血脉。 “一段失落的秘密将被重拾。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/31/79r65pjlgs4boduwx17vu94sqn0i2t6.png/100px-Xuemai_youling.png",
+                            "price": 160000,
+                            "limit": 3,
                             "rare": false
                         }
                     ]
