@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-10-24 15:36:58",
+    "generated_at": "2026-10-24 20:12:31",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -131,6 +131,15 @@
                     "price": 3000,
                     "limit": 200,
                     "rare": false
+                },
+                {
+                    "name": "神奇的蛋",
+                    "category": "精灵蛋",
+                    "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                    "price": 36000,
+                    "limit": 5,
+                    "rare": false
                 }
             ]
         },
@@ -157,6 +166,24 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/5a/hif6470l7ojdexwm72t9brp0f0x3h4x.png/100px-Img_daodanqiu.png",
                     "price": 3000,
                     "limit": 200,
+                    "rare": false
+                },
+                {
+                    "name": "首领血脉秘药",
+                    "category": "血脉修改道具",
+                    "description": "修改血脉的秘药，使特定精灵获得“首领血脉”。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/26/fbfwlhncfo0pstpv3ibxn1mj3ayg6di.png/100px-Xuemai_shoulingxuemai.png",
+                    "price": 320000,
+                    "limit": 1,
+                    "rare": false
+                },
+                {
+                    "name": "魔力果",
+                    "category": "精灵喂养材料",
+                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                    "price": 6000,
+                    "limit": 20,
                     "rare": false
                 }
             ]
