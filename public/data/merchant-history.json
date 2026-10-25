@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-25 10:37:19",
+    "updated_at": "2026-10-25 15:47:59",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -5485,7 +5485,7 @@
                     "index": 2,
                     "start_time": "2026-10-25 12:00:00",
                     "end_time": "2026-10-25 16:00:00",
-                    "recorded_at": "2026-10-25 10:37:19",
+                    "recorded_at": "2026-10-25 15:47:59",
                     "items": [
                         {
                             "name": "网兜球",
@@ -5503,6 +5503,33 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/5a/hif6470l7ojdexwm72t9brp0f0x3h4x.png/100px-Img_daodanqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "国王球",
+                            "category": "咕噜球",
+                            "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵，并能提升精灵的天分。 曾经专供贵族使用，制作方法不明。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2e/jygbfxpdbup5weqy4zaqnyaw2fcfyrq.png/100px-100255.png",
+                            "price": 160000,
+                            "limit": 3,
+                            "rare": true
+                        },
+                        {
+                            "name": "紫莲刚玉",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "水系血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "能唤醒血脉力量的远古秘药，使精灵获得水系血脉。 “一段失落的秘密将被重拾。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/45/i1hr5krh0b2oqgi3iv1m2k7geyox4n1.png/100px-Xuemai_shui.png",
+                            "price": 160000,
+                            "limit": 3,
                             "rare": false
                         }
                     ]
