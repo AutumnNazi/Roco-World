@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-26 16:05:17",
+    "updated_at": "2026-10-26 23:07:24",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -5710,6 +5710,41 @@
                             "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
                             "price": 36000,
                             "limit": 5,
+                            "rare": false
+                        }
+                    ]
+                },
+                "4": {
+                    "index": 4,
+                    "start_time": "2026-10-26 20:00:00",
+                    "end_time": "2026-10-27 00:00:00",
+                    "recorded_at": "2026-10-26 23:07:24",
+                    "items": [
+                        {
+                            "name": "黑晶琉璃",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "地系血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "能唤醒血脉力量的远古秘药，使精灵获得地系血脉。 “一段失落的秘密将被重拾。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/1/17/808i7ggttfttqexttmvtmdknqszrb7t.png/100px-Xuemai_yanshi.png",
+                            "price": 160000,
+                            "limit": 3,
+                            "rare": false
+                        },
+                        {
+                            "name": "幽系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量幽系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/20/okbnyp4feg52iaxuijvjzv6wodaqjmi.png/100px-100126.png",
+                            "price": 500,
+                            "limit": 100,
                             "rare": false
                         }
                     ]
