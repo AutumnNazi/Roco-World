@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-26 23:07:24",
+    "updated_at": "2026-10-27 11:10:38",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -5743,6 +5743,46 @@
                             "category": "炼金材料",
                             "description": "常见的炼金材料，蕴含少量幽系魔法，是合成技能石的主要触媒。",
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/20/okbnyp4feg52iaxuijvjzv6wodaqjmi.png/100px-100126.png",
+                            "price": 500,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-10-27": {
+            "date": "2026-10-27",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-10-27 08:00:00",
+                    "end_time": "2026-10-27 12:00:00",
+                    "recorded_at": "2026-10-27 11:10:38",
+                    "items": [
+                        {
+                            "name": "魔力果",
+                            "category": "精灵喂养材料",
+                            "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                            "price": 6000,
+                            "limit": 20,
+                            "rare": false
+                        },
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
+                            "rare": false
+                        },
+                        {
+                            "name": "冰系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量冰系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a9/no0rhm0wky3e406wni3ef13z6zvfxw1.png/100px-100130.png",
                             "price": 500,
                             "limit": 100,
                             "rare": false
