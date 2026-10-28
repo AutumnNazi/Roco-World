@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-28 17:53:43",
+    "updated_at": "2026-10-29 00:20:07",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -5926,6 +5926,41 @@
                             "category": "炼金材料",
                             "description": "常见的炼金材料，蕴含少量翼系魔法，是合成技能石的主要触媒。",
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/35/5mp1ohcm72pgsxax5kq3x1aophw3lh0.png/100px-100136.png",
+                            "price": 500,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                },
+                "4": {
+                    "index": 4,
+                    "start_time": "2026-10-28 20:00:00",
+                    "end_time": "2026-10-29 00:00:00",
+                    "recorded_at": "2026-10-29 00:20:07",
+                    "items": [
+                        {
+                            "name": "炫彩蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
+                            "price": 1600000,
+                            "limit": 1,
+                            "rare": false
+                        },
+                        {
+                            "name": "黄石榴石",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "幻系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量幻系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/24/sgt0lc5llwfvlcmjhr1awhwq6st35fj.png/100px-100139.png",
                             "price": 500,
                             "limit": 100,
                             "rare": false
