@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-10-29 00:20:07",
+    "updated_at": "2026-10-29 11:47:17",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -5961,6 +5961,37 @@
                             "category": "炼金材料",
                             "description": "常见的炼金材料，蕴含少量幻系魔法，是合成技能石的主要触媒。",
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/24/sgt0lc5llwfvlcmjhr1awhwq6st35fj.png/100px-100139.png",
+                            "price": 500,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-10-29": {
+            "date": "2026-10-29",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-10-29 08:00:00",
+                    "end_time": "2026-10-29 12:00:00",
+                    "recorded_at": "2026-10-29 11:47:17",
+                    "items": [
+                        {
+                            "name": "黑晶琉璃",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "电系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量电系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2f/2sux0g15uo8at77bwpoxrg32rv3l4dz.png/100px-100132.png",
                             "price": 500,
                             "limit": 100,
                             "rare": false
