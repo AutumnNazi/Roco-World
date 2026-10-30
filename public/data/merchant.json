@@ -1,90 +1,81 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-10-30 11:50:09",
+    "generated_at": "2026-10-30 18:29:10",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
         "image_source": "哔哩哔哩洛克王国 BWIKI 图床"
     },
-    "date": "2026-10-30",
+    "date": "2026-11-05",
     "rounds": [
         {
             "index": 1,
-            "start_ts": 1793318400,
-            "end_ts": 1793332800,
-            "start_time": "2026-10-30 08:00:00",
-            "end_time": "2026-10-30 12:00:00",
+            "start_ts": 1793836800,
+            "end_ts": 1793851200,
+            "start_time": "2026-11-05 08:00:00",
+            "end_time": "2026-11-05 12:00:00",
             "items": [
                 {
-                    "name": "蓝晶碧玺",
-                    "category": "炼金材料",
-                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
-                    "price": 1000,
-                    "limit": 100,
-                    "rare": false
-                },
-                {
-                    "name": "网兜球",
-                    "category": "特制咕噜球",
-                    "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
-                    "price": 3000,
-                    "limit": 100,
+                    "name": "捣蛋糖果*30",
+                    "category": "活动货币",
+                    "description": "裹着诡趣糖衣的魔力糖果，甜意之下藏着恶作剧的魔法。收下糖果，开启这场这场王国里的捣蛋狂欢吧~",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_580c087952586ebaa33b4dbc33235196.png",
+                    "price": 5,
+                    "limit": 1,
                     "rare": false
                 }
             ]
         },
         {
             "index": 2,
-            "start_ts": 1793332800,
-            "end_ts": 1793347200,
-            "start_time": "2026-10-30 12:00:00",
-            "end_time": "2026-10-30 16:00:00",
+            "start_ts": 1793851200,
+            "end_ts": 1793865600,
+            "start_time": "2026-11-05 12:00:00",
+            "end_time": "2026-11-05 16:00:00",
             "items": [
                 {
-                    "name": "网兜球",
-                    "category": "特制咕噜球",
-                    "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
-                    "price": 3000,
-                    "limit": 100,
+                    "name": "捣蛋糖果*30",
+                    "category": "活动货币",
+                    "description": "裹着诡趣糖衣的魔力糖果，甜意之下藏着恶作剧的魔法。收下糖果，开启这场这场王国里的捣蛋狂欢吧~",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_580c087952586ebaa33b4dbc33235196.png",
+                    "price": 5,
+                    "limit": 1,
                     "rare": false
                 }
             ]
         },
         {
             "index": 3,
-            "start_ts": 1793347200,
-            "end_ts": 1793361600,
-            "start_time": "2026-10-30 16:00:00",
-            "end_time": "2026-10-30 20:00:00",
+            "start_ts": 1793865600,
+            "end_ts": 1793880000,
+            "start_time": "2026-11-05 16:00:00",
+            "end_time": "2026-11-05 20:00:00",
             "items": [
                 {
-                    "name": "网兜球",
-                    "category": "特制咕噜球",
-                    "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
-                    "price": 3000,
-                    "limit": 100,
+                    "name": "捣蛋糖果*30",
+                    "category": "活动货币",
+                    "description": "裹着诡趣糖衣的魔力糖果，甜意之下藏着恶作剧的魔法。收下糖果，开启这场这场王国里的捣蛋狂欢吧~",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_580c087952586ebaa33b4dbc33235196.png",
+                    "price": 5,
+                    "limit": 1,
                     "rare": false
                 }
             ]
         },
         {
             "index": 4,
-            "start_ts": 1793361600,
-            "end_ts": 1793376000,
-            "start_time": "2026-10-30 20:00:00",
-            "end_time": "2026-10-31 00:00:00",
+            "start_ts": 1793880000,
+            "end_ts": 1793894400,
+            "start_time": "2026-11-05 20:00:00",
+            "end_time": "2026-11-06 00:00:00",
             "items": [
                 {
-                    "name": "网兜球",
-                    "category": "特制咕噜球",
-                    "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
-                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
-                    "price": 3000,
-                    "limit": 100,
+                    "name": "捣蛋糖果*30",
+                    "category": "活动货币",
+                    "description": "裹着诡趣糖衣的魔力糖果，甜意之下藏着恶作剧的魔法。收下糖果，开启这场这场王国里的捣蛋狂欢吧~",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_580c087952586ebaa33b4dbc33235196.png",
+                    "price": 5,
+                    "limit": 1,
                     "rare": false
                 }
             ]
