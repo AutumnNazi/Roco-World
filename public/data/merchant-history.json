@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-11-10 21:42:05",
+    "updated_at": "2026-11-11 08:39:56",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -6959,6 +6959,28 @@
                             "category": "炼金材料",
                             "description": "常见的炼金材料，蕴含少量幽系魔法，是合成技能石的主要触媒。",
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/20/okbnyp4feg52iaxuijvjzv6wodaqjmi.png/100px-100126.png",
+                            "price": 500,
+                            "limit": 100,
+                            "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-11-11": {
+            "date": "2026-11-11",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-11-11 08:00:00",
+                    "end_time": "2026-11-11 12:00:00",
+                    "recorded_at": "2026-11-11 08:39:56",
+                    "items": [
+                        {
+                            "name": "虫系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量虫系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c0/ihsb7b9pcs210dtaiswlsaxuhe2jfaa.png/100px-100134.png",
                             "price": 500,
                             "limit": 100,
                             "rare": false
