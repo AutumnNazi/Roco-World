@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-11-13 09:05:07",
+    "generated_at": "2026-11-13 12:28:50",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -49,6 +49,15 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
                     "price": 3000,
                     "limit": 200,
+                    "rare": false
+                },
+                {
+                    "name": "神奇的蛋",
+                    "category": "精灵蛋",
+                    "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                    "price": 36000,
+                    "limit": 5,
                     "rare": false
                 }
             ]
