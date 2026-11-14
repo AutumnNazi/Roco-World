@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-11-14 08:53:44",
+    "generated_at": "2026-11-14 12:24:09",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -67,6 +67,33 @@
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
                     "price": 3000,
                     "limit": 200,
+                    "rare": false
+                },
+                {
+                    "name": "炫彩蛋",
+                    "category": "精灵蛋",
+                    "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
+                    "price": 1600000,
+                    "limit": 1,
+                    "rare": false
+                },
+                {
+                    "name": "黑晶琉璃",
+                    "category": "炼金材料",
+                    "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+                    "price": 1000,
+                    "limit": 100,
+                    "rare": false
+                },
+                {
+                    "name": "魔力果",
+                    "category": "精灵喂养材料",
+                    "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+                    "price": 6000,
+                    "limit": 20,
                     "rare": false
                 }
             ]
