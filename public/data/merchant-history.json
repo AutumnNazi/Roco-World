@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-11-14 12:24:09",
+    "updated_at": "2026-11-14 19:39:08",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -7398,7 +7398,7 @@
                     "index": 3,
                     "start_time": "2026-11-14 16:00:00",
                     "end_time": "2026-11-14 20:00:00",
-                    "recorded_at": "2026-11-14 08:53:44",
+                    "recorded_at": "2026-11-14 19:39:08",
                     "items": [
                         {
                             "name": "变幻球",
@@ -7407,6 +7407,33 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "炫彩蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
+                            "price": 1600000,
+                            "limit": 1,
+                            "rare": false
+                        },
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
+                            "rare": false
+                        },
+                        {
+                            "name": "幽系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量幽系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/20/okbnyp4feg52iaxuijvjzv6wodaqjmi.png/100px-100126.png",
+                            "price": 500,
+                            "limit": 100,
                             "rare": false
                         }
                     ]
