@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-11-15 12:08:55",
+    "updated_at": "2026-11-15 19:54:29",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -7543,7 +7543,7 @@
                     "index": 3,
                     "start_time": "2026-11-15 16:00:00",
                     "end_time": "2026-11-15 20:00:00",
-                    "recorded_at": "2026-11-15 12:08:55",
+                    "recorded_at": "2026-11-15 19:54:29",
                     "items": [
                         {
                             "name": "变幻球",
@@ -7552,6 +7552,24 @@
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
                             "price": 3000,
                             "limit": 200,
+                            "rare": false
+                        },
+                        {
+                            "name": "机械血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "能唤醒血脉力量的远古秘药，使精灵获得机械系血脉。 “一段失落的秘密将被重拾。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/56/12jc1mzlz7nhgnterqdk6bgm6rofibn.png/100px-Xuemai_gang.png",
+                            "price": 160000,
+                            "limit": 3,
+                            "rare": false
+                        },
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
                             "rare": false
                         }
                     ]
