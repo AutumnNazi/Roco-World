@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "generated_at": "2026-11-22 08:20:44",
+    "generated_at": "2026-11-22 12:27:11",
     "source": {
         "site": "好游快爆 每日远行商人查询器",
         "page": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
@@ -48,6 +48,24 @@
                     "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
                     "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
                     "price": 3000,
+                    "limit": 100,
+                    "rare": false
+                },
+                {
+                    "name": "炫彩蛋",
+                    "category": "精灵蛋",
+                    "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
+                    "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
+                    "price": 1600000,
+                    "limit": 1,
+                    "rare": false
+                },
+                {
+                    "name": "机械粉尘",
+                    "category": "炼金材料",
+                    "description": "常见的炼金材料，蕴含少量机械系魔法，是合成技能石的主要触媒。",
+                    "image": "https://patchwiki.biligame.com/images/rocom/thumb/1/1c/lcsenwszmlkz002ai6du9f32tbfpi19.png/100px-100138.png",
+                    "price": 500,
                     "limit": 100,
                     "rare": false
                 }
