@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-11-26 01:27:33",
+    "updated_at": "2026-11-26 10:51:03",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -8894,6 +8894,97 @@
                             "price": 500,
                             "limit": 100,
                             "rare": false
+                        }
+                    ]
+                }
+            }
+        },
+        "2026-11-26": {
+            "date": "2026-11-26",
+            "rounds": {
+                "1": {
+                    "index": 1,
+                    "start_time": "2026-11-26 08:00:00",
+                    "end_time": "2026-11-26 12:00:00",
+                    "recorded_at": "2026-11-26 10:51:03",
+                    "items": [
+                        {
+                            "name": "棱镜球",
+                            "category": "特制咕噜球",
+                            "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵。 蕴含改变精灵外观、提升天分的神秘力量，还能使其个体资质变为极致。 棱镜中反射出无数个世界。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9b/kkwd244su5nzzg5pj99volbt84ohied.png/100px-100795.png",
+                            "price": 3200000,
+                            "limit": 1,
+                            "rare": true
+                        },
+                        {
+                            "name": "地系血脉秘药",
+                            "category": "血脉修改道具",
+                            "description": "能唤醒血脉力量的远古秘药，使精灵获得地系血脉。 “一段失落的秘密将被重拾。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/1/17/808i7ggttfttqexttmvtmdknqszrb7t.png/100px-Xuemai_yanshi.png",
+                            "price": 160000,
+                            "limit": 3,
+                            "rare": false
+                        },
+                        {
+                            "name": "神奇的蛋",
+                            "category": "精灵蛋",
+                            "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+                            "image": "//img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+                            "price": 36000,
+                            "limit": 5,
+                            "rare": false
+                        }
+                    ]
+                },
+                "2": {
+                    "index": 2,
+                    "start_time": "2026-11-26 12:00:00",
+                    "end_time": "2026-11-26 16:00:00",
+                    "recorded_at": "2026-11-26 10:51:03",
+                    "items": [
+                        {
+                            "name": "棱镜球",
+                            "category": "特制咕噜球",
+                            "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵。 蕴含改变精灵外观、提升天分的神秘力量，还能使其个体资质变为极致。 棱镜中反射出无数个世界。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9b/kkwd244su5nzzg5pj99volbt84ohied.png/100px-100795.png",
+                            "price": 3200000,
+                            "limit": 1,
+                            "rare": true
+                        }
+                    ]
+                },
+                "3": {
+                    "index": 3,
+                    "start_time": "2026-11-26 16:00:00",
+                    "end_time": "2026-11-26 20:00:00",
+                    "recorded_at": "2026-11-26 10:51:03",
+                    "items": [
+                        {
+                            "name": "棱镜球",
+                            "category": "特制咕噜球",
+                            "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵。 蕴含改变精灵外观、提升天分的神秘力量，还能使其个体资质变为极致。 棱镜中反射出无数个世界。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9b/kkwd244su5nzzg5pj99volbt84ohied.png/100px-100795.png",
+                            "price": 3200000,
+                            "limit": 1,
+                            "rare": true
+                        }
+                    ]
+                },
+                "4": {
+                    "index": 4,
+                    "start_time": "2026-11-26 20:00:00",
+                    "end_time": "2026-11-27 00:00:00",
+                    "recorded_at": "2026-11-26 10:51:03",
+                    "items": [
+                        {
+                            "name": "棱镜球",
+                            "category": "特制咕噜球",
+                            "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵。 蕴含改变精灵外观、提升天分的神秘力量，还能使其个体资质变为极致。 棱镜中反射出无数个世界。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9b/kkwd244su5nzzg5pj99volbt84ohied.png/100px-100795.png",
+                            "price": 3200000,
+                            "limit": 1,
+                            "rare": true
                         }
                     ]
                 }
