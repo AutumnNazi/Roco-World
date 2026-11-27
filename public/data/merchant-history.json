@@ -1,6 +1,6 @@
 {
     "schema_version": 1,
-    "updated_at": "2026-11-27 14:05:02",
+    "updated_at": "2026-11-28 00:31:37",
     "days": {
         "2026-09-14": {
             "date": "2026-09-14",
@@ -9121,7 +9121,7 @@
                     "index": 3,
                     "start_time": "2026-11-27 16:00:00",
                     "end_time": "2026-11-27 20:00:00",
-                    "recorded_at": "2026-11-27 10:51:16",
+                    "recorded_at": "2026-11-28 00:31:37",
                     "items": [
                         {
                             "name": "好战球",
@@ -9131,6 +9131,15 @@
                             "price": 3000,
                             "limit": 100,
                             "rare": false
+                        },
+                        {
+                            "name": "黄石榴石",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
                         }
                     ]
                 },
@@ -9138,7 +9147,7 @@
                     "index": 4,
                     "start_time": "2026-11-27 20:00:00",
                     "end_time": "2026-11-28 00:00:00",
-                    "recorded_at": "2026-11-27 10:51:16",
+                    "recorded_at": "2026-11-28 00:31:37",
                     "items": [
                         {
                             "name": "好战球",
@@ -9146,6 +9155,24 @@
                             "description": "更适合用来捕捉武系、龙系的精灵。 好斗的球，攻击中的精灵会被吸引。",
                             "image": "https://patchwiki.biligame.com/images/rocom/thumb/7/79/kdfs6bmfy54gk7ak70arjxug91zv1z5.png/100px-Img_lumangqiu.png",
                             "price": 3000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "黑晶琉璃",
+                            "category": "炼金材料",
+                            "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+                            "price": 1000,
+                            "limit": 100,
+                            "rare": false
+                        },
+                        {
+                            "name": "冰系粉尘",
+                            "category": "炼金材料",
+                            "description": "常见的炼金材料，蕴含少量冰系魔法，是合成技能石的主要触媒。",
+                            "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a9/no0rhm0wky3e406wni3ef13z6zvfxw1.png/100px-100130.png",
+                            "price": 500,
                             "limit": 100,
                             "rare": false
                         }
